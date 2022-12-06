@@ -12,7 +12,6 @@ import ProjectPage from './pages/ProjectPage'
 function App() {
 
   return (
-    
     <Router>
       <Routes>
         <Route path='/' element={<Home/>}/>

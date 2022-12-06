@@ -28,7 +28,7 @@ function CustomLink(item:string, index:number){
   const isActive = useMatch({path: resolvedPath.pathname, end: true})
   return (
     <Link to={renderSwitch(index)}>
-      <li key={item} className={`flex items-center gap-2 cursor-pointer mx-2 px-1 mt-4 rounded ${isActive ? 'bg-[#204f59]': null}`}>
+      <li key={item} className={`flex items-center gap-2 cursor-pointer mx-2 px-1 mt-4 rounded ${isActive ? 'bg-[#1D3557]': null}`}>
         {Icons[index]}
         <h2 className='w-fit flex xl:text-xl text-white' key={item}>{item}</h2>
       </li>
@@ -59,7 +59,7 @@ function renderSwitch(index:number):string{
 
 
   return (
-    <section className='flex flex-col w-1/6 bg-[#2A6470] max-h-screen'>
+    <section className='flex flex-col w-1/6 bg-[#457b9d] max-h-screen'>
       <div className='mt-4 flex flex-col gap-5 relative pt-4 w-full'>
         <Link to='/'>
           <span className='flex items-center gap-2 cursor-pointer mb-10  px-1'>
