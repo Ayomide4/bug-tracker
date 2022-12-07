@@ -1,6 +1,6 @@
 import React from 'react'
 import { Navbar } from '../components/Navbar'
-import { Dashboard } from '../components/Dashboard'
+import { Dashboard } from '../components/DashboardComponents/Dashboard'
 
 
 export default function () {
