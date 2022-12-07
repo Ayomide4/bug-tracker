@@ -8,12 +8,19 @@ export const data01: {name: string, value:number}[] = [
 ];
 
 export const projectList: string[] = [
-  'Bug Tracker',
-  'Portfolio Website',
-  'Typing Website',
-  'Typing Website',
-  'Typing Website'
+  'Project 1',
+  'Project 2',
+  'Project 3',
+  'Project 4',
+  'Project 5',
 ]
 
+export const ticketList: string[] = [
+  'Ticket 1',
+  'Ticket 2',
+  'Ticket 3',
+  'Ticket 4',
+  'Ticket 5',
+]
 
 

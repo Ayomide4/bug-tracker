@@ -1,6 +1,6 @@
 import React from 'react'
 import { PieChartComp } from '../PieChart'
-import { data01, projectList } from '../../tempData'
+import { data01, projectList, ticketList } from '../../tempData'
 import { RxDoubleArrowRight } from 'react-icons/rx'
 
 export default function DashboardProjectPrio(props:any) {
@@ -26,7 +26,7 @@ export default function DashboardProjectPrio(props:any) {
 
         <div className=' bg-white rounded-md row-span-2 shadow-md'>
           <h2 className='text-xl text-center font-semibold p-4'>Your Projects</h2>
-          <div className='flex flex-col px-8'>
+          <div className='flex flex-col px-8 '>
             {projectList.map((entry:string, index:number) => {
               return (
                 <li key={index} className='list-none mb-2'>
@@ -40,10 +40,25 @@ export default function DashboardProjectPrio(props:any) {
                 <RxDoubleArrowRight size={20} color='#1F41AF'/>
               </a>
             </div>
-
           </div>
         </div>
-        <div className='bg-white rounded-md row-span-2 shadow-md'></div>
+
+        <div className='bg-white rounded-md row-span-2 shadow-md'>
+          <h2 className='text-xl text-center font-semibold p-4'>Assigned Tickets</h2>
+          <div className='flex flex-col px-8'>
+            {ticketList.map((entry:string, index:number) => {
+              return (
+                <li key={index} className="list-none mb-2"><a href='#' className='decoration-none'>{entry}</a></li>
+              )
+            })}
+          <div className=''>
+              <a href='/tickets' className='text-blue-800 font-semibold text-md mt-6 flex justify-end items-center'>
+                <h2 className='mr-2'>more tickets</h2>
+                <RxDoubleArrowRight size={20} color='#1F41AF'/>
+              </a>
+          </div>
+          </div>
+        </div>
       </div>  
   )
 }

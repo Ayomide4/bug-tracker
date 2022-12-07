@@ -26,14 +26,14 @@ export const Navbar = () => {
     return (
 
       //IF THE NAV BECOMES UNRESPONSIVE IT'S BECAUSE I SWAPPED LI WITH LINK CHECK GIT LOGS
-        <li key={index} className={`flex items-center gap-2 cursor-pointer mx-2 px-1 mt-4 rounded ${isActive ? 'bg-[#1D3557]': null}`}>
-          <Link to={renderSwitch(index)}>
-            <div className='flex items-center gap-2'>
-              {Icons[index]}
-              <h2 className='w-fit flex xl:text-xl text-white' key={item}>{item}</h2>
-            </div>
-          </Link>
-        </li>
+        <Link to={renderSwitch(index)} key={index}>
+          <li  className={`flex items-center gap-2 cursor-pointer mx-2 px-1 mt-4 rounded ${isActive ? 'bg-[#1D3557]': null}`}>
+              <div className='flex items-center gap-2'>
+                {Icons[index]}
+                <h2 className='w-fit flex xl:text-xl text-white' key={item}>{item}</h2>
+              </div>
+          </li>
+        </Link>
     )
   }
 
@@ -60,7 +60,7 @@ export const Navbar = () => {
     <section className='flex flex-col w-1/6 bg-[#457b9d] max-h-screen'>
       <div className='mt-4 flex flex-col gap-5 relative pt-4 w-full'>
         <Link to='/'>
-          <span className='flex items-center justify-center gap-2 cursor-pointer mb-10 '>
+          <span className='flex items-center justify-center gap-2 cursor-pointer mb-10'>
               <AiOutlineBug  size='24' color='#64C2CA'/>
               <h2 className='w-fit flex xl:text-xl font-bold text-white'>Bug Tracker</h2>
           </span>

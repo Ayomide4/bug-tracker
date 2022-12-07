@@ -17,7 +17,6 @@ export const Dashboard = () => {
     <div className='w-5/6 h-full bg-[#F4F6F6]'>
       <DashboardStatus/>
       <DashboardProjectPrio sum={sum}/>  
-
     </div>
   )
 }
