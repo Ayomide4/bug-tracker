@@ -16,7 +16,7 @@ export default function DashboardProjectPrio(props:any) {
                   return (
                   <div className='flex flex-col justify-center items-center' key={index}>
                     <h2 className='font-semibold'>{entry.name}</h2>
-                    <h2>{`${(entry.value/props.sum).toFixed(2)}%`}</h2>
+                    <h2>{`${(((entry.value/props.sum))*100).toFixed(2)}%`}</h2>
                   </div>
                   )
                 })

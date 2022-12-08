@@ -1,7 +1,19 @@
 import React from 'react'
+import { projects, projectList } from '../tempData'
+import ProjectItem from './ProjectItem'
 
 export default function Projects() {
-const ProjectDesciptors = ['Project', 'Description', 'Members', 'Last Updated']
+const ProjectDesciptors = ['Project', 'Description', 'Team', 'Last Updated']
+
+  const projectItems = 
+    projects.map((entry, index:number) => {
+      return (
+        <li key={index} className='list-none w-full'>
+          <ProjectItem name={entry.name} desc={entry.desc} team={entry.team} lastUpdated={entry.lastUpdated}/>
+        </li>
+      )
+    })
+
 
 
   return (
@@ -16,6 +28,9 @@ const ProjectDesciptors = ['Project', 'Description', 'Members', 'Last Updated']
             <h2 className='py-2 text-gray-500' key={index}>{item}</h2>
           )
         })}
+      </div>
+      <div className='flex flex-col justify-center px-4 pt-2'>
+        {projectItems}
       </div>
     </div>
   )

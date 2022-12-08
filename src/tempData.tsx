@@ -23,4 +23,18 @@ export const ticketList: string[] = [
   'Ticket 5',
 ]
 
+type greetObject = {
+  name: string,
+  desc: string,
+  team: string,
+  lastUpdated: string,
+}
+
+export const projects: greetObject[] = [
+  {name: 'Project 1', desc: 'First Project wow!', team: 'TechSquad', lastUpdated: '12/8/22'},
+  {name: 'Project 2', desc: 'Second Project!', team: 'Lizard', lastUpdated: '12/4/22'},
+  {name: 'Project 3', desc: 'Third Project wow!', team: 'Gecko', lastUpdated: '1/18/22'},
+  {name: 'Project 4', desc: 'Fourth Project wow!', team: 'Dragon', lastUpdated: '2/15/22'},
+  {name: 'Project 5', desc: 'Fifth Project!', team: 'Yes', lastUpdated: '6/6/22'}
+]
 
