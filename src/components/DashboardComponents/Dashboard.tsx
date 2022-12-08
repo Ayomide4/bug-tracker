@@ -14,7 +14,7 @@ export const Dashboard = () => {
 
 
   return (
-    <div className='w-5/6 h-full bg-[#F4F6F6]'>
+    <div className='w-5/6 h-full bg-[#F4F6F6] flex flex-col'>
       <DashboardStatus/>
       <DashboardProjectPrio sum={sum}/>  
     </div>
