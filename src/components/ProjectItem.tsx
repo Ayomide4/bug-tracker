@@ -7,7 +7,7 @@ export default function ProjectItem(props:any) {
     projects.map((entry, index:number) => {
       return (
         <tr className='cursor-pointer hover:bg-gray-200 ' key={index}>
-          <td className='pl-4 text-lg'>{entry.name}</td>
+          <td className='pl-4 text-lg'>{entry.title}</td>
           <td className='text-lg'>{entry.desc}</td>
           <td className='text-lg'>{entry.manager}</td>
           <td className='text-lg'>{entry.lastUpdated}</td>
@@ -28,7 +28,7 @@ export default function ProjectItem(props:any) {
               <th className='py-3 bg-[#F3F4F6] sticky top-0'>Status</th>
             </tr>
           </thead>
-          <tbody className='text-left overflow-y-scroll'>
+          <tbody className='text-left'>
             {displayItems}
           </tbody>
         </table>

@@ -9,7 +9,7 @@ import ListComponent from '../ListComponent'
 export default function TicketStatus() {
 
   let percentage:number = 12
-  const ticketCategories:string[] = ['Title', 'Submitted By', 'Severity', 'Status', 'Priority', 'Last Updated']
+  const ticketCategories:string[] = ['Title', 'Submitted By', 'Status', 'Priority', 'Last Updated']
 
   return (
     <div className='w-full h-full flex flex-col items-center'>
@@ -27,7 +27,7 @@ export default function TicketStatus() {
             fontColor="black"
             trackWidth="18"
             percentage= {percentage}
-            trackPathColor="#F4F6F6"
+            trackPathColor="#F3F4F6"
             trackBorderColor="white"
             defColor={{
               fair: 'green',
@@ -48,7 +48,7 @@ export default function TicketStatus() {
             fontColor="black"
             trackWidth="18"
             percentage= {percentage}
-            trackPathColor="#F4F6F6"
+            trackPathColor="#F3F4F6"
             trackBorderColor="white"
             defColor={{
               fair: '#457B9D',
