@@ -1,12 +1,37 @@
 import React from 'react'
+import { projects } from '../tempData'
 
 export default function ProjectItem(props:any) {
+
+    const displayItems = 
+    projects.map((entry, index:number) => {
+      return (
+        <tr className='cursor-pointer hover:bg-gray-200 ' key={index}>
+          <td className='pl-4 text-lg'>{entry.name}</td>
+          <td className='text-lg'>{entry.desc}</td>
+          <td className='text-lg'>{entry.manager}</td>
+          <td className='text-lg'>{entry.lastUpdated}</td>
+          <td className='text-lg'>{entry.status}</td>
+        </tr>
+      )
+    })
+
   return (
-    <div className='flex items-center '>
-      <a><h2>{props.name}</h2></a>
-      <a className='border border-red-600 ml-32'><h2>{props.desc}</h2></a>
-      <a className='border border-red-600 ml-32'><h2>{props.team}</h2></a>
-      <a><h2>{props.lastUpdated}</h2></a>
-    </div>
-  )
-}
+      <div className='max-h-itemContainer overflow-y-scroll'>
+        <table className='w-full'>
+          <thead className='text-[#707785] text-left'>
+            <tr>
+              <th className='py-3 bg-[#F3F4F6] sticky pl-4 top-0'>Project</th>
+              <th className='py-3 bg-[#F3F4F6] sticky top-0'>Description</th>
+              <th className='py-3 bg-[#F3F4F6] sticky top-0'>Project Manager</th>
+              <th className='py-3 bg-[#F3F4F6] sticky top-0'>Team</th>
+              <th className='py-3 bg-[#F3F4F6] sticky top-0'>Status</th>
+            </tr>
+          </thead>
+          <tbody className='text-left overflow-y-scroll'>
+            {displayItems}
+          </tbody>
+        </table>
+      </div>
+    )
+  }

@@ -2,6 +2,9 @@ import React from 'react'
 
 export default function ListComponent(props:any) {
   const ProjectDesciptors = ['Project', 'Description', 'Members', 'Last Updated']
+
+  
+
   
   console.log(props.categories)
   return (
