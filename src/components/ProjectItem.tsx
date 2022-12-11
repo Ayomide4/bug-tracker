@@ -17,7 +17,7 @@ export default function ProjectItem(props:any) {
     })
 
   return (
-      <div className='max-h-itemContainer overflow-y-scroll'>
+      <div className='min-w-full overflow-scroll max-h-96 flex-none'>
         <table className='w-full'>
           <thead className='text-[#707785] text-left'>
             <tr>

@@ -12,8 +12,12 @@ export default function TicketStatus() {
   const ticketCategories:string[] = ['Title', 'Submitted By', 'Status', 'Priority', 'Last Updated']
 
   return (
+    <>
+
+
     <div className='w-full h-full flex flex-col items-center'>
       <h1 className='w-full mt-6 pl-6 text-2xl text-[#1D3557] font-semibold'>Tickets</h1>
+
       <div className="grid grid-cols-3 gap-6 w-11/12 mt-6">
         <div className='bg-white h-48 rounded-lg shadow-md flex flex-col justify-center items-center border border-[#1D3557]'>
             <h2 className='text-black text-2xl text-center font-bold'>0</h2>
@@ -62,9 +66,10 @@ export default function TicketStatus() {
             <h2 className='text-center text-gray-500 text-md mb-2'>Status: Development</h2>
         </div>
       </div>
-      <div className='w-11/12 h-3/5 mt-4'>
-            <ListComponent title='Tickets' btn='Ticket' categories={ticketCategories}/>
+      <div className='w-11/12 h-3/5 mt-4 '>
+        <ListComponent title='Tickets' btn='Ticket' categories={ticketCategories}/>
       </div>
     </div>
+    </>
   )
 }
