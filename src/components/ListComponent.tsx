@@ -17,10 +17,8 @@ export default function ListComponent(props:any) {
       )
     })
 
-  
-  console.log(props.categories)
-  return (
 
+  return (
     <div className={`border relative  border-[#2A6470] rounded-lg shadow-outline max-h-screen w-full bg-white`}>
       <div className='flex justify-between p-4'>
         <h2 className='text-xl text-[#1D3557]'>Projects</h2>

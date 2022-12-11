@@ -8,7 +8,7 @@ import ListComponent from '../ListComponent'
 
 export default function TicketStatus() {
 
-  let percentage:number = 12
+  let percentage:string = '50'
   const ticketCategories:string[] = ['Title', 'Submitted By', 'Status', 'Priority', 'Last Updated']
 
   return (
