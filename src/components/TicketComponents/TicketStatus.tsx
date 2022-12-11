@@ -8,7 +8,7 @@ import ListComponent from '../ListComponent'
 
 export default function TicketStatus() {
 
-  let percentage:string = "12"
+  let percentage:string = "50"
   const ticketCategories:string[] = ['Title', 'Submitted By', 'Status', 'Priority', 'Last Updated']
 
   return (
@@ -17,7 +17,6 @@ export default function TicketStatus() {
 
     <div className='w-full h-full flex flex-col items-center'>
       <h1 className='w-full mt-6 pl-6 text-2xl text-[#1D3557] font-semibold'>Tickets</h1>
-
       <div className="grid grid-cols-3 gap-6 w-11/12 mt-6">
         <div className='bg-white h-48 rounded-lg shadow-md flex flex-col justify-center items-center border border-[#1D3557]'>
             <h2 className='text-black text-2xl text-center font-bold'>0</h2>
