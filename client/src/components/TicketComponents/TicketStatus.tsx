@@ -8,11 +8,7 @@ import ListComponent from '../ListComponent'
 
 export default function TicketStatus() {
 
-<<<<<<< HEAD:src/components/TicketComponents/TicketStatus.tsx
-  let percentage:string = '50'
-=======
   let percentage:string = "50"
->>>>>>> develop:client/src/components/TicketComponents/TicketStatus.tsx
   const ticketCategories:string[] = ['Title', 'Submitted By', 'Status', 'Priority', 'Last Updated']
 
   return (

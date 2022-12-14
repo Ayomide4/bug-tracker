@@ -2,7 +2,7 @@ import {AiOutlineBug, AiOutlineHome, AiOutlineAppstore} from 'react-icons/ai'
 import {BiTask} from 'react-icons/bi'
 import {RiAdminLine} from 'react-icons/ri'
 import {Link, useMatch, useResolvedPath} from 'react-router-dom'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 
 
@@ -11,6 +11,23 @@ import { useState } from 'react'
 
 
 export const Navbar = () => {
+
+  type Employee = {
+    name? : string,
+    age? : number
+  }
+
+  let responseClone:any;
+
+  const [data, setData] = useState<any>()
+  useEffect(()=>{
+    fetch("/api")
+    .then(res => res.json())
+    .then(data => setData(data))
+      },[])
+    
+
+
   const [toggle, setToggle] = useState<boolean>(true)
   const Menu: Array<string> = ["Dashboard","Projects", "Tickets", "Admin"]
   const Icons = [
@@ -65,6 +82,7 @@ export const Navbar = () => {
               <h2 className='w-fit flex xl:text-xl font-bold text-white'>Bug Tracker</h2>
           </span>
         </Link>
+        <h2>{data}</h2>
         <ul>
           {Menu.map((item, index)=>{
             return (
