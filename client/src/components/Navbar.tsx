@@ -81,7 +81,7 @@ export const Navbar = () => {
               <h2 className='w-fit flex xl:text-xl font-bold text-white'>Bug Tracker</h2>
           </span>
         </Link>
-        <h2>{data?.message === undefined ? 'loading...' : data.message}</h2>
+
         <ul>
           {Menu.map((item, index)=>{
             return (
