@@ -1,17 +1,14 @@
 const express = require('express')
-const bodyParser = require('body-parser')
+const cors = require('cors')
 
 
 const app = express()
+app.use(cors())
 
-app.use(bodyParser.urlencoded({extended: false}))
-app.use(bodyParser.json())
+const message = { message: "Hello from server!" }
 
-app.get('/api', (req, res) => {
-  res.json({
-    name: 'Bill',
-    age: 99
-  })
-})
+app.get("/api", (req, res) => {
+  res.json({ message: "Hello from server and youre cringe!" });
+});
 
-app.listen(3001, () => console.log('server started'))
+app.listen(3002, () => console.log('server started 3002'))
