@@ -8,7 +8,9 @@ module.exports = {
     extend: {
       spacing: {
         'itemContainer': '30.9rem'
-      }
+      },
+      
+      
     }
   },
   plugins: [],

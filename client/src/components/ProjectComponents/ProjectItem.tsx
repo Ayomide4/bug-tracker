@@ -1,5 +1,5 @@
 import React from 'react'
-import { projects } from '../tempData'
+import { projects } from '../../tempData'
 
 export default function ProjectItem(props:any) {
 
@@ -17,11 +17,11 @@ export default function ProjectItem(props:any) {
     })
 
   return (
-      <div className='min-w-full overflow-scroll max-h-96 flex-none'>
+      <div className='min-w-full overflow-scroll max-h-96 flex-none relative z-0'>
         <table className='w-full'>
           <thead className='text-[#707785] text-left'>
             <tr>
-              <th className='py-3 bg-[#F3F4F6] sticky pl-4 top-0'>Project</th>
+              <th className='py-3 bg-[#F3F4F6] sticky pl-4 top-0'>Title</th>
               <th className='py-3 bg-[#F3F4F6] sticky top-0'>Description</th>
               <th className='py-3 bg-[#F3F4F6] sticky top-0'>Project Manager</th>
               <th className='py-3 bg-[#F3F4F6] sticky top-0'>Team</th>

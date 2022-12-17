@@ -1,5 +1,5 @@
 import React from 'react'
-import Projects from '../Projects'
+import Projects from '../ProjectComponents/Projects'
 import {PieChartComp} from '../PieChart'
 import {data01} from '../../tempData'
 import DashboardStatus from './DashboardStatus'
