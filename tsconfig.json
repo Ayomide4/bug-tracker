@@ -1,21 +1,26 @@
 {
   "compilerOptions": {
-    "target": "ESNext",
+    "target": "es6",
     "useDefineForClassFields": true,
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "allowJs": false,
     "skipLibCheck": true,
-    "esModuleInterop": false,
+    "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
-    "module": "ESNext",
+    "module": "CommonJS",
     "moduleResolution": "Node",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "baseUrl": "./",
+        "paths": {
+            "*": [ "src/client/@custom_types/*"]
+        }
   },
   "include": ["client/src", "client/tailwind.config.cjs"],
+  "exclude": ["node_modules", "client/src/components/TicketComponents/TicketStatus.tsx"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
