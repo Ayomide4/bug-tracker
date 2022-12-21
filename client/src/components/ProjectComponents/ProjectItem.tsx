@@ -1,23 +1,38 @@
-import React from 'react'
+import axios from 'axios'
+import { useState, useEffect } from 'react'
 import { projects } from '../../tempData'
+
 
 export default function ProjectItem(props:any) {
 
-    const displayItems = 
-    projects.map((entry, index:number) => {
-      return (
-        <tr className='cursor-pointer hover:bg-gray-200 ' key={index}>
-          <td className='pl-4 text-lg'>{entry.title}</td>
-          <td className='text-lg'>{entry.desc}</td>
-          <td className='text-lg'>{entry.manager}</td>
-          <td className='text-lg'>{entry.lastUpdated}</td>
-          <td className='text-lg'>{entry.status}</td>
-        </tr>
-      )
-    })
+  const [data, setData] = useState([{}])
+  
+
+  useEffect(() => {
+    axios.get("http://localhost:3002/api/list")
+      .then(res => {
+        const list = res.data
+        console.log(list)
+        setData(list)
+      })
+      .catch(err => console.log(err))
+  },[data])
+
+  const dataArray = data.map((entry:any, index:number) => {
+    return(
+      <tr className='cursor-pointer hover:bg-gray-200 ' key={index}>
+        <td className='pl-4 text-lg'>{entry.title}</td>
+        <td className='text-lg'>{entry.desc}</td>
+        <td className='text-lg'>{entry.manager}</td>
+        <td className='text-lg'>{entry.team}</td>
+        <td className='text-lg'>{entry.status}</td>
+      </tr>
+    )
+  })
+  
 
   return (
-      <div className='min-w-full overflow-scroll max-h-96 flex-none relative z-0'>
+      <div className='min-w-full overflow-scroll max-h-itemContainer flex-none relative z-0'>
         <table className='w-full'>
           <thead className='text-[#707785] text-left'>
             <tr>
@@ -29,7 +44,8 @@ export default function ProjectItem(props:any) {
             </tr>
           </thead>
           <tbody className='text-left'>
-            {displayItems}
+            {dataArray}
+
           </tbody>
         </table>
       </div>

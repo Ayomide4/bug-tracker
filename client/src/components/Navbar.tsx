@@ -12,21 +12,6 @@ import { useEffect, useState } from 'react'
 
 export const Navbar = () => {
 
-  type jsonObj = {
-    message: string
-  }
-
-  const [data, setData] = useState<jsonObj>()
-  useEffect(() => {
-  
-    fetch('http://localhost:3002/api')
-      .then(res => res.json())
-      .then(data => setData(data))
-    
-  })
-    
-
-
   const [toggle, setToggle] = useState<boolean>(true)
   const Menu: Array<string> = ["Dashboard","Projects", "Tickets", "Admin"]
   const Icons = [
