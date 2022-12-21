@@ -1,6 +1,6 @@
 import React from 'react'
 import ProgressBar from 'react-animated-progress-bar'
-import ListComponent from '../ListComponent'
+import ListComponent from './TicketItem'
 
 
 

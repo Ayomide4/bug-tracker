@@ -28,8 +28,8 @@ export const Navbar = () => {
 
       //IF THE NAV BECOMES UNRESPONSIVE IT'S BECAUSE I SWAPPED LI WITH LINK CHECK GIT LOGS
         <Link to={renderSwitch(index)} key={index}>
-          <li  className={`flex items-center gap-2 cursor-pointer mx-2 px-1 mt-4 rounded ${isActive ? 'bg-[#1D3557]': null}`}>
-              <div className='flex items-center gap-2'>
+          <li className={`flex items-center gap-2 mx-2 px-1 mt-4 rounded ${isActive ? 'bg-[#1D3557]': null}`}>
+              <div className='flex items-center gap-2 cursor-pointer'>
                 {Icons[index]}
                 <h2 className='w-fit flex xl:text-xl text-white' key={item}>{item}</h2>
               </div>

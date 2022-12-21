@@ -42,31 +42,7 @@ export const ticketList: string[] = [
 
 export const tickets: ticketObjArr[] = [
   {title: 'Ticket 1', submittedBy: 'Ayo', status:'Development', priority:'High', lastUpdated: '12/9/22'},
-  {title: 'Ticket 2', submittedBy: 'Tye', status:'New', priority:'Medium', lastUpdated: '1/12/22'},
-  {title: 'Ticket 3', submittedBy: 'James', status:'Unassigned', priority:'Low', lastUpdated: '1/31/22'},
-  {title: 'Ticket 4', submittedBy: 'Rachel', status:'Development', priority:'High', lastUpdated: '4/5/22'},
-  {title: 'Ticket 5', submittedBy: 'Sike', status:'New', priority:'Medium', lastUpdated: '3/4/22'},
-  {title: 'Ticket 5', submittedBy: 'Sike', status:'New', priority:'Medium', lastUpdated: '3/4/22'},
-  {title: 'Ticket 5', submittedBy: 'Sike', status:'New', priority:'Medium', lastUpdated: '3/4/22'},
-  {title: 'Ticket 5', submittedBy: 'Sike', status:'New', priority:'Medium', lastUpdated: '3/4/22'},
-  {title: 'Ticket 5', submittedBy: 'Sike', status:'New', priority:'Medium', lastUpdated: '3/4/22'},
-  {title: 'Ticket 5', submittedBy: 'Sike', status:'New', priority:'Medium', lastUpdated: '3/4/22'},
-  {title: 'Ticket 5', submittedBy: 'Sike', status:'New', priority:'Medium', lastUpdated: '3/4/22'},
-  {title: 'Ticket 5', submittedBy: 'Sike', status:'New', priority:'Medium', lastUpdated: '3/4/22'},
-  {title: 'Ticket 5', submittedBy: 'Sike', status:'New', priority:'Medium', lastUpdated: '3/4/22'},
-  {title: 'Ticket 5', submittedBy: 'Sike', status:'New', priority:'Medium', lastUpdated: '3/4/22'},
-  {title: 'Ticket 5', submittedBy: 'Sike', status:'New', priority:'Medium', lastUpdated: '3/4/22'},
-  {title: 'Ticket 5', submittedBy: 'Sike', status:'New', priority:'Medium', lastUpdated: '3/4/22'},
-  {title: 'Ticket 5', submittedBy: 'Sike', status:'New', priority:'Medium', lastUpdated: '3/4/22'},
-  {title: 'Ticket 5', submittedBy: 'Sike', status:'New', priority:'Medium', lastUpdated: '3/4/22'},
-  {title: 'Ticket 5', submittedBy: 'Sike', status:'New', priority:'Medium', lastUpdated: '3/4/22'},
-  {title: 'Ticket 5', submittedBy: 'Sike', status:'New', priority:'Medium', lastUpdated: '3/4/22'},
-  {title: 'Ticket 5', submittedBy: 'Sike', status:'New', priority:'Medium', lastUpdated: '3/4/22'},
-  {title: 'Ticket 5', submittedBy: 'Sike', status:'New', priority:'Medium', lastUpdated: '3/4/22'},
-  {title: 'Ticket 5', submittedBy: 'Sike', status:'New', priority:'Medium', lastUpdated: '3/4/22'},
-  {title: 'Ticket 5', submittedBy: 'Sike', status:'New', priority:'Medium', lastUpdated: '3/4/22'},
-  {title: 'Ticket 5', submittedBy: 'Sike', status:'New', priority:'Medium', lastUpdated: '3/4/22'},
-]
+ ]
 
 
 export const projects: greetObject[] = [

@@ -23,7 +23,7 @@ export default function CreateProject(props:any) {
       alert('Inputs cannot be empty')
       return false
     } else {
-      axios.post("http://localhost:3002/api/create", formData)
+      axios.post("http://localhost:3002/project/create", formData)
         .catch(function (error){
           if (error.response){
             console.log(error.data)

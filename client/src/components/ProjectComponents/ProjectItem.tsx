@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { useState, useEffect } from 'react'
-import { projects } from '../../tempData'
+
 
 
 export default function ProjectItem(props:any) {
@@ -9,7 +9,7 @@ export default function ProjectItem(props:any) {
   
 
   useEffect(() => {
-    axios.get("http://localhost:3002/api/list")
+    axios.get("http://localhost:3002/project/list")
       .then(res => {
         const list = res.data
         console.log(list)
@@ -45,7 +45,6 @@ export default function ProjectItem(props:any) {
           </thead>
           <tbody className='text-left'>
             {dataArray}
-
           </tbody>
         </table>
       </div>
