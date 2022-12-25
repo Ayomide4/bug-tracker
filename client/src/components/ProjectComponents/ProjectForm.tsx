@@ -1,5 +1,5 @@
 
-export default function Form(props:any) {
+export default function ProjectForm(props:any) {
 
   const handleChange = (e:any) => {
     const newData:any = {...props.formData}

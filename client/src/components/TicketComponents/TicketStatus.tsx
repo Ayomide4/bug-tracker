@@ -1,6 +1,6 @@
 import React from 'react'
 import ProgressBar from 'react-animated-progress-bar'
-import ListComponent from './TicketItem'
+import TicketItem from './TicketItem'
 
 
 
@@ -66,7 +66,7 @@ export default function TicketStatus() {
         </div>
       </div>
       <div className='w-11/12 h-3/5 mt-4 '>
-        <ListComponent title='Tickets' btn='Ticket' categories={ticketCategories}/>
+        <TicketItem title='Tickets' btn='Ticket' categories={ticketCategories}/>
       </div>
     </div>
     </>
