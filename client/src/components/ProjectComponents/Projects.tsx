@@ -35,7 +35,7 @@ export default function Projects() {
         <div className='flex justify-between p-4 '>
           <h2 className='text-xl text-[#1D3557]'>Projects</h2>
           <button onClick={handleClick} className='border rounded-md bg-[#1D3557] p-2 text-white text-base'>New Project</button>
-        </div>
+        </div>fsdfs
           <ProjectItem/>
 
       </div>
