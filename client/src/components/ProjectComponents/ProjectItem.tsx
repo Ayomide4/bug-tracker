@@ -7,20 +7,27 @@ export default function ProjectItem(props:any) {
 
   const [data, setData] = useState([{}])
   
-
-  useEffect(() => {
+  //fetches list of projects and saves it into data state
+  const fetchData = async () => {
     axios.get("http://localhost:3002/project/list")
       .then(res => {
         const list = res.data
-        console.log(list)
         setData(list)
+        props.setListLength(list.length)
       })
       .catch(err => console.log(err))
-  },[data])
+  }
 
+  //updates list when length changes
+  useEffect(() => {
+    fetchData()
+  },[props.listLength])
+
+
+  //ren
   const dataArray = data.map((entry:any, index:number) => {
     return(
-      <tr className='cursor-pointer hover:bg-gray-200 ' key={index}>
+      <tr className='cursor-pointer hover:bg-gray-200' key={index}>
         <td className='pl-4 text-lg'>{entry.title}</td>
         <td className='text-lg'>{entry.desc}</td>
         <td className='text-lg'>{entry.manager}</td>
@@ -29,6 +36,7 @@ export default function ProjectItem(props:any) {
       </tr>
     )
   })
+
   
 
   return (
@@ -44,7 +52,7 @@ export default function ProjectItem(props:any) {
             </tr>
           </thead>
           <tbody className='text-left'>
-            {dataArray}
+            {dataArray ? dataArray : null}
           </tbody>
         </table>
       </div>
