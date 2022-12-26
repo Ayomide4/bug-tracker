@@ -3,12 +3,11 @@ import ProjectItem from './ProjectItem'
 import CreateProject from './CreateProject'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import List from '../List';
 
 export default function Projects() {
   
-  const [projectInfo, setProjectInfo] = useState({
-    title: "",
-  })
+
 
   const [trigger, setTrigger] = useState(false)
 
@@ -38,6 +37,7 @@ export default function Projects() {
           <button onClick={handleClick} className='border rounded-md bg-[#1D3557] p-2 text-white text-base'>New Project</button>
         </div>
           <ProjectItem/>
+
       </div>
       <ToastContainer/>
     </div>
