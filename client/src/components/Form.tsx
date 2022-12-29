@@ -1,12 +1,24 @@
+import DropdownMenu from "./DropdownMenu"
+import { useEffect, useState } from "react"
 
-export default function ProjectForm(props:any) {
+export default function Form(props:any) {
+
+  const [dropdownValue, setDropdownValue] = useState('- Select -')
+  const prioList: string[] = ['Low', 'Medium', 'High']
+  const newData:any = {...props.formData}
+
 
   const handleChange = (e:any) => {
-    const newData:any = {...props.formData}
-    newData[e.target.id] = e.target.value
-    props.setFormData(newData)
+    newData[e.target.id] = e.target.value //lookks for id that matches new data and saves the value at the id
+    props.setFormData(newData) //sets formdata to new data from form
   }
+  
+  useEffect(()=>{
+    newData['prio'] = dropdownValue //
+    props.setFormData(newData)
+  }, [dropdownValue])
 
+  
 
   return (
     <div className='w-full h-full fixed left-0 top-0 bg-black bg-opacity-20 flex justify-center items-center z-50'>
@@ -17,7 +29,7 @@ export default function ProjectForm(props:any) {
             <form onSubmit={props.handleSubmit} className='bg-white w-full h-full' autoComplete='off'>
               <div className="ml-4">
                 <div className="flex flex-col mb-6">
-                  <label className="mb-1 text-lg">Title</label>
+                  <label className="mb-1 text-lg ">Title</label>
                   <input id="title" onChange={(e) => handleChange(e)} value={props.formData.title} maxLength={30} className="rounded-md w-2/3 p-2 border border-gray-500" type='text' placeholder="Enter a title"/>
                 </div>
                 <div className="flex flex-col mb-6">
@@ -35,19 +47,24 @@ export default function ProjectForm(props:any) {
             // TICKET FORM
             <form onSubmit={props.handleSubmit} className='bg-white w-full h-full' autoComplete='off'>
             <div className="ml-4">
-              <div className="flex flex-col mb-6">
-                <label className="mb-1 text-lg">Title</label>
-                <input id="title" onChange={(e) => handleChange(e)} value={props.formData.title || ''} maxLength={20} className="rounded-md w-2/3 p-2 border border-gray-500" type='text' placeholder="Enter a title"/>
+              <div className="mb-6 flex justify-between ">
+                <div className="w-96">
+                  <div className="flex flex-col mb-8 mt-1">
+                    <label className="mb-1 text-lg">Title</label>
+                    <input id="title" onChange={(e) => handleChange(e)} value={props.formData.title || ''} maxLength={20} className="rounded-md w-72 p-2 border border-gray-500" type='text' placeholder="Enter a title"/>
+                  </div>
+                  <div className="flex flex-col">
+                    <label className="mb-1 text-lg">Description</label>
+                    <textarea id="desc" onChange={(e) => handleChange(e)} value={props.formData.desc || ''} maxLength={140} className="border border-gray-500 pl-2 pt-2 h-52 resize-none w-72 " placeholder="Enter a description"/>
+                  </div>
+                </div>
+                <div className="flex flex-col">
+                  <div className="flex flex-col h-12 mr-32 mb-32">
+                    <DropdownMenu dropdownValue={dropdownValue} setDropdownValue={setDropdownValue} list={prioList} title={'Priority'}/>
+                  </div>
+                </div>
               </div>
-              <div className="flex flex-col mb-6">
-                <label className="mb-1 text-lg">Description</label>
-                <textarea id="desc" onChange={(e) => handleChange(e)} value={props.formData.desc || ''} maxLength={140} className="border border-gray-500 pl-2 pt-2 h-24 resize-none w-2/3" placeholder="Enter a description"/>
-              </div>
-              <div className="flex flex-col mb-8">
-                <label className="mb-1 text-lg">Priority</label>
-                <input id="prio" onChange={(e) => handleChange(e)} value={props.formData.prio || ''} maxLength={30} className="rounded-md w-2/3 p-2 border border-gray-500" type='text' placeholder="Enter your team's name"/>
-              </div>
-              <button className="w-36 h-12 text-lg bg-[#1D3557] text-white">Create Project</button>
+              <button className="w-36 h-12 text-lg bg-[#1D3557] text-white">Create Ticket</button>
             </div>
             </form>
           }

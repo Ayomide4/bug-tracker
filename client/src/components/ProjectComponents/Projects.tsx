@@ -36,7 +36,7 @@ export const notify = (success:boolean) => {
 export default function Projects() {
 
   const [trigger, setTrigger] = useState(false)
-  const [listLength, setListLength] = useState()
+  const [listLength, setListLength] = useState(1)
   const [formData, setFormData] = useState({
     title: '',
     desc: '', 

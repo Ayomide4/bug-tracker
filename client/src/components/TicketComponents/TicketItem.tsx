@@ -9,14 +9,17 @@ export default function TicketItem(props:any) {
 
   const [data, setData] = useState([{}])
   const [trigger, setTrigger] = useState(false)
-  const [listLength, setListLength] = useState(0)
+  const [listLength, setListLength] = useState(1)
+  
+
+  
 
   const [formData, setFormData] = useState([{
     title: '',
     desc: '',
-    status: 'active',
+    status: 'New',
     prio: '',
-    dev: 'ayo'
+    dev: 'none'
   }])
   
   const fetchData = async () => {
@@ -59,6 +62,8 @@ export default function TicketItem(props:any) {
         </tr>
       )
     })
+
+    
   
   return (
     <div className={`border relative  border-[#2A6470] rounded-lg shadow-outline max-h-screen w-full bg-white`}>
@@ -72,7 +77,7 @@ export default function TicketItem(props:any) {
         <table className='w-full'>
             <thead className='text-[#707785] text-left'>
               <tr>
-                <th className='py-3 bg-[#F3F4F6] sticky pl-4 top-0'>Ticket Title</th>
+                <th className='py-3 bg-[#F3F4F6] sticky pl-4 top-0'>Title</th>
                 <th className='py-3 bg-[#F3F4F6] sticky top-0'>Description</th>
                 <th className='py-3 bg-[#F3F4F6] sticky top-0'>Status</th>
                 <th className='py-3 bg-[#F3F4F6] sticky top-0'>Priority</th>

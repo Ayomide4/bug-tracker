@@ -12,15 +12,6 @@ mongoose.set('strictQuery', true);
 
 
 
-// app.post("/project", async (req: Request, res: Response) => {
-
-//   const newProject = new Project({
-//     title: req.body.title
-//   })
-//   const createdProject = await newProject.save()
-//   res.json(createdProject)
-// })
-
 app.use("/", require("./routes/projectRoute"))
 app.use("/", require("./routes/ticketRoute"))
 

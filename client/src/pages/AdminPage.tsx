@@ -1,5 +1,6 @@
 import React from 'react'
 import { Navbar } from '../components/Navbar'
+import DropdownMenu from '../components/DropdownMenu'
 
 export default function AdminPage() {
   return (

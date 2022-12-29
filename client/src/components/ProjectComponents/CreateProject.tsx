@@ -1,4 +1,4 @@
-import ProjectForm from './ProjectForm.js'
+import Form from '../Form.js'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 import { notify } from './Projects.js'
@@ -46,25 +46,29 @@ export default function CreateProject(props:any) {
       }
     }
     else if(props.itemType === 'ticket'){
-      axios.post("http://localhost:3002/ticket/create", formData)
-      .catch(function (error){
-        if (error.response){
-          console.log(error.data)
-          console.log(error.status)
-          console.log(error.headers)
-        }
-      })
+      if(formData.title === '' || formData.desc === '' || formData.status === '' || formData.prio === '')
+      {
+        notify(false)
+        return false
+      } else {
+        axios.post("http://localhost:3002/ticket/create", formData)
+        .catch(function (error){
+          if (error.response){
+            console.log(error.data)
+            console.log(error.status)
+            console.log(error.headers)
+          }
+        })
 
-
-      props.setListLength(props.listLength+1) //
-      props.setFormData(blankData) //reset form input
-      props.notify(true)
-      props.closeModal()
-
+        props.setListLength(props.listLength+1) //
+        props.setFormData(blankData) //reset form input
+        props.notify(true)
+        props.closeModal()
+      }
     }
   }
 
   return ( props.trigger &&
-    (<ProjectForm itemType={props.itemType} closeModal={props.closeModal} handleSubmit={handleSubmit} formData={formData} setFormData={props.setFormData}/>)
+    (<Form list={props.list} itemType={props.itemType} closeModal={props.closeModal} handleSubmit={handleSubmit} formData={formData} setFormData={props.setFormData}/>)
   )
   }
