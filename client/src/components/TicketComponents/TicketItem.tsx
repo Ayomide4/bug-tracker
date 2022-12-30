@@ -9,25 +9,22 @@ export default function TicketItem(props:any) {
 
   const [data, setData] = useState([{}])
   const [trigger, setTrigger] = useState(false)
-  const [listLength, setListLength] = useState(1)
-  
 
-  
 
-  const [formData, setFormData] = useState([{
+  const [formData, setFormData] = useState({
     title: '',
     desc: '',
     status: 'New',
     prio: '',
     dev: 'none'
-  }])
+  })
   
   const fetchData = async () => {
     axios.get("http://localhost:3002/ticket/list")
     .then(res => {
       const list = res.data
       setData(list)
-      setListLength(list.length)
+      props.setListLength(list.length)
 
     })
     .catch(err => console.log(err))
@@ -35,7 +32,7 @@ export default function TicketItem(props:any) {
 
   useEffect(()=>{
     fetchData()
-  },[listLength])
+  },[props.listLength])
 
 
   const handleClick = () => {
@@ -68,7 +65,7 @@ export default function TicketItem(props:any) {
   return (
     <div className={`border relative  border-[#2A6470] rounded-lg shadow-outline max-h-screen w-full bg-white`}>
       {/* <CreateProject trigger={trigger} closeModal={handleClick} info={ticketInfo}/> */}
-      <CreateProject trigger={trigger} closeModal={handleClick} notify={notify} listLength={listLength} setListLength={setListLength} itemType={'ticket'} formData={formData} setFormData={setFormData}/>
+      <CreateProject trigger={trigger} closeModal={handleClick} notify={notify} listLength={props.listLength} setListLength={props.setListLength} itemType={'ticket'} formData={formData} setFormData={setFormData}/>
       <div className='flex justify-between p-4'>
         <h2 className='text-xl text-[#1D3557]'>Tickets</h2>
         <button onClick={handleClick} className='border rounded-md bg-[#1D3557] p-2 text-white text-base'>New Ticket</button>

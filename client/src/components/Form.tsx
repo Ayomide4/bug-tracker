@@ -11,6 +11,7 @@ export default function Form(props:any) {
   const handleChange = (e:any) => {
     newData[e.target.id] = e.target.value //lookks for id that matches new data and saves the value at the id
     props.setFormData(newData) //sets formdata to new data from form
+    //console.log(newData)
   }
   
   useEffect(()=>{

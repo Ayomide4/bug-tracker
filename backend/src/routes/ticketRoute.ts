@@ -5,7 +5,7 @@ import Ticket from '../models/ticketModel'
 router.route("/ticket/create").post((req,res) => {
   const title = req.body.title
   const desc = req.body.desc
-  const status = req.body.type
+  const status = req.body.status
   const prio = req.body.prio
   const dev = req.body.dev
   

@@ -46,11 +46,12 @@ export default function CreateProject(props:any) {
       }
     }
     else if(props.itemType === 'ticket'){
-      if(formData.title === '' || formData.desc === '' || formData.status === '' || formData.prio === '')
+      if(formData.title === '' || formData.desc === '' || formData.prio === '- Select -')
       {
         notify(false)
         return false
       } else {
+        console.log(`before post: ${formData['status']}`)
         axios.post("http://localhost:3002/ticket/create", formData)
         .catch(function (error){
           if (error.response){
@@ -59,6 +60,7 @@ export default function CreateProject(props:any) {
             console.log(error.headers)
           }
         })
+
 
         props.setListLength(props.listLength+1) //
         props.setFormData(blankData) //reset form input
