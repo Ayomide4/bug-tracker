@@ -1,15 +1,28 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import {AiOutlineRight, AiOutlineDown} from 'react-icons/ai'
 
 export const DropdownMenu = (props:any) => {
   const [isExpanded, setIsExpanded] = useState(false)
+  const [btnTitle, setBtnTitle] = useState('- Select -') 
   
   const handleClick = (e:any) => {
-    props.setDropdownValue(e.target.getAttribute('value'))
+    const value = e.target.getAttribute('value')
+    if(props.listType === 'status'){
+      setBtnTitle(value) //change btn so title isnt set for all drop components
+      props.setDropdownValue( {...props.dropdownValue, status: value})
+
+    } 
+    
+    else if(props.listType === 'prio') {
+      setBtnTitle(value) //change btn so title isnt set for all drop components
+      props.setDropdownValue({...props.dropdownValue, prio: value})
+    }
+
     setIsExpanded(false)
   }
 
 
+  
 
   return (
     <>
@@ -17,7 +30,7 @@ export const DropdownMenu = (props:any) => {
       <div className='border border-gray-500 rounded-sm'>
 
         <button type='button' onClick={() => {setIsExpanded(prev => !prev)}} className='bg-white w-32 h-10 py-1 flex justify-center items-center'>
-          <div className='mr-1'>{props.dropdownValue}</div>
+          <div className='mr-1'>{btnTitle /* change title when dropdown value changes*/}</div> 
           <div>
             {!isExpanded && <AiOutlineRight/>}
             {isExpanded && <AiOutlineDown/>}
@@ -26,15 +39,10 @@ export const DropdownMenu = (props:any) => {
           {isExpanded &&  //display dropdown contents
             <div>
               <hr className='border-1 border-black'></hr>
-              <ul>
+              <ul className='z-10'>
                 {props.list.map((item: string, index: number) => {
                   return (
-                    <li 
-                      value={item} 
-                      onClick={(e:any) => {
-                        handleClick(e)
-                      }} 
-                      className='cursor-pointer hover:bg-blue-500 hover:text-white p-1' key={index}>
+                    <li value={item} onClick={(e:any) => {handleClick(e)}} className='cursor-pointer hover:bg-blue-500 hover:text-white p-1 bg-white' key={index}>
                       {item}
                     </li>
                   )

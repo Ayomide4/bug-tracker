@@ -7,14 +7,15 @@ import { ToastContainer, toast } from 'react-toastify';
 
 export default function TicketItem(props:any) {
 
-  const [data, setData] = useState([{}])
+  const [data, setData] = useState<{}[]>([{}])
   const [trigger, setTrigger] = useState(false)
 
+  
 
   const [formData, setFormData] = useState({
     title: '',
     desc: '',
-    status: 'New',
+    status: '',
     prio: '',
     dev: 'none'
   })
@@ -22,8 +23,9 @@ export default function TicketItem(props:any) {
   const fetchData = async () => {
     axios.get("http://localhost:3002/ticket/list")
     .then(res => {
-      const list = res.data
+      const list: {}[] = res.data
       setData(list)
+      console.log(data)
       props.setListLength(list.length)
 
     })
@@ -47,12 +49,26 @@ export default function TicketItem(props:any) {
     setFormData(blankData) 
     }
 
+
+  interface iTicket {
+    title: String;
+    desc: String;
+    status: String;
+    prio: String;
+    dev: String
+  }
+
+
+  
+
   const displayItems = 
     data.map((entry:any, index:number) => {
+
       return (
+        
         <tr className='cursor-pointer hover:bg-gray-200 ' key={index}>
           <td className='pl-4 text-lg'>{entry.title}</td>
-          <td className='text-lg'>{entry.desc}</td>
+          <td className='text-lg max-h-1'>{entry.desc}</td>
           <td className='text-lg'>{entry.status}</td>
           <td className='text-lg'>{entry.prio}</td>
           <td className='text-lg'>{entry.dev}</td>
@@ -64,7 +80,6 @@ export default function TicketItem(props:any) {
   
   return (
     <div className={`border relative  border-[#2A6470] rounded-lg shadow-outline max-h-screen w-full bg-white`}>
-      {/* <CreateProject trigger={trigger} closeModal={handleClick} info={ticketInfo}/> */}
       <CreateProject trigger={trigger} closeModal={handleClick} notify={notify} listLength={props.listLength} setListLength={props.setListLength} itemType={'ticket'} formData={formData} setFormData={setFormData}/>
       <div className='flex justify-between p-4'>
         <h2 className='text-xl text-[#1D3557]'>Tickets</h2>
@@ -74,11 +89,11 @@ export default function TicketItem(props:any) {
         <table className='w-full'>
             <thead className='text-[#707785] text-left'>
               <tr>
-                <th className='py-3 bg-[#F3F4F6] sticky pl-4 top-0'>Title</th>
-                <th className='py-3 bg-[#F3F4F6] sticky top-0'>Description</th>
-                <th className='py-3 bg-[#F3F4F6] sticky top-0'>Status</th>
-                <th className='py-3 bg-[#F3F4F6] sticky top-0'>Priority</th>
-                <th className='py-3 bg-[#F3F4F6] sticky top-0'>Ticket Developer</th>
+                <th className='py-3 bg-[#F3F4F6] sticky pl-4 top-0 w-52 ' >Title</th>
+                <th className='py-3 bg-[#F3F4F6] sticky top-0 max-w-3xl'>Description</th>
+                <th className='py-3 bg-[#F3F4F6] sticky top-0 w-32'>Status</th>
+                <th className='py-3 bg-[#F3F4F6] sticky top-0 w-32'>Priority</th>
+                <th className='py-3 bg-[#F3F4F6] sticky top-0 w-52'>Ticket Developer</th>
               </tr>
             </thead>
             <tbody className='text-left '>

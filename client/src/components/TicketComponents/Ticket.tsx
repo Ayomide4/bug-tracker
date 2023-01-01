@@ -1,5 +1,3 @@
-import React from 'react'
-import { PieChartComp } from '../PieChart'
 import TicketStatus from './TicketStatus'
 
 export default function Ticket() {

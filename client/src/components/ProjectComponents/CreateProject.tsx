@@ -51,7 +51,6 @@ export default function CreateProject(props:any) {
         notify(false)
         return false
       } else {
-        console.log(`before post: ${formData['status']}`)
         axios.post("http://localhost:3002/ticket/create", formData)
         .catch(function (error){
           if (error.response){

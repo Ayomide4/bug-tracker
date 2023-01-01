@@ -3,20 +3,23 @@ import { useEffect, useState } from "react"
 
 export default function Form(props:any) {
 
-  const [dropdownValue, setDropdownValue] = useState('- Select -')
+  const [dropdownValue, setDropdownValue] = useState({ prio: '', status: ''})
   const prioList: string[] = ['Low', 'Medium', 'High']
+  const ticketStatusList: string[] = ['New', 'Unassigned', 'Development', 'Testing', 'Resolved']
   const newData:any = {...props.formData}
 
 
   const handleChange = (e:any) => {
-    newData[e.target.id] = e.target.value //lookks for id that matches new data and saves the value at the id
+    newData[e.target.id] = e.target.value //looks for id that matches new data and saves the value at the id
     props.setFormData(newData) //sets formdata to new data from form
-    //console.log(newData)
+
   }
   
   useEffect(()=>{
-    newData['prio'] = dropdownValue //
+    newData['prio'] = dropdownValue['prio']
+    newData['status'] = dropdownValue['status']
     props.setFormData(newData)
+    console.log(`newdata: ${newData}`)
   }, [dropdownValue])
 
   
@@ -26,6 +29,7 @@ export default function Form(props:any) {
       <div className='relative p-20 w-3/5 h-3/4 bg-white opacity-100'>
         <button onClick={props.closeModal} className='w-20 h-10 text-lg bg-[#1D3557] absolute right-8 top-8 text-white'>Close</button>
           { props.itemType === 'project' ? 
+
             // PROJECT FORM
             <form onSubmit={props.handleSubmit} className='bg-white w-full h-full' autoComplete='off'>
               <div className="ml-4">
@@ -47,26 +51,29 @@ export default function Form(props:any) {
           
             // TICKET FORM
             <form onSubmit={props.handleSubmit} className='bg-white w-full h-full' autoComplete='off'>
-            <div className="ml-4">
-              <div className="mb-6 flex justify-between ">
-                <div className="w-96">
-                  <div className="flex flex-col mb-8 mt-1">
-                    <label className="mb-1 text-lg">Title</label>
-                    <input id="title" onChange={(e) => handleChange(e)} value={props.formData.title || ''} maxLength={20} className="rounded-md w-72 p-2 border border-gray-500" type='text' placeholder="Enter a title"/>
+              <div className="ml-4">
+                <div className="mb-6">
+                  <div className="w-96">
+                    <div className="flex flex-col mt-1 absolute top-16 z-10 ">
+                      <label className="mb-1 text-lg">Title</label>
+                      <input id="title" onChange={(e) => handleChange(e)} value={props.formData.title || ''} maxLength={20} className="rounded-md w-72 p-2 border border-gray-500" type='text' placeholder="Enter a title"/>
+                    </div>
+                    <div className="flex flex-col absolute top-44 z-0">
+                      <label className="mb-1 text-lg">Description</label>
+                      <textarea id="desc" onChange={(e) => handleChange(e)} value={props.formData.desc || ''} maxLength={140} className="border border-gray-500 pl-2 pt-2 h-40 resize-none w-72 " placeholder="Enter a description"/>
+                    </div>
                   </div>
                   <div className="flex flex-col">
-                    <label className="mb-1 text-lg">Description</label>
-                    <textarea id="desc" onChange={(e) => handleChange(e)} value={props.formData.desc || ''} maxLength={140} className="border border-gray-500 pl-2 pt-2 h-52 resize-none w-72 " placeholder="Enter a description"/>
+                    <div className="flex flex-col h-12 mr-32 mb-20 absolute right-20 top-16 z-20">
+                      <DropdownMenu listType='prio' dropdownValue={dropdownValue} setDropdownValue={setDropdownValue} list={prioList} title={'Priority'}/>
+                    </div>
+                    <div className="flex flex-col h-12 mr-32 mb-32 absolute right-20 top-64 z-0">
+                      <DropdownMenu listType='status' dropdownValue={dropdownValue} setDropdownValue={setDropdownValue} list={ticketStatusList} title={'Status'}/>
+                    </div>
                   </div>
                 </div>
-                <div className="flex flex-col">
-                  <div className="flex flex-col h-12 mr-32 mb-32">
-                    <DropdownMenu dropdownValue={dropdownValue} setDropdownValue={setDropdownValue} list={prioList} title={'Priority'}/>
-                  </div>
-                </div>
+                <button className="w-36 h-12 text-lg bg-[#1D3557] text-white absolute bottom-20">Create Ticket</button>
               </div>
-              <button className="w-36 h-12 text-lg bg-[#1D3557] text-white">Create Ticket</button>
-            </div>
             </form>
           }
       </div>
