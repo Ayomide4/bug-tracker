@@ -37,6 +37,22 @@ export default function TicketItem(props:any) {
   },[props.listLength])
 
 
+  const descFill = ``
+  
+  const displayItems = 
+  data.map((entry:any, index:number) => {
+    //TODO: FIX DESC LEN LIMITING OR ELSE
+    return (
+      <tr className='cursor-pointer hover:bg-gray-200 ' key={index}>
+        <td className='pl-4 text-lg max-h-1'>{entry.title}</td>
+        <td className='text-lg px-2 max-h-1 max-w-3xl'>{entry.desc !== undefined && entry.desc.length > 40 ? `${entry.desc.substring(0,40)}...`: entry.desc}</td>
+        <td className='text-lg max-h-1'>{entry.status}</td>
+        <td className='text-lg max-h-1'>{entry.prio}</td>
+        <td className='text-lg max-h-1'>{entry.dev}</td>
+      </tr>
+    )
+  })
+
   const handleClick = () => {
     setTrigger(trigger => !trigger) 
     const blankData = {
@@ -49,34 +65,6 @@ export default function TicketItem(props:any) {
     setFormData(blankData) 
     }
 
-
-  interface iTicket {
-    title: String;
-    desc: String;
-    status: String;
-    prio: String;
-    dev: String
-  }
-
-
-  
-
-  const displayItems = 
-    data.map((entry:any, index:number) => {
-
-      return (
-        
-        <tr className='cursor-pointer hover:bg-gray-200 ' key={index}>
-          <td className='pl-4 text-lg'>{entry.title}</td>
-          <td className='text-lg max-h-1'>{entry.desc}</td>
-          <td className='text-lg'>{entry.status}</td>
-          <td className='text-lg'>{entry.prio}</td>
-          <td className='text-lg'>{entry.dev}</td>
-        </tr>
-      )
-    })
-
-    
   
   return (
     <div className={`border relative  border-[#2A6470] rounded-lg shadow-outline max-h-screen w-full bg-white`}>
@@ -89,15 +77,15 @@ export default function TicketItem(props:any) {
         <table className='w-full'>
             <thead className='text-[#707785] text-left'>
               <tr>
-                <th className='py-3 bg-[#F3F4F6] sticky pl-4 top-0 w-52 ' >Title</th>
-                <th className='py-3 bg-[#F3F4F6] sticky top-0 max-w-3xl'>Description</th>
-                <th className='py-3 bg-[#F3F4F6] sticky top-0 w-32'>Status</th>
-                <th className='py-3 bg-[#F3F4F6] sticky top-0 w-32'>Priority</th>
-                <th className='py-3 bg-[#F3F4F6] sticky top-0 w-52'>Ticket Developer</th>
+                <th className='py-3 bg-[#F3F4F6] sticky max-h-6 pl-4 top-0 w-52'>Title</th>
+                <th className='py-3 bg-[#F3F4F6] sticky max-h-6 top-0 px-2'>Description</th>
+                <th className='py-3 bg-[#F3F4F6] sticky max-h-6 top-0 w-32'>Status</th>
+                <th className='py-3 bg-[#F3F4F6] sticky max-h-6 top-0 w-32'>Priority</th>
+                <th className='py-3 bg-[#F3F4F6] sticky max-h-6 top-0 w-52'>Ticket Developer</th>
               </tr>
             </thead>
-            <tbody className='text-left '>
-              {displayItems}
+            <tbody className='text-left'>
+              {displayItems !== undefined ? displayItems : null}
             </tbody>
         </table>
       </div>
