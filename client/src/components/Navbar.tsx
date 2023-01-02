@@ -12,7 +12,6 @@ import { useEffect, useState } from 'react'
 
 export const Navbar = () => {
 
-  const [toggle, setToggle] = useState<boolean>(true)
   const Menu: Array<string> = ["Dashboard","Projects", "Tickets", "Admin"]
   const Icons = [
     <AiOutlineHome size='24' color='#9AD2D9'/>,
@@ -25,8 +24,6 @@ export const Navbar = () => {
     const resolvedPath = useResolvedPath(renderSwitch(index))
     const isActive = useMatch({path: resolvedPath.pathname, end: true})
     return (
-
-      //IF THE NAV BECOMES UNRESPONSIVE IT'S BECAUSE I SWAPPED LI WITH LINK CHECK GIT LOGS
         <Link to={renderSwitch(index)} key={index}>
           <li className={`flex items-center gap-2 mx-2 px-1 mt-4 rounded ${isActive ? 'bg-[#1D3557]': null}`}>
               <div className='flex items-center gap-2 cursor-pointer'>

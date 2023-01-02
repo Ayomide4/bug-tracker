@@ -21,6 +21,6 @@
         }
   },
   "include": ["client/src", "client/tailwind.config.cjs"],
-  "exclude": ["node_modules", "client/src/components/TicketComponents/TicketStatus.tsx"],
+  "exclude": ["node_modules", "client/src/components/TicketComponents/Ticket.tsx"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

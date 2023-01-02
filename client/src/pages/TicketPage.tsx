@@ -1,6 +1,6 @@
 import React from 'react'
 import { Navbar } from '../components/Navbar'
-import Ticket from '../components/TicketComponents/Ticket'
+import Ticket from '../components/TicketComponents/Tickets'
 
 export default function TicketPage() {
   return (

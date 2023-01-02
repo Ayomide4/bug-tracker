@@ -3,23 +3,24 @@ import { useEffect, useState } from "react"
 
 export default function Form(props:any) {
 
-  const [dropdownValue, setDropdownValue] = useState({ prio: '', status: ''})
+  const [dropdownValue, setDropdownValue] = useState({ prio: '', status: 'New'})
   const prioList: string[] = ['Low', 'Medium', 'High']
-  const ticketStatusList: string[] = ['New', 'Unassigned', 'Development', 'Testing', 'Resolved']
+  //const ticketStatusList: string[] = ['New', 'Open', 'Development', 'Testing', 'Resolved']
   const newData:any = {...props.formData}
 
 
   const handleChange = (e:any) => {
     newData[e.target.id] = e.target.value //looks for id that matches new data and saves the value at the id
+    if(props.itemType === 'project') {
+      props.setFormData(newData['status'] = 'active') //default for project statsu
+    }
     props.setFormData(newData) //sets formdata to new data from form
-
   }
   
   useEffect(()=>{
     newData['prio'] = dropdownValue['prio']
     newData['status'] = dropdownValue['status']
     props.setFormData(newData)
-    console.log(`newdata: ${newData}`)
   }, [dropdownValue])
 
   
@@ -63,13 +64,11 @@ export default function Form(props:any) {
                       <textarea id="desc" onChange={(e) => handleChange(e)} value={props.formData.desc || ''} maxLength={140} className="border border-gray-500 pl-2 pt-2 h-40 resize-none w-72 " placeholder="Enter a description"/>
                     </div>
                   </div>
-                  <div className="flex flex-col">
-                    <div className="flex flex-col h-12 mr-32 mb-20 absolute right-20 top-16 z-20">
+                  <div>
+                    <div className=" h-12 mr-32 mb-20 absolute right-20 top-16 z-20">
                       <DropdownMenu listType='prio' dropdownValue={dropdownValue} setDropdownValue={setDropdownValue} list={prioList} title={'Priority'}/>
                     </div>
-                    <div className="flex flex-col h-12 mr-32 mb-32 absolute right-20 top-64 z-0">
-                      <DropdownMenu listType='status' dropdownValue={dropdownValue} setDropdownValue={setDropdownValue} list={ticketStatusList} title={'Status'}/>
-                    </div>
+
                   </div>
                 </div>
                 <button className="w-36 h-12 text-lg bg-[#1D3557] text-white absolute bottom-20">Create Ticket</button>

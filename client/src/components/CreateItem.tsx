@@ -1,7 +1,7 @@
-import Form from '../Form.js'
+import Form from './Form.js'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
-import { notify } from './Projects.js'
+import { notify } from './ProjectComponents/Project.js'
 
 
 
@@ -38,7 +38,7 @@ export default function CreateProject(props:any) {
             }
           })
 
-
+        
         props.setListLength(props.listLength+1) //
         props.setFormData(blankData) //reset form input
         props.notify(true)

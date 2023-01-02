@@ -12,7 +12,7 @@ export default function ProjectItem(props:any) {
     axios.get("http://localhost:3002/project/list")
       .then(res => {
         const list = res.data
-        setData(list)
+        setData(list.reverse())
         props.setListLength(list.length)
       })
       .catch(err => console.log(err))
@@ -52,7 +52,7 @@ export default function ProjectItem(props:any) {
             </tr>
           </thead>
           <tbody className='text-left'>
-            {dataArray !== undefined? dataArray : null}
+            {dataArray !== undefined ? dataArray : null}
           </tbody>
         </table>
       </div>

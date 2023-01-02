@@ -1,33 +1,37 @@
 import {useState, useEffect} from 'react'
 import axios from 'axios'
-import CreateProject from '../ProjectComponents/CreateProject'
-import { notify} from '../ProjectComponents/Projects'
-import { ToastContainer, toast } from 'react-toastify';
+import CreateProject from '../CreateItem'
+import { notify } from '../ProjectComponents/Project'
+import { ToastContainer } from 'react-toastify';
+import {BiTrash} from 'react-icons/bi'
 
 
 export default function TicketItem(props:any) {
 
+  
   const [data, setData] = useState<{}[]>([{}])
   const [trigger, setTrigger] = useState(false)
-
-  
+  const [selected, setSelected] = useState(false)
 
   const [formData, setFormData] = useState({
     title: '',
     desc: '',
-    status: '',
+    status: 'active',
     prio: '',
     dev: 'none'
   })
+
+
+  let openCount = 0
+  let devCount = 0
   
   const fetchData = async () => {
     axios.get("http://localhost:3002/ticket/list")
     .then(res => {
       const list: {}[] = res.data
-      setData(list)
-      console.log(data)
-      props.setListLength(list.length)
-
+      setData(list.reverse())
+      props.setListLength(list.length) //getting the length of the array of objects to render total items
+      props.setTicketStatus({development: devCount, open: openCount})
     })
     .catch(err => console.log(err))
   }
@@ -37,21 +41,23 @@ export default function TicketItem(props:any) {
   },[props.listLength])
 
 
-  const descFill = ``
-  
-  const displayItems = 
-  data.map((entry:any, index:number) => {
-    //TODO: FIX DESC LEN LIMITING OR ELSE
+  const displayItems = data.map((entry:any, index:number) => {
+    if(entry.status === 'Open'){openCount=openCount+1}
+    if(entry.status === 'Development'){devCount = devCount+1}
+    
     return (
-      <tr className='cursor-pointer hover:bg-gray-200 ' key={index}>
-        <td className='pl-4 text-lg max-h-1'>{entry.title}</td>
-        <td className='text-lg px-2 max-h-1 max-w-3xl'>{entry.desc !== undefined && entry.desc.length > 40 ? `${entry.desc.substring(0,40)}...`: entry.desc}</td>
-        <td className='text-lg max-h-1'>{entry.status}</td>
-        <td className='text-lg max-h-1'>{entry.prio}</td>
-        <td className='text-lg max-h-1'>{entry.dev}</td>
-      </tr>
+        <tr className='cursor-pointer hover:bg-gray-200' key={index} onClick={props.clickItem} >
+          <td className='pl-4 text-lg max-h-1'>{entry.title}</td>
+          <td className='text-lg px-2 max-h-1 max-w-4xl'>{entry.desc !== undefined && entry.desc.length > 40 ? `${entry.desc.substring(0,40)}...`: entry.desc}</td>
+          <td className='text-lg max-h-1'>{entry.status}</td>
+          <td className='text-lg max-h-1'>{entry.prio}</td>
+          <td className='text-lg max-h-1'>{entry.dev}</td>
+        </tr>
     )
   })
+
+
+
 
   const handleClick = () => {
     setTrigger(trigger => !trigger) 
@@ -71,6 +77,10 @@ export default function TicketItem(props:any) {
       <CreateProject trigger={trigger} closeModal={handleClick} notify={notify} listLength={props.listLength} setListLength={props.setListLength} itemType={'ticket'} formData={formData} setFormData={setFormData}/>
       <div className='flex justify-between p-4'>
         <h2 className='text-xl text-[#1D3557]'>Tickets</h2>
+        <form>
+          <label>Filter</label>
+          <input className='border border-black' maxLength={20} type="text"/>
+        </form>
         <button onClick={handleClick} className='border rounded-md bg-[#1D3557] p-2 text-white text-base'>New Ticket</button>
       </div>
       <div className='overflow-y-scroll max-h-96 h-96'>
@@ -85,7 +95,7 @@ export default function TicketItem(props:any) {
               </tr>
             </thead>
             <tbody className='text-left'>
-              {displayItems !== undefined ? displayItems : null}
+              {displayItems !== undefined ? displayItems: null}
             </tbody>
         </table>
       </div>
