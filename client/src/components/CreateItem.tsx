@@ -39,7 +39,7 @@ export default function CreateProject(props:any) {
           })
 
         
-        props.setListLength(props.listLength+1) //
+        props.setListLength(prev => props.setListLength(prev+1)) //
         props.setFormData(blankData) //reset form input
         props.notify(true)
         props.closeModal()
@@ -61,7 +61,7 @@ export default function CreateProject(props:any) {
         })
 
 
-        props.setListLength(props.listLength+1) //
+        props.setListLength(prev => props.setListLength(prev+1)) //
         props.setFormData(blankData) //reset form input
         props.notify(true)
         props.closeModal()

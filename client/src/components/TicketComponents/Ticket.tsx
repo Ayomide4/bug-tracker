@@ -8,7 +8,7 @@ import TicketItem from './TicketItem'
 
 export default function Ticket(props:any) {
 
-  const [listLength, setListLength] = useState(1)
+  const [listLength, setListLength] = useState<number>(0)
   const [ticketStatus, setTicketStatus] = useState({
     total: 0,
     open: 0,

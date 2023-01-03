@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { useState, useEffect } from 'react'
+import { AiFillPropertySafety } from 'react-icons/ai'
 
 
 
@@ -7,13 +8,19 @@ export default function ProjectItem(props:any) {
 
   const [data, setData] = useState([{}])
   
+  // TODO: ONCLICK OF ELE SET TITLE,DESC ETC AND RENDER SELECTED PROJECT COMP
+  const clickItem =  (e:any, entry: any) => {
+    props.isSelected(prev => !prev)
+    props.setSelectedInfo({...props.selectedInfo, title: entry.title, desc: entry.desc, manager: entry.manager, team: entry.team, status: entry.status})
+  }
+
   //fetches list of projects and saves it into data state
   const fetchData = async () => {
     axios.get("http://localhost:3002/project/list")
       .then(res => {
         const list = res.data
         setData(list.reverse())
-        props.setListLength(list.length)
+        props.setListLength((prev:number) => list.length)
       })
       .catch(err => console.log(err))
   }
@@ -27,12 +34,12 @@ export default function ProjectItem(props:any) {
   //ren
   const dataArray = data.map((entry:any, index:number) => {
     return(
-      <tr className='cursor-pointer hover:bg-gray-200' key={index}>
-        <td className='pl-4 text-lg'>{entry.title}</td>
-        <td className='text-lg px-2 max-h-6 max-w-4xl'>{entry.desc !== undefined && entry.desc.length > 45 ? `${entry.desc.substring(0,50)}...`: entry.desc}</td>
-        <td className='text-lg'>{entry.manager}</td>
-        <td className='text-lg'>{entry.team}</td>
-        <td className='text-lg'>{entry.status}</td>
+      <tr className='cursor-pointer hover:bg-gray-200'onClick={(e) => clickItem(e, entry)} key={index}>
+        <td id='title' className='pl-4 text-lg'>{entry.title}</td>
+        <td id='desc' className='text-lg px-2 max-h-6 max-w-4xl'>{entry.desc !== undefined && entry.desc.length > 45 ? `${entry.desc.substring(0,50)}...`: entry.desc}</td>
+        <td id='manager' className='text-lg'>{entry.manager}</td>
+        <td id='team' className='text-lg'>{entry.team}</td>
+        <td id='status' className='text-lg'>{entry.status}</td>
       </tr>
     )
   })

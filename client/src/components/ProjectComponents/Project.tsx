@@ -1,5 +1,4 @@
-import { useState, useEffect } from 'react'
-import axios from 'axios';
+import { useState } from 'react'
 import ProjectItem from './ProjectItem'
 import CreateProject from '../CreateItem'
 import { ToastContainer, toast } from 'react-toastify';
@@ -31,10 +30,12 @@ export const notify = (success:boolean) => {
   }
 }
 
-export default function Project() {
+
+
+export default function Project(props:any) {
 
   const [trigger, setTrigger] = useState(false)
-  const [listLength, setListLength] = useState(1)
+  const [listLength, setListLength] = useState<number>(0)
   const [formData, setFormData] = useState({
     title: '',
     desc: '', 
@@ -42,6 +43,8 @@ export default function Project() {
     team: '',
     status: 'active',
   })
+
+  
 
   const handleClick = () => {
     setTrigger(trigger => !trigger) 
@@ -60,12 +63,12 @@ export default function Project() {
   return (
     <div className='border mb-20 relative border-[#2A6470] rounded-lg w-11/12 mx-12 shadow-outline h-full bg-white mt-6'>
       <CreateProject trigger={trigger} closeModal={handleClick} notify={notify} listLength={listLength} setListLength={setListLength} itemType={'project'} formData={formData} setFormData={setFormData}/>
-      <div className=''>
+      <div>
         <div className='flex justify-between p-4 '>
           <h2 className='text-xl text-[#1D3557]'>Projects</h2>
           <button onClick={handleClick} className='border rounded-md bg-[#1D3557] p-2 text-white text-base'>New Project</button>
         </div>
-          <ProjectItem listLength={listLength} setListLength={setListLength}/>
+          <ProjectItem listLength={listLength} setListLength={setListLength} setSelectedInfo={props.setSelectedInfo} selectedInfo={props.selectedInfo} selected={props.selected} isSelected={props.isSelected}/>
       </div>
       <ToastContainer/>
     </div>

@@ -30,7 +30,7 @@ export default function TicketItem(props:any) {
     .then(res => {
       const list: {}[] = res.data
       setData(list.reverse())
-      props.setListLength(list.length) //getting the length of the array of objects to render total items
+      props.setListLength((prev:number) => list.length) //getting the length of the array of objects to render total items
       props.setTicketStatus({development: devCount, open: openCount})
     })
     .catch(err => console.log(err))
@@ -91,7 +91,7 @@ export default function TicketItem(props:any) {
                 <th className='py-3 bg-[#F3F4F6] sticky max-h-6 top-0 px-2'>Description</th>
                 <th className='py-3 bg-[#F3F4F6] sticky max-h-6 top-0 w-32'>Status</th>
                 <th className='py-3 bg-[#F3F4F6] sticky max-h-6 top-0 w-32'>Priority</th>
-                <th className='py-3 bg-[#F3F4F6] sticky max-h-6 top-0 w-52'>Ticket Developer</th>
+                <th className='py-3 bg-[#F3F4F6] sticky max-h-6 top-0 w-52'>Developer</th>
               </tr>
             </thead>
             <tbody className='text-left'>
