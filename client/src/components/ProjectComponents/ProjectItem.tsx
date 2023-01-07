@@ -10,7 +10,7 @@ export default function ProjectItem(props:any) {
   
 
   const clickItem =  (e:any, entry: any) => {
-    props.isSelected((prev:boolean) => !prev)
+    props.setIsSelected((prev:boolean) => !prev)
     props.setSelectedInfo({...props.selectedInfo, title: entry.title, desc: entry.desc, manager: entry.manager, team: entry.team, status: entry.status, date: entry.date, id: entry._id})
   }
 

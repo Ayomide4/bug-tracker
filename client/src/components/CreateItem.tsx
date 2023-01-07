@@ -41,7 +41,7 @@ export default function CreateItem(props:any) {
             }
           })
 
-        console.log(formData)
+
         props.setListLength((prev:number) => props.setListLength(prev+1)) //
         props.setFormData(blankData) //reset form input
         props.notify(true)

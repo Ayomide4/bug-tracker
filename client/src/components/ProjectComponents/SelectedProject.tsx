@@ -1,11 +1,12 @@
 import axios from 'axios';
-import React, { SetStateAction } from 'react'
+import React, { SetStateAction, useEffect, useState } from 'react'
 import {FaArrowLeft} from 'react-icons/fa'
+import ConfirmDelete from './ConfirmDelete';
 //maybe should make this a shared component with ticket
 
 interface Props{ 
   selected: boolean;
-  isSelected: React.Dispatch<SetStateAction<boolean>>
+  setIsSelected: React.Dispatch<SetStateAction<boolean>>
   selectedInfo: {
     title: string;
     desc: string;
@@ -27,31 +28,38 @@ interface Props{
 }
 
 
-const deleteProject = (id:string) => {
+
+export default function SelectedProject({selected, setIsSelected, selectedInfo, setSelectedInfo} : Props) {
   
-}
 
+  const [trigger, setTrigger] = useState<boolean>(false)
+  const [confirmDelete, setConfirmDelete] = useState<boolean>(false)
 
-
-export default function SelectedProject({selected, isSelected, selectedInfo, setSelectedInfo} : Props) {
-  
   const handleClick = () => {
     //sends a delete request to the server 
-    //TODO: 
-    // - refresh project page on delete
-    // - popup modal: are you sure you want to delete this?
-    axios.delete(`http://localhost:3002/project/${selectedInfo.id}`)
-      .then(() => console.log('delete success'))
-      .catch(error => {
-        console.error('There was an error!' ,error)
-      })
+    setTrigger((prev) => !prev)  //sets triiger to open so we can see the confirm delete page
+
+    //if page is open delete project
+    if(trigger){
+      axios.delete(`http://localhost:3002/project/${selectedInfo.id}`)
+        .then(() => setIsSelected((prevSelected) => !prevSelected))
+        .catch(error => {
+          console.error('There was an error!', error)
+        })
+    }
+    
   }
 
-  console.log(`id of ${selectedInfo.title} : ${selectedInfo.id}`)
+  useEffect(() => {
+    //deletes project when confirm delete state changes
+      handleClick()
+  }, [confirmDelete])
+
   return (
     <div className='w-full h-full'>
+      {trigger && <ConfirmDelete trigger={trigger} setTrigger={setTrigger} setConfirmDelete={setConfirmDelete} title={selectedInfo.title}/>}
       <div className='flex items-center w-full mt-6 justify-between'>
-        <div className='flex items-center cursor-pointer ml-4 w-44' onClick={() => {isSelected(prev => !prev)}}>
+        <div className='flex items-center cursor-pointer ml-4 w-44' onClick={() => {setIsSelected(prev => !prev)}}>
           <FaArrowLeft color='#1D3557' size={20} />
           <h1 className='text-xl font-bold text-[#1D3557] ml-1'>Project Details</h1>  
         </div>
