@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import ProjectItem from './ProjectItem'
-import CreateProject from '../CreateItem'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import CreateItem from '../CreateItem';
 export const notify = (success:boolean) => {
   if (success){
     toast.success('Created new project 🚀', {
@@ -60,9 +60,10 @@ export default function Project(props:any) {
     }
 
 
+
   return (
     <div className='border mb-20 relative border-[#2A6470] rounded-lg w-11/12 mx-12 shadow-outline h-full bg-white mt-6'>
-      <CreateProject trigger={trigger} closeModal={handleClick} notify={notify} listLength={listLength} setListLength={setListLength} itemType={'project'} formData={formData} setFormData={setFormData}/>
+      <CreateItem trigger={trigger} closeModal={handleClick} notify={notify} listLength={listLength} setListLength={setListLength} itemType={'project'} formData={formData} setFormData={setFormData}/>
       <div>
         <div className='flex justify-between p-4 '>
           <h2 className='text-xl text-[#1D3557]'>Projects</h2>

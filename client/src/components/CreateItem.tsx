@@ -1,14 +1,17 @@
 import Form from './Form.js'
-import { useEffect, useState } from 'react'
 import axios from 'axios'
 import { notify } from './ProjectComponents/Project.js'
 
 
 
 
-export default function CreateProject(props:any) {
+export default function CreateItem(props:any) {
 
-  const formData = props.formData
+  const formData = {
+    ...props.formData,
+    date: new Date().toLocaleDateString('en-us', {year: 'numeric', month: 'short', day: '2-digit'})
+  }
+
 
   const handleSubmit = (e:React.FormEvent) => {
     //sends project info to database
@@ -38,8 +41,8 @@ export default function CreateProject(props:any) {
             }
           })
 
-        
-        props.setListLength(prev => props.setListLength(prev+1)) //
+        console.log(formData)
+        props.setListLength((prev:number) => props.setListLength(prev+1)) //
         props.setFormData(blankData) //reset form input
         props.notify(true)
         props.closeModal()
@@ -61,7 +64,7 @@ export default function CreateProject(props:any) {
         })
 
 
-        props.setListLength(prev => props.setListLength(prev+1)) //
+        props.setListLength((prev:number) => props.setListLength(prev+1)) //
         props.setFormData(blankData) //reset form input
         props.notify(true)
         props.closeModal()

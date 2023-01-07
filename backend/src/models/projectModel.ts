@@ -9,6 +9,7 @@ const ProjectSchema = new Schema({
   manager: String,
   team: String,
   status: String,
+  date: String
 })
 
 const Project = mongoose.model("Project", ProjectSchema)

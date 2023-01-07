@@ -1,9 +1,9 @@
 import {useState, useEffect} from 'react'
 import axios from 'axios'
-import CreateProject from '../CreateItem'
 import { notify } from '../ProjectComponents/Project'
 import { ToastContainer } from 'react-toastify';
 import {BiTrash} from 'react-icons/bi'
+import CreateItem from '../CreateItem';
 
 
 export default function TicketItem(props:any) {
@@ -74,7 +74,7 @@ export default function TicketItem(props:any) {
   
   return (
     <div className={`border relative  border-[#2A6470] rounded-lg shadow-outline max-h-screen w-full bg-white`}>
-      <CreateProject trigger={trigger} closeModal={handleClick} notify={notify} listLength={props.listLength} setListLength={props.setListLength} itemType={'ticket'} formData={formData} setFormData={setFormData}/>
+      <CreateItem trigger={trigger} closeModal={handleClick} notify={notify} listLength={props.listLength} setListLength={props.setListLength} itemType={'ticket'} formData={formData} setFormData={setFormData}/>
       <div className='flex justify-between p-4'>
         <h2 className='text-xl text-[#1D3557]'>Tickets</h2>
         <form>

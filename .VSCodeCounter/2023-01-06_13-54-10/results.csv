@@ -1,0 +1,45 @@
+"filename", "language", "JSON", "JavaScript", "TypeScript React", "JSON with Comments", "Markdown", "TypeScript", "CSS", "HTML", "comment", "blank", "total"
+"/Users/ayoomotosho/web_development/projects/bug-tracker/README.md", "Markdown", 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1
+"/Users/ayoomotosho/web_development/projects/bug-tracker/backend/package-lock.json", "JSON", 4673, 0, 0, 0, 0, 0, 0, 0, 0, 1, 4674
+"/Users/ayoomotosho/web_development/projects/bug-tracker/backend/package.json", "JSON", 27, 0, 0, 0, 0, 0, 0, 0, 0, 1, 28
+"/Users/ayoomotosho/web_development/projects/bug-tracker/backend/src/models/projectModel.ts", "TypeScript", 0, 0, 0, 0, 0, 12, 0, 0, 1, 3, 16
+"/Users/ayoomotosho/web_development/projects/bug-tracker/backend/src/models/ticketModel.ts", "TypeScript", 0, 0, 0, 0, 0, 11, 0, 0, 0, 3, 14
+"/Users/ayoomotosho/web_development/projects/bug-tracker/backend/src/routes/projectRoute.ts", "TypeScript", 0, 0, 0, 0, 0, 25, 0, 0, 0, 5, 30
+"/Users/ayoomotosho/web_development/projects/bug-tracker/backend/src/routes/ticketRoute.ts", "TypeScript", 0, 0, 0, 0, 0, 23, 0, 0, 0, 6, 29
+"/Users/ayoomotosho/web_development/projects/bug-tracker/backend/src/server.ts", "TypeScript", 0, 0, 0, 0, 0, 18, 0, 0, 0, 7, 25
+"/Users/ayoomotosho/web_development/projects/bug-tracker/client/index.html", "HTML", 0, 0, 0, 0, 0, 0, 0, 13, 0, 2, 15
+"/Users/ayoomotosho/web_development/projects/bug-tracker/client/package-lock.json", "JSON", 10710, 0, 0, 0, 0, 0, 0, 0, 0, 1, 10711
+"/Users/ayoomotosho/web_development/projects/bug-tracker/client/package.json", "JSON", 33, 0, 0, 0, 0, 0, 0, 0, 0, 1, 34
+"/Users/ayoomotosho/web_development/projects/bug-tracker/client/src/App.tsx", "TypeScript React", 0, 0, 23, 0, 0, 0, 0, 0, 0, 7, 30
+"/Users/ayoomotosho/web_development/projects/bug-tracker/client/src/components/CreateItem.tsx", "TypeScript React", 0, 0, 62, 0, 0, 0, 0, 0, 3, 13, 78
+"/Users/ayoomotosho/web_development/projects/bug-tracker/client/src/components/DashboardComponents/DashProjectsInfo.tsx", "TypeScript React", 0, 0, 60, 0, 0, 0, 0, 0, 1, 4, 65
+"/Users/ayoomotosho/web_development/projects/bug-tracker/client/src/components/DashboardComponents/Dashboard.tsx", "TypeScript React", 0, 0, 17, 0, 0, 0, 0, 0, 0, 6, 23
+"/Users/ayoomotosho/web_development/projects/bug-tracker/client/src/components/DashboardComponents/DashboardStatus.tsx", "TypeScript React", 0, 0, 26, 0, 0, 0, 0, 0, 0, 3, 29
+"/Users/ayoomotosho/web_development/projects/bug-tracker/client/src/components/DropdownMenu.tsx", "TypeScript React", 0, 0, 47, 0, 0, 0, 0, 0, 0, 11, 58
+"/Users/ayoomotosho/web_development/projects/bug-tracker/client/src/components/Form.tsx", "TypeScript React", 0, 0, 67, 0, 0, 0, 0, 0, 3, 12, 82
+"/Users/ayoomotosho/web_development/projects/bug-tracker/client/src/components/Navbar.tsx", "TypeScript React", 0, 0, 65, 0, 0, 0, 0, 0, 0, 13, 78
+"/Users/ayoomotosho/web_development/projects/bug-tracker/client/src/components/PieChart.tsx", "TypeScript React", 0, 0, 27, 0, 0, 0, 0, 0, 13, 9, 49
+"/Users/ayoomotosho/web_development/projects/bug-tracker/client/src/components/ProjectComponents/Project.tsx", "TypeScript React", 0, 0, 65, 0, 0, 0, 0, 0, 0, 12, 77
+"/Users/ayoomotosho/web_development/projects/bug-tracker/client/src/components/ProjectComponents/ProjectItem.tsx", "TypeScript React", 0, 0, 51, 0, 0, 0, 0, 0, 4, 13, 68
+"/Users/ayoomotosho/web_development/projects/bug-tracker/client/src/components/ProjectComponents/Projects.tsx", "TypeScript React", 0, 0, 23, 0, 0, 0, 0, 0, 0, 5, 28
+"/Users/ayoomotosho/web_development/projects/bug-tracker/client/src/components/ProjectComponents/SelectedProject.tsx", "TypeScript React", 0, 0, 94, 0, 0, 0, 0, 0, 2, 7, 103
+"/Users/ayoomotosho/web_development/projects/bug-tracker/client/src/components/TicketComponents/ProgressProvider.tsx", "TypeScript React", 0, 0, 9, 0, 0, 0, 0, 0, 0, 3, 12
+"/Users/ayoomotosho/web_development/projects/bug-tracker/client/src/components/TicketComponents/SelectedTicket.tsx", "TypeScript React", 0, 0, 6, 0, 0, 0, 0, 0, 0, 2, 8
+"/Users/ayoomotosho/web_development/projects/bug-tracker/client/src/components/TicketComponents/Ticket.tsx", "TypeScript React", 0, 0, 71, 0, 0, 0, 0, 0, 0, 8, 79
+"/Users/ayoomotosho/web_development/projects/bug-tracker/client/src/components/TicketComponents/TicketItem.tsx", "TypeScript React", 0, 0, 86, 0, 0, 0, 0, 0, 0, 20, 106
+"/Users/ayoomotosho/web_development/projects/bug-tracker/client/src/components/TicketComponents/Tickets.tsx", "TypeScript React", 0, 0, 15, 0, 0, 0, 0, 0, 0, 4, 19
+"/Users/ayoomotosho/web_development/projects/bug-tracker/client/src/index.css", "CSS", 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 3
+"/Users/ayoomotosho/web_development/projects/bug-tracker/client/src/main.tsx", "TypeScript React", 0, 0, 9, 0, 0, 0, 0, 0, 0, 2, 11
+"/Users/ayoomotosho/web_development/projects/bug-tracker/client/src/pages/AdminPage.tsx", "TypeScript React", 0, 0, 10, 0, 0, 0, 0, 0, 0, 2, 12
+"/Users/ayoomotosho/web_development/projects/bug-tracker/client/src/pages/DashboardPage.tsx", "TypeScript React", 0, 0, 11, 0, 0, 0, 0, 0, 0, 3, 14
+"/Users/ayoomotosho/web_development/projects/bug-tracker/client/src/pages/ErrorPage.tsx", "TypeScript React", 0, 0, 6, 0, 0, 0, 0, 0, 0, 2, 8
+"/Users/ayoomotosho/web_development/projects/bug-tracker/client/src/pages/ProjectPage.tsx", "TypeScript React", 0, 0, 13, 0, 0, 0, 0, 0, 0, 5, 18
+"/Users/ayoomotosho/web_development/projects/bug-tracker/client/src/pages/TicketPage.tsx", "TypeScript React", 0, 0, 11, 0, 0, 0, 0, 0, 0, 2, 13
+"/Users/ayoomotosho/web_development/projects/bug-tracker/client/src/tempData.tsx", "TypeScript React", 0, 0, 39, 0, 0, 0, 0, 0, 1, 9, 49
+"/Users/ayoomotosho/web_development/projects/bug-tracker/client/src/vite-env.d.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 2
+"/Users/ayoomotosho/web_development/projects/bug-tracker/client/tailwind.config.cjs", "JavaScript", 0, 14, 0, 0, 0, 0, 0, 0, 1, 2, 17
+"/Users/ayoomotosho/web_development/projects/bug-tracker/client/vite.config.ts", "TypeScript", 0, 0, 0, 0, 0, 5, 0, 0, 1, 2, 8
+"/Users/ayoomotosho/web_development/projects/bug-tracker/postcss.config.cjs", "JavaScript", 0, 6, 0, 0, 0, 0, 0, 0, 0, 1, 7
+"/Users/ayoomotosho/web_development/projects/bug-tracker/tsconfig.json", "JSON with Comments", 0, 0, 0, 20, 0, 0, 0, 0, 7, 0, 27
+"/Users/ayoomotosho/web_development/projects/bug-tracker/tsconfig.node.json", "JSON", 9, 0, 0, 0, 0, 0, 0, 0, 0, 1, 10
+"Total", "-", 15452, 20, 913, 20, 1, 94, 3, 13, 38, 214, 16768

@@ -7,7 +7,6 @@ export default function Tickets() {
 
   function clickItem() {
     setSelected(selected => !selected)
-    console.log(selected)
   }
 
   return (

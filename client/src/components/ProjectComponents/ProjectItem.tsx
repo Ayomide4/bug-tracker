@@ -8,10 +8,10 @@ export default function ProjectItem(props:any) {
 
   const [data, setData] = useState([{}])
   
-  // TODO: ONCLICK OF ELE SET TITLE,DESC ETC AND RENDER SELECTED PROJECT COMP
+
   const clickItem =  (e:any, entry: any) => {
-    props.isSelected(prev => !prev)
-    props.setSelectedInfo({...props.selectedInfo, title: entry.title, desc: entry.desc, manager: entry.manager, team: entry.team, status: entry.status})
+    props.isSelected((prev:boolean) => !prev)
+    props.setSelectedInfo({...props.selectedInfo, title: entry.title, desc: entry.desc, manager: entry.manager, team: entry.team, status: entry.status, date: entry.date, id: entry._id})
   }
 
   //fetches list of projects and saves it into data state
@@ -43,6 +43,7 @@ export default function ProjectItem(props:any) {
       </tr>
     )
   })
+
 
   
 
