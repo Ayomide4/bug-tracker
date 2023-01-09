@@ -1,5 +1,9 @@
 import React from 'react'
 
+
+
+
+
 interface Props{
   trigger: boolean;
   setTrigger: React.Dispatch<React.SetStateAction<boolean>>;
@@ -12,6 +16,8 @@ export default function ConfirmDelete({trigger, setTrigger, setConfirmDelete, ti
   const handleClick = () => {
     setConfirmDelete((prev) => !prev)
   }
+
+
 
   return (
     <div className='w-full h-full bg-opacity-20 top-0 left-0 fixed bg-black z-50 flex justify-center items-center'>

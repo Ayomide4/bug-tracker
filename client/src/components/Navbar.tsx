@@ -2,7 +2,7 @@ import {AiOutlineBug, AiOutlineHome, AiOutlineAppstore} from 'react-icons/ai'
 import {BiTask} from 'react-icons/bi'
 import {RiAdminLine} from 'react-icons/ri'
 import {json, Link, useMatch, useResolvedPath} from 'react-router-dom'
-import { useEffect, useState } from 'react'
+
 
 
 
@@ -58,7 +58,7 @@ export const Navbar = () => {
     <section className='flex flex-col w-1/6 bg-[#457b9d] max-h-screen'>
       <div className='mt-4 flex flex-col gap-5 relative pt-4 w-full'>
         <Link to='/'>
-          <span className='flex items-center justify-center gap-2 cursor-pointer mb-10'>
+          <span className='flex items-center justify-center gap-2 cursor-pointer mb-10 '>
               <AiOutlineBug  size='24' color='#64C2CA'/>
               <h2 className='w-fit flex xl:text-xl font-bold text-white'>Bug Tracker</h2>
           </span>

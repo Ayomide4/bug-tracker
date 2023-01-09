@@ -7,6 +7,7 @@ import TicketPage from './pages/TicketPage'
 import AdminPage from './pages/AdminPage'
 import ErrorPage from './pages/ErrorPage'
 import ProjectPage from './pages/ProjectPage'
+import LoginPage from './pages/LoginPage'
 
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
   return (
     <Router>
       <Routes>
+        <Route path='/login' element={<LoginPage/>}/>
         <Route path='/' element={<Home/>}/>
         <Route path='/projects' element={<ProjectPage/>}/>
         <Route path='/tickets' element={<TicketPage/>}/>

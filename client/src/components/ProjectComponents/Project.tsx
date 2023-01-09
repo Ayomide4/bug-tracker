@@ -32,6 +32,7 @@ export const notify = (success:boolean) => {
 
 
 
+
 export default function Project(props:any) {
 
   const [trigger, setTrigger] = useState(false)

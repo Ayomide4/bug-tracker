@@ -2,7 +2,35 @@ import axios from 'axios';
 import React, { SetStateAction, useEffect, useState } from 'react'
 import {FaArrowLeft} from 'react-icons/fa'
 import ConfirmDelete from './ConfirmDelete';
+import { toast, ToastContainer } from 'react-toastify';
 //maybe should make this a shared component with ticket
+
+const notifyDelete = (success:boolean) => {
+  if(success){
+    toast.success('Successfully Deleted', {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      });
+  }
+  else if (!success) {
+    toast.error('Error deleting Project', {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      });
+  }
+}
 
 interface Props{ 
   selected: boolean;
@@ -27,8 +55,6 @@ interface Props{
   }>>
 }
 
-
-
 export default function SelectedProject({selected, setIsSelected, selectedInfo, setSelectedInfo} : Props) {
   
 
@@ -42,10 +68,14 @@ export default function SelectedProject({selected, setIsSelected, selectedInfo, 
     //if page is open delete project
     if(trigger){
       axios.delete(`http://localhost:3002/project/${selectedInfo.id}`)
-        .then(() => setIsSelected((prevSelected) => !prevSelected))
+        .then(() => {
+          setIsSelected((prevSelected) => !prevSelected)
+        })
         .catch(error => {
+          notifyDelete(false)
           console.error('There was an error!', error)
         })
+
     }
     
   }
@@ -57,6 +87,7 @@ export default function SelectedProject({selected, setIsSelected, selectedInfo, 
 
   return (
     <div className='w-full h-full'>
+      <ToastContainer/>
       {trigger && <ConfirmDelete trigger={trigger} setTrigger={setTrigger} setConfirmDelete={setConfirmDelete} title={selectedInfo.title}/>}
       <div className='flex items-center w-full mt-6 justify-between'>
         <div className='flex items-center cursor-pointer ml-4 w-44' onClick={() => {setIsSelected(prev => !prev)}}>
