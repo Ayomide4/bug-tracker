@@ -1,8 +1,8 @@
 import express, { Request, Response} from 'express'
 import mongoose from 'mongoose'
 import cors from 'cors'
-import Project from './models/projectModel'
 import {config} from 'dotenv'
+
 
 config()
 const app = express()
@@ -14,6 +14,7 @@ mongoose.set('strictQuery', true);
 
 app.use("/", require("./routes/projectRoute"))
 app.use("/", require("./routes/ticketRoute"))
+app.use("/", require("./routes/userRoute"))
 
 
 mongoose
