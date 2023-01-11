@@ -4,7 +4,7 @@ import {ToastContainer, toast } from 'react-toastify';
 
 interface Props {
   setTrigger: React.Dispatch<React.SetStateAction<boolean>>
-  notify: (success: boolean) => void 
+  notify: (type: string) => void 
 }
 
 interface signUpType{
@@ -45,8 +45,9 @@ export default function SignUp({setTrigger, notify} : Props) {
 
     //TODO: form validation
       if(signUpInfo.firstName === "" || signUpInfo.lastName === "" || signUpInfo.email === "" || signUpInfo.password === ""){
-        notify(false)
-      } else {
+        notify('input')
+      } 
+      else {
           axios.post('http://localhost:3002/register', signUpInfo)
           .catch(function (error){
             if(error.response){

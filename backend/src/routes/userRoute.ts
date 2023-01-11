@@ -3,14 +3,14 @@ const router = express.Router()
 import User from '../models/userModel'
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
-
+import { config } from 'dotenv'
 
 interface userType{
   email: string
   password: string
 }
 
-const JWT_SECRET= "JDLFKSJDLFKJ2324SADFljkdasfsldkfna23qrwer"
+
 
 router.route("/register").post(async(req,res) => {
   const firstName = req.body.firstName
@@ -38,23 +38,22 @@ router.route("/register").post(async(req,res) => {
 
 router.route("/login").post(async(req,res) => {
   const {email, password} = req.body
+  //console.log('REQUEST BODY login route', req.body)
   const user = await User.findOne({email})
   if(!user){
-    return res.status(400).send({error: 'user not found'})
+    return res.status(404).json({error: 'user not found'})
   }
-  
   if(user){
     if(await bcrypt.compare(password, user.password!)){
-      const token = jwt.sign({}, JWT_SECRET)
-  
-      if(res.status(201)){
-        return res.json({status: "ok", data: token})
-      } else {
-        return res.json({error: "error"})
-      }
+      const token = jwt.sign({id: user.id, email: user.email}, process.env.JWT_SECRET!) 
+      return res.json({message: 'login success', data: token})    
     }
   }
-  res.json({status: "error", error: "invalid password"})
+  return res.status(404).json({error: 'Incorrect password'})
 })
+
+
+
+
 
 module.exports = router

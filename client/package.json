@@ -14,6 +14,7 @@
     "formik": "^2.2.9",
     "react": "^18.2.0",
     "react-animated-progress-bar": "^1.1.2",
+    "react-auth-kit": "^2.7.1",
     "react-dom": "^18.2.0",
     "react-icons": "^4.7.1",
     "react-lazy-load-image-component": "^1.5.6",

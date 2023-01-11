@@ -4,9 +4,33 @@ import Login from '../components/LoginComponents/Login'
 import SignUp from '../components/LoginComponents/SignUp'
 import {toast, ToastContainer} from 'react-toastify'
 
-const notify = (success:boolean) => {
-  if (!success) {
+const notify = (type:string) => {
+  if (type === 'input') {
     toast.error('Input cannot be empty', {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      });
+  }
+  if(type === 'password'){
+    toast.error('Incorrect password', {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      });
+  }
+  if(type === 'user not found'){
+    toast.error('User not found', {
       position: "top-right",
       autoClose: 3000,
       hideProgressBar: false,

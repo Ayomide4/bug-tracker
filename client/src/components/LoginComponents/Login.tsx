@@ -2,20 +2,23 @@ import { FormEvent, useState } from "react"
 import {toast, ToastContainer} from 'react-toastify'
 import {useNavigate} from 'react-router-dom'
 import axios from "axios"
+import {useSignIn} from 'react-auth-kit'
 
 
 interface Props {
   setTrigger: React.Dispatch<React.SetStateAction<boolean>>
-  notify:  (success: boolean) => void 
+  notify:  (type: string) => void 
 }
 
 interface loginType{
   email: string;
   password: string;
-  checked: boolean
+  checked: boolean;
+  token: string;
 }
 
 export default function ({setTrigger, notify} : Props) {
+  const signIn = useSignIn()
   const navigate = useNavigate()
   const handleClick = () => {
     setTrigger((prev) => !prev)
@@ -24,7 +27,8 @@ export default function ({setTrigger, notify} : Props) {
   const [loginInfo, setLoginInfo] = useState<loginType>({
     email: '',
     password: '',
-    checked: false
+    checked: false,
+    token: ''
   })
 
   const newData:any = {...loginInfo}
@@ -32,24 +36,47 @@ export default function ({setTrigger, notify} : Props) {
   const handleChange = (e:any) => {
     newData[e.target.id] = e.target.value
     setLoginInfo(newData)
-    console.log(loginInfo)
+
   }
 
   const handleChecked = () => {
     let isChecked = loginInfo.checked
     setLoginInfo({...loginInfo, checked: !isChecked})
-    console.log(loginInfo)
+
   }
 
-  const handleSubmit = (e:FormEvent) => {
+  const handleSubmit = async (e:FormEvent) => {
     e.preventDefault()
 
     if(loginInfo.email === "" || loginInfo.password === ""){
+      notify('input')
+    //   navigate('/dashboard')
+    } else {
       axios.post('http://localhost:3002/login', loginInfo)
-      notify(false)
-    } else{
-      console.log(loginInfo)
-      navigate('/dashboard')
+        .then(function (response){
+          console.log('response data ',response.data)
+          signIn({
+            token: response.data.data,
+            expiresIn: 3600,
+            tokenType: "Bearer",
+            authState: {
+              email: loginInfo.email, 
+            }
+          })
+          navigate('/')
+          //setLoginInfo({...loginInfo, token: response.data.data})
+        })
+        .catch(function (error){
+          if(error.response.data.error === 'Incorrect password'){
+            notify('password')
+          }
+          if(error.response.data.error === 'user not found'){
+            notify('user not found')
+          }
+          console.log(error.response.data)
+        })
+
+        
     }
   }
 
