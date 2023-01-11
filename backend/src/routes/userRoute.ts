@@ -2,6 +2,15 @@ import express from 'express'
 const router = express.Router()
 import User from '../models/userModel'
 import bcrypt from 'bcryptjs'
+import jwt from 'jsonwebtoken'
+
+
+interface userType{
+  email: string
+  password: string
+}
+
+const JWT_SECRET= "JDLFKSJDLFKJ2324SADFljkdasfsldkfna23qrwer"
 
 router.route("/register").post(async(req,res) => {
   const firstName = req.body.firstName
@@ -23,8 +32,29 @@ router.route("/register").post(async(req,res) => {
     email,
     password: encryptedPassword
   })
-  res.status(200).send({success: 'user created'})
+  res.status(201).send({success: 'user created'})
   newUser.save()
+})
+
+router.route("/login").post(async(req,res) => {
+  const {email, password} = req.body
+  const user = await User.findOne({email})
+  if(!user){
+    return res.status(400).send({error: 'user not found'})
+  }
+  
+  if(user){
+    if(await bcrypt.compare(password, user.password!)){
+      const token = jwt.sign({}, JWT_SECRET)
+  
+      if(res.status(201)){
+        return res.json({status: "ok", data: token})
+      } else {
+        return res.json({error: "error"})
+      }
+    }
+  }
+  res.json({status: "error", error: "invalid password"})
 })
 
 module.exports = router
