@@ -24,7 +24,6 @@ export default function CreateItem(props:any) {
       desc: '', 
       team: '',
     }
-    
 
     //form validation
     if (props.itemType === 'project'){

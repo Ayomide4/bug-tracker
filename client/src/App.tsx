@@ -8,6 +8,7 @@ import AdminPage from './pages/AdminPage'
 import ErrorPage from './pages/ErrorPage'
 import ProjectPage from './pages/ProjectPage'
 import LoginPage from './pages/LoginPage'
+import DashboardPage from './pages/DashboardPage'
 
 
 function App() {
@@ -16,7 +17,8 @@ function App() {
     <Router>
       <Routes>
         <Route path='/login' element={<LoginPage/>}/>
-        <Route path='/' element={<Home/>}/>
+        <Route path='/dashboard' element={<DashboardPage/>}/>
+        <Route path='/' element={<DashboardPage/>}/>
         <Route path='/projects' element={<ProjectPage/>}/>
         <Route path='/tickets' element={<TicketPage/>}/>
         <Route path='/admin' element={<AdminPage/>}/>
