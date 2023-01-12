@@ -1,5 +1,5 @@
 import { FormEvent, useState } from "react"
-import {toast, ToastContainer} from 'react-toastify'
+import { ToastContainer} from 'react-toastify'
 import {useNavigate} from 'react-router-dom'
 import axios from "axios"
 import {useSignIn} from 'react-auth-kit'
@@ -64,7 +64,8 @@ export default function ({setTrigger, notify} : Props) {
             }
           })
           navigate('/')
-          //setLoginInfo({...loginInfo, token: response.data.data})
+          //setLoginInfo({...loginInfo,  token: response.data.data})
+          console.log(loginInfo)
         })
         .catch(function (error){
           if(error.response.data.error === 'Incorrect password'){

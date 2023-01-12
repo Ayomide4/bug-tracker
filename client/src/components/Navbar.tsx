@@ -2,6 +2,7 @@ import {AiOutlineBug, AiOutlineHome, AiOutlineAppstore} from 'react-icons/ai'
 import {BiTask} from 'react-icons/bi'
 import {RiAdminLine} from 'react-icons/ri'
 import {json, Link, useMatch, useResolvedPath} from 'react-router-dom'
+import Logout from './LoginComponents/Logout'
 
 
 
@@ -71,6 +72,7 @@ export const Navbar = () => {
             )
           })}
         </ul>
+          <Logout/>
       </div>
     </section>
   )
