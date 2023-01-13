@@ -1,3 +1,4 @@
+import CreateTeam from "./AdminComponents/CreateTeam"
 import DropdownMenu from "./DropdownMenu"
 import { useEffect, useState } from "react"
 
@@ -48,7 +49,8 @@ export default function Form(props:any) {
                 </div>
                 <button className="w-36 h-12 text-lg bg-[#1D3557] text-white">Create Project</button>
               </div>
-            </form> : 
+            </form> 
+            : 
           
             // TICKET FORM
             <form onSubmit={props.handleSubmit} className='bg-white w-full h-full' autoComplete='off'>

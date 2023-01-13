@@ -56,7 +56,9 @@ interface Props{
 }
 
 export default function SelectedProject({selected, setIsSelected, selectedInfo, setSelectedInfo} : Props) {
-  
+
+  //TODO: make it so only admin can delete/edit
+  //  DELETE and EDIT button shouldn't show up for regular users
 
   const [trigger, setTrigger] = useState<boolean>(false)
   const [confirmDelete, setConfirmDelete] = useState<boolean>(false)
