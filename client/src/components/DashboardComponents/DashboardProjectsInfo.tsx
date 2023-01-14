@@ -3,7 +3,8 @@ import { PieChartComp } from '../PieChart'
 import { data01, projectList, ticketList } from '../../tempData'
 import { RxDoubleArrowRight } from 'react-icons/rx'
 
-export default function DashboardProjectPrio(props:any) {
+export default function DashboardProjectsInfo(props:any) {
+
   return (
     <div className='mt-10 mx-4 grid grid-rows-2 grid-cols-3 gap-4 h-72'>
       <div className=' bg-white rounded-md row-span-2 p-4 shadow-md'>

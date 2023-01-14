@@ -1,17 +1,16 @@
-import {useState, useEffect} from 'react'
+import {useState, useEffect, useContext} from 'react'
 import axios from 'axios'
 import { notify } from '../ProjectComponents/Project'
 import { ToastContainer } from 'react-toastify';
-import {BiTrash} from 'react-icons/bi'
 import CreateItem from '../CreateItem';
-
+import { useDashboard } from '/Users/ayoomotosho/web_development/projects/bug-tracker/client/src/DashboardProvider';
 
 export default function TicketItem(props:any) {
 
   
   const [data, setData] = useState<{}[]>([{}])
   const [trigger, setTrigger] = useState(false)
-  const [selected, setSelected] = useState(false)
+
 
   const [formData, setFormData] = useState({
     title: '',
@@ -36,6 +35,10 @@ export default function TicketItem(props:any) {
     .catch(err => console.log(err))
   }
 
+  const dash = useDashboard()
+
+
+  //const activeTickets = data.filter((entry:any) => entry.status === 'New')
   useEffect(()=>{
     fetchData()
   },[props.listLength])
@@ -46,7 +49,7 @@ export default function TicketItem(props:any) {
     if(entry.status === 'Development'){devCount = devCount+1}
     
     return (
-        <tr className='cursor-pointer hover:bg-gray-200' key={index} onClick={props.clickItem} >
+        <tr className='cursor-pointer hover:bg-gray-200' key={index}>
           <td className='pl-4 text-lg max-h-1'>{entry.title}</td>
           <td className='text-lg px-2 max-h-1 max-w-4xl'>{entry.desc !== undefined && entry.desc.length > 40 ? `${entry.desc.substring(0,40)}...`: entry.desc}</td>
           <td className='text-lg max-h-1'>{entry.status}</td>

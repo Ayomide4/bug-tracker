@@ -1,12 +1,15 @@
 import {useState} from 'react'
 import ProgressBar from 'react-animated-progress-bar'
 import TicketItem from './TicketItem'
+import { projectDashboardType } from '/Users/ayoomotosho/web_development/projects/bug-tracker/client/src/App'
 
 
+interface Props {
+  projectDashboard: projectDashboardType
+  setProjectDashboard: React.Dispatch<React.SetStateAction<projectDashboardType>>
+}
 
-
-
-export default function Ticket(props:any) {
+export default function Ticket() {
 
   const [listLength, setListLength] = useState<number>(0)
   const [ticketStatus, setTicketStatus] = useState({
@@ -70,7 +73,7 @@ export default function Ticket(props:any) {
           </div>
         </div>
         <div className='w-11/12 h-3/5 mt-4 '>
-          <TicketItem title='Tickets' btn='Ticket' categories={ticketCategories} ticketStatus={ticketStatus} setTicketStatus={setTicketStatus} listLength={listLength} setListLength={setListLength} clickItem={props.clickItem}/>
+          <TicketItem title='Tickets' btn='Ticket' categories={ticketCategories} ticketStatus={ticketStatus} setTicketStatus={setTicketStatus} listLength={listLength} setListLength={setListLength} />
         </div>
       </div>
     </>

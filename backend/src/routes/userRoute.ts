@@ -3,12 +3,6 @@ const router = express.Router()
 import User from '../models/userModel'
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
-import { config } from 'dotenv'
-
-interface userType{
-  email: string
-  password: string
-}
 
 
 

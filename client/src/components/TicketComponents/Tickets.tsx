@@ -2,7 +2,7 @@ import { useState } from 'react'
 import SelectedTicket from './SelectedTicket'
 import Ticket from './Ticket'
 
-export default function Tickets() {
+export default function Tickets(props: any) {
   const [selected, setSelected] = useState(true)
 
   function clickItem() {
@@ -11,7 +11,7 @@ export default function Tickets() {
 
   return (
     <div className='w-5/6 h-full bg-[#F4F6F6] flex flex-col items-center'>
-      {selected && <Ticket clickItem={clickItem}/>}
+      {selected && <Ticket />}
       {!selected && <SelectedTicket/>}
     </div>
   )

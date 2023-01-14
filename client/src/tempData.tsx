@@ -42,7 +42,7 @@ export const ticketList: string[] = [
 
 export const tickets: ticketObjArr[] = [
   {title: 'Ticket 1', submittedBy: 'Ayo', status:'Development', priority:'High', lastUpdated: '12/9/22'},
- ]
+]
 
 
 export const projects: greetObject[] = [

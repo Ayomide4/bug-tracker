@@ -24,11 +24,18 @@ export default function ProjectItem(props:any) {
       })
       .catch(err => console.log(err))
   }
-
+  
   //updates list when length changes
   useEffect(() => {
+    let totalActiveProjects = []
+    totalActiveProjects = data.filter((object:any) => object.status === 'active')
+    props.setProjectDashboard({...props.projectDashboard, activeProjects: totalActiveProjects.length})
     fetchData()
   },[props.listLength])
+
+
+
+
 
 
   //ren
@@ -45,7 +52,13 @@ export default function ProjectItem(props:any) {
   })
 
 
+
+  const word:string = 'active'
   
+  //set dashboard status
+  
+
+
 
   return (
       <div className='min-w-full overflow-scroll max-h-itemContainer flex-none relative z-0'>

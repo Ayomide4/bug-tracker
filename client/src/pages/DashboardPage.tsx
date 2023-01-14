@@ -1,7 +1,11 @@
 import React from 'react'
 import { Navbar } from '../components/Navbar'
 import { Dashboard } from '../components/DashboardComponents/Dashboard'
+import { projectDashboardType } from '../App'
 
+interface Props {
+  projectDashboard: projectDashboardType
+}
 
 export default function DashboardPage() {
   return (
