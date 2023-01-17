@@ -18,8 +18,6 @@ export function useDashboard() {
   return useContext(DashboardContext)
 } 
 
-const dash  = useDashboard
-
 
 export default function DashboardProvider({children}: any) {
   

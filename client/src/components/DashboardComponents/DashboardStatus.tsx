@@ -8,6 +8,8 @@ export default function DashboardStatus() {
 
   let total = 0
 
+  //TODO: Filter active projects and get length to send to dashboard
+
   const dashStatus = useDashboard()
   const fetchDashInfo = async () => {
     axios.get('http://localhost:3002/ticket/list')
@@ -15,7 +17,6 @@ export default function DashboardStatus() {
         const list = res.data
         total = list.length
         dashStatus?.setProjectDashboard({...dashStatus.projectDashboard, totalTickets: total})
-        console.log(list)
       })
     }
     

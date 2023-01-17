@@ -1,7 +1,6 @@
-import {AiOutlineBug, AiOutlineHome, AiOutlineAppstore} from 'react-icons/ai'
+import {AiOutlineBug, AiOutlineHome, AiOutlineAppstore, AiOutlineTeam} from 'react-icons/ai'
 import {BiTask} from 'react-icons/bi'
-import {RiAdminLine} from 'react-icons/ri'
-import {json, Link, useMatch, useResolvedPath} from 'react-router-dom'
+import { Link, useMatch, useResolvedPath} from 'react-router-dom'
 import Logout from './LoginComponents/Logout'
 
 
@@ -13,12 +12,13 @@ import Logout from './LoginComponents/Logout'
 
 export const Navbar = () => {
 
-  const Menu: Array<string> = ["Dashboard","Projects", "Tickets", "Admin"]
+
+  const Menu: Array<string> = ["Dashboard","Projects", "Tickets", "Team"]
   const Icons = [
     <AiOutlineHome size='24' color='#9AD2D9'/>,
     <AiOutlineAppstore size='24' color='#9AD2D9'/>,
     <BiTask size='24' color='#9AD2D9'/>,
-    <RiAdminLine size='24' color='#9AD2D9'/>
+    <AiOutlineTeam size='24' color='#9AD2D9'/>
   ]
 
   function CustomLink(item:string, index:number){

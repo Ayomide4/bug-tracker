@@ -3,16 +3,15 @@ import { useState, useEffect } from 'react'
 
 
 
-
 export default function ProjectItem(props:any) {
-
   const [data, setData] = useState([{}])
-  
 
   const clickItem =  (e:any, entry: any) => {
     props.setIsSelected((prev:boolean) => !prev)
     props.setSelectedInfo({...props.selectedInfo, title: entry.title, desc: entry.desc, manager: entry.manager, team: entry.team, status: entry.status, date: entry.date, id: entry._id})
   }
+
+  //TODO: Filter active projects and get length to send to dashboard
 
   //fetches list of projects and saves it into data state
   const fetchData = async () => {
@@ -24,12 +23,11 @@ export default function ProjectItem(props:any) {
       })
       .catch(err => console.log(err))
   }
+
+
   
   //updates list when length changes
   useEffect(() => {
-    let totalActiveProjects = []
-    totalActiveProjects = data.filter((object:any) => object.status === 'active')
-    props.setProjectDashboard({...props.projectDashboard, activeProjects: totalActiveProjects.length})
     fetchData()
   },[props.listLength])
 
@@ -50,13 +48,6 @@ export default function ProjectItem(props:any) {
       </tr>
     )
   })
-
-
-
-  const word:string = 'active'
-  
-  //set dashboard status
-  
 
 
 

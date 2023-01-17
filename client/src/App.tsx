@@ -1,4 +1,3 @@
-import React, { useState, createContext, useContext } from 'react'
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom'
 import TicketPage from './pages/TicketPage'
 import AdminPage from './pages/AdminPage'
@@ -13,11 +12,6 @@ import DashboardProvider from './DashboardProvider'
 
 
 function App() {
-
-  
-
-
-
   return (
     <DashboardProvider>
       <Router>
@@ -28,11 +22,7 @@ function App() {
               <DashboardPage />
             </RequireAuth>}/>
           <Route path='/projects' element={<RequireAuth loginPath='/login'><ProjectPage/></RequireAuth>}/>
-          <Route path='/tickets' element={<RequireAuth loginPath='/login'>
-
-              <TicketPage/>
-
-          </RequireAuth>}/>
+          <Route path='/tickets' element={<RequireAuth loginPath='/login'><TicketPage/></RequireAuth>}/>
           <Route path='/admin' element={<RequireAuth loginPath='/login'><AdminPage/></RequireAuth>}/>
           <Route path='*' element={<ErrorPage/>}/>
         </Routes>

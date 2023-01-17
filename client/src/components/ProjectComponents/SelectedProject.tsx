@@ -59,6 +59,7 @@ export default function SelectedProject({selected, setIsSelected, selectedInfo, 
 
   //TODO: make it so only admin can delete/edit
   //  DELETE and EDIT button shouldn't show up for regular users
+  //TODO: highlight ticket colors based on prio
 
   const [trigger, setTrigger] = useState<boolean>(false)
   const [confirmDelete, setConfirmDelete] = useState<boolean>(false)

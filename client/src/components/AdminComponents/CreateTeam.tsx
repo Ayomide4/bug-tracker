@@ -16,7 +16,7 @@ export default function CreateTeam({setTrigger} : Props) {
     e.preventDefault()
     console.log('Team name: ',teamName)
     setTeamName('')
-    setTrigger(false)
+    setTrigger((prev) => !prev)
   }
 
   return (

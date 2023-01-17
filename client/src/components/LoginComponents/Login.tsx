@@ -31,6 +31,13 @@ export default function ({setTrigger, notify} : Props) {
     token: ''
   })
 
+  const blankInfo: loginType = {
+    email: '',
+    password: '',
+    checked: false,
+    token: ''
+  }
+
   const newData:any = {...loginInfo}
 
   const handleChange = (e:any) => {
@@ -54,7 +61,7 @@ export default function ({setTrigger, notify} : Props) {
     } else {
       axios.post('http://localhost:3002/login', loginInfo)
         .then(function (response){
-          console.log('response data ',response.data)
+          //console.log('response data ',response.data)
           signIn({
             token: response.data.data,
             expiresIn: 3600,
@@ -65,7 +72,8 @@ export default function ({setTrigger, notify} : Props) {
           })
           navigate('/')
           //setLoginInfo({...loginInfo,  token: response.data.data})
-          console.log(loginInfo)
+          setLoginInfo(blankInfo)
+
         })
         .catch(function (error){
           if(error.response.data.error === 'Incorrect password'){
