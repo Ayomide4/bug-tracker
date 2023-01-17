@@ -41,6 +41,18 @@ const notify = (type:string) => {
       theme: "light",
       });
   }
+  if(type === 'email taken'){
+    toast.error('email is already taken', {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      });
+  }
 }
 
 export default function LoginPage() {

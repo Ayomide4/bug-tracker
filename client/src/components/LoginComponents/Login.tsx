@@ -1,9 +1,9 @@
 import { FormEvent, useState } from "react"
-import { ToastContainer} from 'react-toastify'
+import { ToastContainer } from 'react-toastify'
 import {useNavigate} from 'react-router-dom'
 import axios from "axios"
 import {useSignIn} from 'react-auth-kit'
-
+import { useLogin } from "../../LoginProvider"
 
 interface Props {
   setTrigger: React.Dispatch<React.SetStateAction<boolean>>
@@ -18,61 +18,57 @@ interface loginType{
 }
 
 export default function ({setTrigger, notify} : Props) {
+
+  const login = useLogin()
   const signIn = useSignIn()
   const navigate = useNavigate()
   const handleClick = () => {
     setTrigger((prev) => !prev)
   }
+  
 
-  const [loginInfo, setLoginInfo] = useState<loginType>({
-    email: '',
-    password: '',
-    checked: false,
-    token: ''
-  })
+  
 
-  const blankInfo: loginType = {
-    email: '',
-    password: '',
-    checked: false,
-    token: ''
-  }
 
-  const newData:any = {...loginInfo}
+
+  const newData:any = {...login?.loginInfo}
 
   const handleChange = (e:any) => {
     newData[e.target.id] = e.target.value
-    setLoginInfo(newData)
+    login?.setLoginInfo(newData)
 
   }
 
   const handleChecked = () => {
-    let isChecked = loginInfo.checked
-    setLoginInfo({...loginInfo, checked: !isChecked})
-
+    let isChecked = login?.loginInfo.checked
+    login?.setLoginInfo({...newData, checked: !isChecked})
   }
 
   const handleSubmit = async (e:FormEvent) => {
     e.preventDefault()
+    let responseToken = ''
+    let loginData:any = login?.loginInfo
 
-    if(loginInfo.email === "" || loginInfo.password === ""){
+
+    if(login?.loginInfo.email === "" || login?.loginInfo.password === ""){
       notify('input')
     //   navigate('/dashboard')
     } else {
-      axios.post('http://localhost:3002/login', loginInfo)
-        .then(function (response){
-          //console.log('response data ',response.data)
+      axios.post('http://localhost:3002/login', login?.loginInfo)
+        .then(async function (response){
+          responseToken = response.data.data
+          //console.log(response.data)
           signIn({
-            token: response.data.data,
+            token: responseToken,
             expiresIn: 3600,
             tokenType: "Bearer",
             authState: {
-              email: loginInfo.email, 
+              email: login?.loginInfo.email, 
             }
           })
+
           navigate('/')
-          //setLoginInfo({...loginInfo,  token: response.data.data})
-          setLoginInfo(blankInfo)
+          login?.setLoginInfo({...loginData, password: '', token: responseToken, id: response.data.id})
 
         })
         .catch(function (error){
@@ -83,8 +79,8 @@ export default function ({setTrigger, notify} : Props) {
             notify('user not found')
           }
           console.log(error.response.data)
-        })
-
+        }) 
+        console.log(login?.loginInfo);
         
     }
   }

@@ -10,7 +10,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@types/bcryptjs": "^2.4.2",
     "axios": "^1.2.1",
+    "bcryptjs": "^2.4.3",
     "formik": "^2.2.9",
     "react": "^18.2.0",
     "react-animated-progress-bar": "^1.1.2",

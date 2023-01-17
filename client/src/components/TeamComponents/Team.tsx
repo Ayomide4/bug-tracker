@@ -1,20 +1,18 @@
-import React, {useState} from 'react'
-import CreateTeam from './CreateTeam'
+import React, { useState } from 'react'
+import DropdownMenu from '../DropdownMenu'
 
-export default function Admin() {
-  const [trigger, setTrigger] = useState<boolean>(false)
+export default function Team() {
+  const teamsList = ['team 1', 'team 2', 'team 3']
+  const [dropdownValue, setDropdownValue] = useState()
+
 
   return (
-    <div className='w-full h-full'>
-
-      {trigger && 
-      <>
-        <h1 className='ml-6 mt-6 font-semibold text-2xl text-[#1D3557] mb-8'>Administration</h1>
-        <div className='flex items-start justify-evenly mb-8'>
-
+    <div className='z-10'>
+    <h1 className='ml-6 mt-6 font-semibold text-2xl text-[#1D3557] mb-8'>Teams</h1>
+        <div className='flex items-start justify-evenly mb-8 z-0'>
 
           {/* TEAM LIST */}
-          <div className='w-5/12 h-72 bg-white border border-black rounded'>
+          <div className='w-5/12 h-80 bg-white border border-black rounded'>
             <div className='flex justify-between items-center py-2'>
               <h2 className=' text-xl font-semibold ml-2 text-[#1D3557]'>Team Name</h2>
               <button className='w-32 mr-2 px-2 h-8 text-lg bg-[#1D3557] text-white'>Add Member</button>  
@@ -76,13 +74,8 @@ export default function Admin() {
           </div>
 
         </div>
-      </>}
 
-        {/* TEAM MEMBER INFORMATION */}
-
-      {/* <div className=' border border-black rounded w-4/5 h-40 bg-white'> </div> */}
-
-      { !trigger && <CreateTeam setTrigger={setTrigger}/>}
+        {/* TODO: TEAM COMMENTS PAGE */}
     </div>
   )
 }

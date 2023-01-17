@@ -25,7 +25,7 @@ export default function DashboardProvider({children}: any) {
     activeProjects: 0,
     totalTickets: 0,
     assignedTickets: 10,
-    unassignedTickets: 30
+    unassignedTickets: 30, 
   })
 
   return (

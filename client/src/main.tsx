@@ -4,6 +4,8 @@ import App from './App'
 import './index.css'
 import {AuthProvider} from 'react-auth-kit'
 
+
+
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <AuthProvider 
@@ -11,6 +13,7 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
       authName='_auth'
       cookieDomain={window.location.hostname}
       cookieSecure={false} //change when using https
+
     >
       <App />
     </AuthProvider>

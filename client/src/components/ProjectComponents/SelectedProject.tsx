@@ -66,7 +66,7 @@ export default function SelectedProject({selected, setIsSelected, selectedInfo, 
 
   const handleClick = () => {
     //sends a delete request to the server 
-    setTrigger((prev) => !prev)  //sets triiger to open so we can see the confirm delete page
+    setTrigger((prev) => !prev)  //sets trigger to open so we can see the confirm delete page
 
     //if page is open delete project
     if(trigger){

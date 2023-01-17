@@ -12,6 +12,7 @@ interface signUpType{
   lastName: string;
   email: string;
   password: string;
+  isAdmin: boolean
 }
 
 
@@ -20,15 +21,18 @@ export default function SignUp({setTrigger, notify} : Props) {
     firstName: '',
     lastName: '',
     email: '',
-    password: ''
+    password: '',
+    isAdmin: false
   })
 
-  const blankData: signUpType = {
+  const blankData:signUpType = {
     firstName: '',
     lastName: '',
     email: '',
-    password: ''
+    password: '',
+    isAdmin: false
   }
+
 
   const newData:any = {...signUpInfo}
   const handleChange = (e:any) => {
@@ -49,17 +53,16 @@ export default function SignUp({setTrigger, notify} : Props) {
       } 
       else {
           axios.post('http://localhost:3002/register', signUpInfo)
-          .catch(function (error){
-            if(error.response){
-              console.log(error.data)
-              console.log(error.status)
-              console.log(error.headers)
-            }
+            .then(async () => {
+              setTrigger((prev) => !prev)
+            })
+            .catch(function (error){
+              if(error.response){
+                setSignUpInfo(blankData)
+                notify('email taken')
+              }
           })
-        setSignUpInfo(blankData)
-        setTrigger((prev) => !prev)
-      
-    }    
+        }    
   }
 
 

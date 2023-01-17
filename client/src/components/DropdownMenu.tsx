@@ -8,14 +8,16 @@ export const DropdownMenu = (props:any) => {
   const handleClick = (e:any) => {
     const value = e.target.getAttribute('value')
     if(props.listType === 'status'){
-      setBtnTitle(value) //change btn so title isnt set for all drop components
+      setBtnTitle(value) //change btn so title isn;t set for all drop components
       props.setDropdownValue( {...props.dropdownValue, status: value})
 
     } 
     
     else if(props.listType === 'prio') {
-      setBtnTitle(value) //change btn so title isnt set for all drop components
+      setBtnTitle(value) //change btn so title isn't set for all drop components
       props.setDropdownValue({...props.dropdownValue, prio: value})
+    } else {
+      setBtnTitle(value)
     }
 
     setIsExpanded(false)

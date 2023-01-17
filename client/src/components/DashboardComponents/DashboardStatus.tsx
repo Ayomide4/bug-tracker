@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { useDashboard } from '/Users/ayoomotosho/web_development/projects/bug-tracker/client/src/DashboardProvider'
-import {useContext, useEffect, useState} from 'react'
+import { useEffect} from 'react'
+import { useLogin } from '../../LoginProvider'
 
 
 
@@ -8,7 +9,11 @@ export default function DashboardStatus() {
 
   let total = 0
 
+
   //TODO: Filter active projects and get length to send to dashboard
+
+  // const login = useLogin()
+  // console.log(login?.loginInfo)
 
   const dashStatus = useDashboard()
   const fetchDashInfo = async () => {
@@ -22,7 +27,7 @@ export default function DashboardStatus() {
     
     useEffect(()=>{
       fetchDashInfo()
-  }, [dashStatus?.projectDashboard.totalTickets])
+    }, [dashStatus?.projectDashboard.totalTickets])
 
   return (
     <div>

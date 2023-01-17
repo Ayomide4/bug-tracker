@@ -48,7 +48,7 @@ export const Navbar = () => {
         return '/tickets'
         break
       case 3:
-        return '/admin'
+        return '/team'
         break
       default:
         return '/'

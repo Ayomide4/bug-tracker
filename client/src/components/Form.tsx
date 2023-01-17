@@ -1,4 +1,4 @@
-import CreateTeam from "./AdminComponents/CreateTeam"
+import CreateTeam from "./TeamComponents/CreateTeam"
 import DropdownMenu from "./DropdownMenu"
 import { useEffect, useState } from "react"
 
@@ -6,7 +6,6 @@ export default function Form(props:any) {
 
   const [dropdownValue, setDropdownValue] = useState({ prio: '', status: 'New'})
   const prioList: string[] = ['Low', 'Medium', 'High']
-  //const ticketStatusList: string[] = ['New', 'Open', 'Development', 'Testing', 'Resolved']
   const newData:any = {...props.formData}
 
 
