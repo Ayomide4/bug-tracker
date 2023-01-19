@@ -57,7 +57,7 @@ export default function ({setTrigger, notify} : Props) {
       axios.post('http://localhost:3002/login', login?.loginInfo)
         .then(async function (response){
           responseToken = response.data.data
-          //console.log(response.data)
+          console.log('response data ',response.data)
           signIn({
             token: responseToken,
             expiresIn: 3600,
@@ -80,7 +80,7 @@ export default function ({setTrigger, notify} : Props) {
           }
           console.log(error.response.data)
         }) 
-        console.log(login?.loginInfo);
+        //console.log('login state: ',login?.loginInfo);
         
     }
   }

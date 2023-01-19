@@ -56,7 +56,7 @@ export const Navbar = () => {
   }
 
   return (
-    <section className='flex flex-col w-1/6 bg-[#457b9d] max-h-screen'>
+    <section className='flex flex-col w-1/6 bg-[#457b9d] max-h-screen z-0'>
       <div className='mt-4 flex flex-col gap-5 relative pt-4 w-full'>
         <Link to='/'>
           <span className='flex items-center justify-center gap-2 cursor-pointer mb-10 '>

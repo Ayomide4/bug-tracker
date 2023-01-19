@@ -53,12 +53,12 @@ export default function CreateItem(props:any) {
         return false
       } else {
         axios.post("http://localhost:3002/ticket/create", formData)
-        .catch(function (error){
-          if (error.response){
-            console.log(error.data)
-            console.log(error.status)
-            console.log(error.headers)
-          }
+          .catch(function (error){
+            if (error.response){
+              console.log(error.data)
+              console.log(error.status)
+              console.log(error.headers)
+            }
         })
 
 

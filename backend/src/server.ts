@@ -15,6 +15,7 @@ mongoose.set('strictQuery', true);
 app.use("/", require("./routes/projectRoute"))
 app.use("/", require("./routes/ticketRoute"))
 app.use("/", require("./routes/userRoute"))
+app.use("/", require("./routes/teamRoute"))
 
 
 mongoose

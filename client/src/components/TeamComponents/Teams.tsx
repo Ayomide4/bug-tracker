@@ -15,7 +15,7 @@ export default function Teams() {
 
 
   return (
-    <div className='w-full h-full relative'>
+    <div className='w-full h-full'>
       {trigger && <Team/>}
       
 
