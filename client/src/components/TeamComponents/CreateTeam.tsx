@@ -21,8 +21,6 @@ export default function CreateTeam({setTrigger} : Props) {
     manager: login?.loginInfo.id
   })
 
-  console.log("login info ",login?.loginInfo)
-
 
   const handleChange = (e: any) => {
     //setTeamName(e.target.value)
@@ -52,7 +50,7 @@ export default function CreateTeam({setTrigger} : Props) {
     
     axios.patch(`http://localhost:3002/user/teams/${login?.loginInfo.id}`, team)
       .then((response) => {
-        console.log(response.data)
+        console.log('yo',response.data)
       })
       .catch((error) => {
         console.log(error.data)

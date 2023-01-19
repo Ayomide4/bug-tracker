@@ -68,7 +68,6 @@ router.route('/user/:id').patch(async(req, res) => {
 router.route('/user/teams/:id').patch(async (req, res) => {
   let title = req.body.title
   let id = req.params.id
-  console.log(title, id)
 
   User.findByIdAndUpdate(id, {$push: {"teams": title}})
     .then((user) => {
@@ -79,11 +78,12 @@ router.route('/user/teams/:id').patch(async (req, res) => {
     .catch((error) => {
       res.status(404).send({message: 'there was an error adding team'})
     })
-
-  
-  
-
 })
 
+router.route('/user/:id').get(async (req, res) => {
+  const id = req.params.id
+  const user = await User.findById(id)
+  res.status(200).send(user)
+})
 
 module.exports = router

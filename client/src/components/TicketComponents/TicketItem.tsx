@@ -35,8 +35,6 @@ export default function TicketItem(props:any) {
     .catch(err => console.log(err))
   }
 
-  const dash = useDashboard()
-
 
   //const activeTickets = data.filter((entry:any) => entry.status === 'New')
   useEffect(()=>{

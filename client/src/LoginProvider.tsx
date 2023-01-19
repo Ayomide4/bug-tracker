@@ -1,4 +1,5 @@
-import React, {createContext, useContext, useState} from 'react'
+import axios from 'axios'
+import React, {createContext, useContext, useState, useEffect} from 'react'
 
 type loginInfoType = {
   email: string,
@@ -6,7 +7,8 @@ type loginInfoType = {
   checked: boolean,
   token: string,
   isAdmin: boolean,
-  id: string
+  id: string,
+  teamLength: number
 }
 
 type contextType = {
@@ -20,17 +22,26 @@ export function useLogin() {
   return useContext(LoginContext)
 }
 
-
 const LoginProvider = ({children}: any) => {
+  let user:any = {}
 
-  const [loginInfo, setLoginInfo] = useState<loginInfoType>({
+  const [loginInfo, setLoginInfo] = useState<any>({
     email: '',
     password: '',
     checked: false,
     token: '',
     isAdmin: false,
-    id: ''
+    id: '',
+    teamLength: 0
   })
+
+  const [test, setTest] = useState<any>()
+
+  
+    
+
+
+
 
 
   return (

@@ -1,4 +1,4 @@
-import { FormEvent, useState } from "react"
+import { FormEvent, useEffect, useState } from "react"
 import { ToastContainer } from 'react-toastify'
 import {useNavigate} from 'react-router-dom'
 import axios from "axios"
@@ -18,7 +18,7 @@ interface loginType{
 }
 
 export default function ({setTrigger, notify} : Props) {
-
+  let user:any = {}
   const login = useLogin()
   const signIn = useSignIn()
   const navigate = useNavigate()
@@ -27,8 +27,9 @@ export default function ({setTrigger, notify} : Props) {
   }
   
 
-  
-
+  useEffect(() => {
+    localStorage.clear()
+  })
 
 
   const newData:any = {...login?.loginInfo}
@@ -49,7 +50,7 @@ export default function ({setTrigger, notify} : Props) {
     let responseToken = ''
     let loginData:any = login?.loginInfo
 
-
+    //send login info to db
     if(login?.loginInfo.email === "" || login?.loginInfo.password === ""){
       notify('input')
     //   navigate('/dashboard')
@@ -57,7 +58,9 @@ export default function ({setTrigger, notify} : Props) {
       axios.post('http://localhost:3002/login', login?.loginInfo)
         .then(async function (response){
           responseToken = response.data.data
-          console.log('response data ',response.data)
+          //console.log('response data handle submit login',response.data)
+          user = login?.loginInfo
+          console.log('user ',user)
           signIn({
             token: responseToken,
             expiresIn: 3600,
@@ -66,10 +69,8 @@ export default function ({setTrigger, notify} : Props) {
               email: login?.loginInfo.email, 
             }
           })
-
           navigate('/')
           login?.setLoginInfo({...loginData, password: '', token: responseToken, id: response.data.id})
-
         })
         .catch(function (error){
           if(error.response.data.error === 'Incorrect password'){
@@ -80,8 +81,6 @@ export default function ({setTrigger, notify} : Props) {
           }
           console.log(error.response.data)
         }) 
-        //console.log('login state: ',login?.loginInfo);
-        
     }
   }
 
