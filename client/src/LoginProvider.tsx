@@ -12,7 +12,7 @@ type loginInfoType = {
 }
 
 type contextType = {
-  loginInfo: loginInfoType
+  loginInfo: any
   setLoginInfo: React.Dispatch<React.SetStateAction<loginInfoType>>
 }
 
@@ -23,24 +23,18 @@ export function useLogin() {
 }
 
 const LoginProvider = ({children}: any) => {
-  let user:any = {}
 
   const [loginInfo, setLoginInfo] = useState<any>({
-    email: '',
-    password: '',
-    checked: false,
-    token: '',
-    isAdmin: false,
-    id: '',
-    teamLength: 0
+    // email: '',
+    // password: '',
+    // checked: false,
+    // token: '',
+    // isAdmin: false,
+    // id: '',
+    // teamLength: 0
   })
 
   const [test, setTest] = useState<any>()
-
-  
-    
-
-
 
 
 

@@ -18,7 +18,6 @@ interface loginType{
 }
 
 export default function ({setTrigger, notify} : Props) {
-  let user:any = {}
   const login = useLogin()
   const signIn = useSignIn()
   const navigate = useNavigate()
@@ -59,8 +58,7 @@ export default function ({setTrigger, notify} : Props) {
         .then(async function (response){
           responseToken = response.data.data
           //console.log('response data handle submit login',response.data)
-          user = login?.loginInfo
-          console.log('user ',user)
+          
           signIn({
             token: responseToken,
             expiresIn: 3600,

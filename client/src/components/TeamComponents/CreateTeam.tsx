@@ -4,6 +4,7 @@ import axios from 'axios'
 
 
 interface Props {
+  trigger: boolean
   setTrigger: React.Dispatch<React.SetStateAction<boolean>>
 }
 
@@ -12,9 +13,10 @@ type teamType = {
   manager: any
 }
 
-export default function CreateTeam({setTrigger} : Props) {
-  const [test, setTest] = useState(false)
+export default function CreateTeam({trigger, setTrigger} : Props) {
   const login = useLogin()
+  console.log('login info global ',login?.loginInfo)
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
   const [team, setTeam] = useState<teamType>({
     title: '',
@@ -22,8 +24,11 @@ export default function CreateTeam({setTrigger} : Props) {
   })
 
 
+  //get login state from localStorage
+  const temp:any = localStorage.getItem('login state')
+  const obj:any = JSON.parse(temp)
+
   const handleChange = (e: any) => {
-    //setTeamName(e.target.value)
     setTeam({...team, title: e.target.value})
     
   }
@@ -31,15 +36,15 @@ export default function CreateTeam({setTrigger} : Props) {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
     setTrigger((prev) => !prev)
-    
+
 
     if(login?.loginInfo.isAdmin){
       console.log('already admin')
       return
     } else {
-      axios.patch(`http://localhost:3002/user/${login?.loginInfo.id}`)
+      axios.patch(`http://localhost:3002/user/${obj._id}`)
         .then((response) => {
-          console.log(response.data)
+          console.log('patch user/id', JSON.stringify(response.data))
         })
         .catch((error) => {
           console.log(error.data)
@@ -48,9 +53,10 @@ export default function CreateTeam({setTrigger} : Props) {
         })
     }
     
-    axios.patch(`http://localhost:3002/user/teams/${login?.loginInfo.id}`, team)
+    axios.patch(`http://localhost:3002/user/teams/${obj._id}`, team)
       .then((response) => {
-        console.log('yo',response.data)
+        console.log(`added team to user ${login?.loginInfo.id}: ${response.data}`)
+
       })
       .catch((error) => {
         console.log(error.data)
@@ -60,7 +66,7 @@ export default function CreateTeam({setTrigger} : Props) {
   }
 
   const handleClick = () => {
-    setTest((prev) => !prev)
+    setIsModalOpen((prev) => !prev)
   }
 
   return (
@@ -71,7 +77,7 @@ export default function CreateTeam({setTrigger} : Props) {
         <button className='absolute top-10 right-10 bg-[#1D3557] rounded-lg w-36 h-12 text-white ' onClick={handleClick}>Create Team</button>
       </>
 
-      {test && 
+      {isModalOpen && 
         <div className='h-full w-full bg-black bg-opacity-20 flex justify-center items-center absolute top-0 left-0 z-50'>
           <div className='relative p-10 w-2/5 h-32 bg-white opacity-100'>
             <form onSubmit={e=> handleSubmit(e)} className=''>

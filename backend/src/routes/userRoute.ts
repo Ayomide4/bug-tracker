@@ -38,7 +38,6 @@ router.route("/register").post(async(req,res) => {
 
 router.route("/login").post(async(req,res) => {
   const {email, password} = req.body
-  //console.log('REQUEST BODY login route', req.body)
   const user = await User.findOne({email})
   if(!user){
     return res.status(404).json({error: 'user not found'})
@@ -52,13 +51,29 @@ router.route("/login").post(async(req,res) => {
   return res.status(404).json({error: 'Incorrect password'})
 })
 
+//get user with id
+router.route('/user/:id').get(async (req, res) => {
+  const id = req.params.id
+  const user = await User.findById(id)
+    .then((user) => {
+      if(user){
+        res.status(200).send(user)
+        //console.log(user)
+      }
+    })
+    .catch((error) => {
+      //res.status(404).send(error.data)
+      res.status(404).send({message: "There was an error getting the user data"})
+    })
+})
+
 //update admin
 router.route('/user/:id').patch(async(req, res) => {
   let id = req.params.id
   User.findByIdAndUpdate(id, {isAdmin: true})
     .then((user) => {
       if(user){
-        res.status(200).send({message: 'success'})
+        res.status(200).send(user)
       }})
     .catch((error) => {
       res.status(404).send({message: 'there was an error'})
@@ -80,10 +95,5 @@ router.route('/user/teams/:id').patch(async (req, res) => {
     })
 })
 
-router.route('/user/:id').get(async (req, res) => {
-  const id = req.params.id
-  const user = await User.findById(id)
-  res.status(200).send(user)
-})
 
 module.exports = router
