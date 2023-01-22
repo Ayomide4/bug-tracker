@@ -13,31 +13,16 @@ export const Dashboard = () => {
     return accumulator + object.value;
   }, 0)
 
-  //console.log(`login is ${login?.loginInfo}`)
 
   useEffect(() => {
-    const temp:any = localStorage.getItem('login state')
-    const user:any = JSON.parse(temp)
     const id = login?.loginInfo._id
-    console.log('id', id)
-  
-
     axios.get(`http://localhost:3002/user/${id}`)
       .then((response) => {
         console.log('response ', response.data)
         localStorage.setItem("login state", JSON.stringify(response.data))
       })
-
-
-
-
-    
-
-    // login?.setLoginInfo(JSON.parse(user))
-    // //console.log('state is ', login?.loginInfo)
     },[])
     
-    //console.log('THIS IS LOGIN INFO GLOBaL ',login?.loginInfo)
   return (
     <div className='w-5/6 h-full bg-[#F4F6F6] flex flex-col'>
       <DashboardStatus />
