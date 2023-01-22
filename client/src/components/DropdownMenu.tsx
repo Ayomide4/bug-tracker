@@ -5,6 +5,7 @@ export const DropdownMenu = (props:any) => {
   const [isExpanded, setIsExpanded] = useState(false)
   const [btnTitle, setBtnTitle] = useState('- Select -') 
   
+
   const handleClick = (e:any) => {
     const value = e.target.getAttribute('value')
     
@@ -16,10 +17,6 @@ export const DropdownMenu = (props:any) => {
       setBtnTitle(value) //change btn so title isn't set for all drop components
       props.setDropdownValue({...props.dropdownValue, prio: value})
     } 
-    else if(props.listType === 'teams'){
-      setBtnTitle(value)
-    }
-    
     else {
       setBtnTitle(value)
     }

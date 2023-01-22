@@ -8,7 +8,22 @@ const UserSchema = new Schema({
   email: String,
   password: String,
   isAdmin: Boolean,
-  teams: []
+  //teams: [String]
+  teams: [ //array of teams
+    {
+      teamName: String,  //name of the team 
+      manager: String, //manager of the team (gets special permissions)
+      members: [{ //list of members in the team
+        id: String,
+        firstName: String,
+        lastName: String
+      }],
+      projects: [{ //list of projects associated with the team
+        title: String,
+        status: String
+      }]
+    }
+  ]
 })
 
 const User = mongoose.model('User', UserSchema)

@@ -15,18 +15,22 @@ type teamType = {
 }
 
 export default function CreateTeam({trigger, setTrigger} : Props) {
+  const temp:any = localStorage.getItem('login state')
+  const obj:any = JSON.parse(temp)
+  const id = obj._id
+
+  
   const login = useLogin()
   const [isModalOpen, setIsModalOpen] = useState(false)
 
   const [team, setTeam] = useState<teamType>({
     title: '',
-    manager: login?.loginInfo.id
+    manager: id
   })
 
   //get login state from localStorage
-  const temp:any = localStorage.getItem('login state')
-  const obj:any = JSON.parse(temp)
-  console.log('state when create team renders', obj)
+  console.log('local state', obj)
+
   
 
   const handleChange = (e: any) => {
@@ -36,29 +40,32 @@ export default function CreateTeam({trigger, setTrigger} : Props) {
   const handleSubmit = useCallback( (e: FormEvent) => {
     e.preventDefault()
     setTrigger((prev) => !prev)
+    console.log('team is ',team)
     
     if(login?.loginInfo.isAdmin){
       console.log('already admin')
       return
     } else {
       //sets user to admin
-      axios.patch(`http://localhost:3002/user/${login?.loginInfo._id}`)
-      .then((response) => {
-      })
-      .catch((error) => {
-        console.log(error.data)
-        console.log(error.status)
-        console.log(error.headers)
-      })
+      // axios.patch(`http://localhost:3002/user/${id}`)
+      // .then((response) => {
+      //   console.log(response.data)
+      // })
+      // .catch((error) => {
+      //   console.log(error.data)
+      //   console.log(error.status)
+      //   console.log(error.headers)
+      // })
     }
     
     //gets user obj
-    axios.patch(`http://localhost:3002/user/teams/${obj._id}`, team)
+    axios.patch(`http://localhost:3002/user/teams/${obj._id}`, {title: team.title, manager: team.manager})
     .then((response) => {
       //localStorage.clear()
-      let obj = {...response.data, teams: [team.title]}
-      console.log('update obj ', obj)
-      localStorage.setItem("login state",JSON.stringify(obj))
+      let obj = {...response.data}
+      console.log('obj response', obj)
+      console.log('team ', team)
+      //localStorage.setItem("login state",JSON.stringify(obj))
     })
     .catch((error) => {
       console.log(error.data)

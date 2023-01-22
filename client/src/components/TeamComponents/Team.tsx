@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import DropdownMenu from '../DropdownMenu'
 import { useLogin } from '/Users/ayoomotosho/web_development/projects/bug-tracker/client/src/LoginProvider'
 import ClipLoader from "react-spinners/ClipLoader";
+import SelectTeam from './SelectTeam';
 
 
 export default function Team(props:any) {
@@ -16,7 +17,7 @@ export default function Team(props:any) {
       const temp:any = localStorage.getItem("login state")
       const obj:any = JSON.parse(temp)
       console.log('login in use effect ', obj)
-      setMyTeamName(obj.teams[0])
+      setMyTeamName(obj.teams[0].teamName)
       setList([...obj.teams])
       setLoading(false)
     }, 2000)
@@ -37,7 +38,10 @@ export default function Team(props:any) {
       :  
       <>
         <h1 className='ml-6 mt-6 font-semibold text-2xl text-[#1D3557] mb-8'>Teams</h1>
-        <div className='absolute top-4 right-8'><DropdownMenu dropdownValue={dropdownValue} setDropdownValue={setDropdownValue} listType='teams' list={list}/></div>
+        <div className='absolute top-4 right-8'>
+          {/* <DropdownMenu dropdownValue={dropdownValue} setDropdownValue={setDropdownValue} listType='teams' list={list}/> */}
+          <SelectTeam list={list} setMyTeamName={setMyTeamName}/>
+        </div>
         <div className='flex items-start justify-evenly mb-8 z-0'>
           {/* TEAM LIST */}
           <div className='w-5/12 h-80 bg-white border border-[#1D3557] shadow-sm rounded'>

@@ -18,7 +18,7 @@ router.route("/register").post(async(req,res) => {
   const encryptedPassword = await bcrypt.hash(password, 10)
   const oldUser = await User.findOne({email})
 
-
+  
 
   if(oldUser){
     return res.status(409).send({error: "User Exists"})
@@ -30,6 +30,12 @@ router.route("/register").post(async(req,res) => {
     email,
     password: encryptedPassword, 
     isAdmin,
+    teams: [
+      {
+        teamName: '',
+        manager: '',
+      }
+    ]
 
   })
   res.status(201).send({success: 'user created'})
@@ -81,17 +87,30 @@ router.route('/user/:id').patch(async(req, res) => {
 })
 
 router.route('/user/teams/:id').patch(async (req, res) => {
-  let title = req.body.title
+  let title:string = req.body.title
+  let manager:string = req.params.id
+  console.log(title, manager)
+
   let id = req.params.id
 
-  User.findByIdAndUpdate(id, {$push: {"teams": title}})
+
+  // {$push: {"teams": title}}
+  User.findByIdAndUpdate(id, {title, manager})
     .then((user) => {
       if(user){
+        //console.log(user.teams[0])
+        console.log(title, manager)
+        console.log(user.teams)
+
+        user.teams[0].teamName = title
+        user.teams[0].manager = manager
+        console.log(user.teams)
         res.status(200).send(user)
       }
     })
     .catch((error) => {
-      res.status(404).send({message: 'there was an error adding team'})
+      console.log(error)
+      res.status(404).send({error: "error updating team information"})
     })
 })
 

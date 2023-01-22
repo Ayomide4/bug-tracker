@@ -4,5 +4,8 @@
     "formdata",
     "prio",
     "statsu"
+  ],
+  "cSpell.ignoreWords": [
+    "testid"
   ]
 }

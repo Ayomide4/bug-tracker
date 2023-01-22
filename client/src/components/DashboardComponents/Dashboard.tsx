@@ -14,13 +14,23 @@ export const Dashboard = () => {
   }, 0)
 
 
-  const id = login?.loginInfo._id
+
+  let id = login?.loginInfo._id
+  if(!id){
+    let temp:any = localStorage.getItem('login state')
+    let obj = JSON.parse(temp)
+    id = obj._id
+    console.log(id)
+  }
+
   useEffect(() => {
-    axios.get(`http://localhost:3002/user/${id}`)
-      .then((response) => {
-        console.log('response ', response.data)
-        localStorage.setItem("login state", JSON.stringify(response.data))
-      })
+    if(id){
+      axios.get(`http://localhost:3002/user/${id}`)
+        .then((response) => {
+          console.log('response ', response.data)
+          localStorage.setItem("login state", JSON.stringify(response.data))
+        })
+    }
     },[])
     
   return (
