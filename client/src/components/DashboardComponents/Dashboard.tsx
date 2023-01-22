@@ -14,8 +14,8 @@ export const Dashboard = () => {
   }, 0)
 
 
+  const id = login?.loginInfo._id
   useEffect(() => {
-    const id = login?.loginInfo._id
     axios.get(`http://localhost:3002/user/${id}`)
       .then((response) => {
         console.log('response ', response.data)

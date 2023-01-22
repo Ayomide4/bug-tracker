@@ -8,24 +8,22 @@ import { useLogin } from '/Users/ayoomotosho/web_development/projects/bug-tracke
 export default function Teams() {
   //get login info
   const login = useLogin()
-  let isAdmin  = false
-  
-    //retrieve state from local storage into user obj
-  const user:any = localStorage.getItem("login state")
-  if(user){
-    const temp = JSON.parse(user)
-    //get id and isAdmin from local storage
-    isAdmin = temp.isAdmin
-  }
 
   //trigger that renders create team or the team page
   const [trigger, setTrigger] = useState<boolean>(false)
+
+  
+    //retrieve state from local storage into user obj
+  const temp:any = localStorage.getItem("login state")
+  const user:any = JSON.parse(temp)
+  let isAdmin = user.isAdmin
+  console.log('is admin? ', isAdmin)
 
 
 
   return (
     <div className='w-full h-full'>
-      {!trigger ? <CreateTeam trigger={trigger} setTrigger={setTrigger}/>: <Team trigger={trigger}/>}
+      {!trigger && !isAdmin ? <CreateTeam trigger={trigger} setTrigger={setTrigger}/>: <Team trigger={trigger}/>}
     </div>
   )
 }

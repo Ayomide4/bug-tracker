@@ -7,30 +7,29 @@ export const DropdownMenu = (props:any) => {
   
   const handleClick = (e:any) => {
     const value = e.target.getAttribute('value')
+    
     if(props.listType === 'status'){
       setBtnTitle(value) //change btn so title isn;t set for all drop components
       props.setDropdownValue( {...props.dropdownValue, status: value})
-
     } 
-    
     else if(props.listType === 'prio') {
       setBtnTitle(value) //change btn so title isn't set for all drop components
       props.setDropdownValue({...props.dropdownValue, prio: value})
-    } else {
+    } 
+    else if(props.listType === 'teams'){
       setBtnTitle(value)
     }
-
+    
+    else {
+      setBtnTitle(value)
+    }
     setIsExpanded(false)
   }
-
-
-  
 
   return (
     <>
       <h1 className='text-lg mb-2'>{props.title}</h1>
       <div className='border border-gray-500 rounded-sm'>
-
         <button type='button' onClick={() => {setIsExpanded(prev => !prev)}} className='bg-white w-32 h-10 py-1 flex justify-center items-center'>
           <div className='mr-1'>{btnTitle /* change title when dropdown value changes*/}</div> 
           <div>

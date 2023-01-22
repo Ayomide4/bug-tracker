@@ -30,15 +30,12 @@ export default function ({setTrigger, notify} : Props) {
     localStorage.clear()
   })
 
-
   const newData:any = {...login?.loginInfo}
 
   const handleChange = (e:any) => {
     newData[e.target.id] = e.target.value
     login?.setLoginInfo(newData)
-
   }
-
 
   const handleChecked = () => {
     let isChecked = login?.loginInfo.checked
