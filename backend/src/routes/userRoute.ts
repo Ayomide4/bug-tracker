@@ -87,7 +87,7 @@ router.route('/user/teams/:id').patch(async (req, res) => {
   User.findByIdAndUpdate(id, {$push: {"teams": title}})
     .then((user) => {
       if(user){
-        res.status(200).send({message: 'success added team'})
+        res.status(200).send(user)
       }
     })
     .catch((error) => {

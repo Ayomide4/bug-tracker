@@ -39,6 +39,7 @@ export default function ({setTrigger, notify} : Props) {
 
   }
 
+
   const handleChecked = () => {
     let isChecked = login?.loginInfo.checked
     login?.setLoginInfo({...newData, checked: !isChecked})
@@ -58,7 +59,6 @@ export default function ({setTrigger, notify} : Props) {
         .then(async function (response){
           responseToken = response.data.data
           //console.log('response data handle submit login',response.data)
-          
           signIn({
             token: responseToken,
             expiresIn: 3600,
@@ -68,7 +68,8 @@ export default function ({setTrigger, notify} : Props) {
             }
           })
           navigate('/')
-          login?.setLoginInfo({...loginData, password: '', token: responseToken, id: response.data.id})
+          login?.setLoginInfo({...response.data, password: '', token: responseToken, _id: response.data.id})
+          localStorage.setItem('login state',JSON.stringify(response.data))
         })
         .catch(function (error){
           if(error.response.data.error === 'Incorrect password'){

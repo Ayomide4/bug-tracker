@@ -8,34 +8,24 @@ import { useLogin } from '/Users/ayoomotosho/web_development/projects/bug-tracke
 export default function Teams() {
   //get login info
   const login = useLogin()
-  const isAdmin = login?.loginInfo.isAdmin
+  let isAdmin  = false
   
-  //retrieve state from localStorage
-  const getLocalState:any = localStorage.getItem('login state')
-  const localState: any = JSON.parse(getLocalState)
+    //retrieve state from local storage into user obj
+  const user:any = localStorage.getItem("login state")
+  if(user){
+    const temp = JSON.parse(user)
+    //get id and isAdmin from local storage
+    isAdmin = temp.isAdmin
+  }
 
   //trigger that renders create team or the team page
   const [trigger, setTrigger] = useState<boolean>(false)
 
-  //let user:any = {}
-  // useEffect(()=>{
-  //   const id = login?.loginInfo._id
-  //   axios.get(`http://localhost:3002/user/${id}`)
-  //     .then((response) => {
-  //       localStorage.setItem("login state", JSON.stringify(response.data))
-  //       console.log(`get response : ${JSON.stringify(user)}`)
-  //     })
-  //     .catch((error) => {
-  //       console.log(error.data)
-  //     })
-  // }, [trigger])
 
-  console.log(`is admin is ${isAdmin}`)
 
   return (
     <div className='w-full h-full'>
-      {isAdmin || trigger ? <Team/> :  <CreateTeam trigger={trigger} setTrigger={setTrigger}/>}
-    
+      {!trigger ? <CreateTeam trigger={trigger} setTrigger={setTrigger}/>: <Team trigger={trigger}/>}
     </div>
   )
 }

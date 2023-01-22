@@ -1,6 +1,7 @@
-import React, { FormEvent, useState } from 'react'
+import React, { FormEvent, useState, useCallback } from 'react'
 import { useLogin } from '/Users/ayoomotosho/web_development/projects/bug-tracker/client/src/LoginProvider'
 import axios from 'axios'
+import Team from './Team'
 
 
 interface Props {
@@ -15,7 +16,6 @@ type teamType = {
 
 export default function CreateTeam({trigger, setTrigger} : Props) {
   const login = useLogin()
-  console.log('login info global ',login?.loginInfo)
   const [isModalOpen, setIsModalOpen] = useState(false)
 
   const [team, setTeam] = useState<teamType>({
@@ -23,52 +23,53 @@ export default function CreateTeam({trigger, setTrigger} : Props) {
     manager: login?.loginInfo.id
   })
 
-
   //get login state from localStorage
   const temp:any = localStorage.getItem('login state')
   const obj:any = JSON.parse(temp)
+  console.log('state when create team renders', obj)
+  
 
   const handleChange = (e: any) => {
     setTeam({...team, title: e.target.value})
-    
   }
 
-  const handleSubmit = async (e: FormEvent) => {
+  const handleSubmit = useCallback( (e: FormEvent) => {
     e.preventDefault()
     setTrigger((prev) => !prev)
-
-
+    
     if(login?.loginInfo.isAdmin){
       console.log('already admin')
       return
     } else {
-      axios.patch(`http://localhost:3002/user/${obj._id}`)
-        .then((response) => {
-          console.log('patch user/id', JSON.stringify(response.data))
-        })
-        .catch((error) => {
-          console.log(error.data)
-          console.log(error.status)
-          console.log(error.headers)
-        })
-    }
-    
-    axios.patch(`http://localhost:3002/user/teams/${obj._id}`, team)
+      //sets user to admin
+      axios.patch(`http://localhost:3002/user/${login?.loginInfo._id}`)
       .then((response) => {
-        console.log(`added team to user ${login?.loginInfo.id}: ${response.data}`)
-
       })
       .catch((error) => {
         console.log(error.data)
+        console.log(error.status)
+        console.log(error.headers)
       })
+    }
     
-    
-  }
+    //gets user obj
+    axios.patch(`http://localhost:3002/user/teams/${obj._id}`, team)
+    .then((response) => {
+      //localStorage.clear()
+      let obj = {...response.data, teams: [team.title]}
+      console.log('update obj ', obj)
+      localStorage.setItem("login state",JSON.stringify(obj))
+    })
+    .catch((error) => {
+      console.log(error.data)
+    }) 
+  },[team])
 
   const handleClick = () => {
     setIsModalOpen((prev) => !prev)
   }
 
+  //console.log('create team render');
   return (
     <>
       <>
@@ -93,5 +94,6 @@ export default function CreateTeam({trigger, setTrigger} : Props) {
         </div>
       }
     </>
+    
   )
 }
