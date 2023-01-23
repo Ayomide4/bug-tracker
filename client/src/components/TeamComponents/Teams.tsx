@@ -17,7 +17,8 @@ export default function Teams() {
   const temp:any = localStorage.getItem("login state")
   const user:any = JSON.parse(temp)
   let isAdmin = user.isAdmin
-  console.log('is admin? ', isAdmin)
+  console.log(login?.loginInfo)
+
 
 
 

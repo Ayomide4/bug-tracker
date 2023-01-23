@@ -17,15 +17,12 @@ type teamType = {
 export default function CreateTeam({trigger, setTrigger} : Props) {
   const temp:any = localStorage.getItem('login state')
   const obj:any = JSON.parse(temp)
-  const id = obj._id
-
-  
-  const login = useLogin()
+  const name = `${obj.firstName} ${obj.lastName}`
   const [isModalOpen, setIsModalOpen] = useState(false)
 
   const [team, setTeam] = useState<teamType>({
     title: '',
-    manager: id
+    manager: name
   })
 
   //get login state from localStorage
@@ -40,43 +37,24 @@ export default function CreateTeam({trigger, setTrigger} : Props) {
   const handleSubmit = useCallback( (e: FormEvent) => {
     e.preventDefault()
     setTrigger((prev) => !prev)
-    console.log('team is ',team)
-    
-    if(login?.loginInfo.isAdmin){
-      console.log('already admin')
-      return
-    } else {
-      //sets user to admin
-      // axios.patch(`http://localhost:3002/user/${id}`)
-      // .then((response) => {
-      //   console.log(response.data)
-      // })
-      // .catch((error) => {
-      //   console.log(error.data)
-      //   console.log(error.status)
-      //   console.log(error.headers)
-      // })
-    }
     
     //gets user obj
     axios.patch(`http://localhost:3002/user/teams/${obj._id}`, {title: team.title, manager: team.manager})
-    .then((response) => {
-      //localStorage.clear()
-      let obj = {...response.data}
-      console.log('obj response', obj)
-      console.log('team ', team)
-      //localStorage.setItem("login state",JSON.stringify(obj))
-    })
-    .catch((error) => {
-      console.log(error.data)
-    }) 
+      .then((response) => {
+        let obj = {...response.data}
+        console.log('obj response', obj)
+        console.log('team ', team)
+        localStorage.setItem("login state",JSON.stringify(obj))
+      })
+      .catch((error) => {
+        console.log(error.data)
+      }) 
   },[team])
 
   const handleClick = () => {
     setIsModalOpen((prev) => !prev)
   }
 
-  //console.log('create team render');
   return (
     <>
       <>

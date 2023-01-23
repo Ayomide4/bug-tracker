@@ -3,6 +3,7 @@ import DropdownMenu from '../DropdownMenu'
 import { useLogin } from '/Users/ayoomotosho/web_development/projects/bug-tracker/client/src/LoginProvider'
 import ClipLoader from "react-spinners/ClipLoader";
 import SelectTeam from './SelectTeam';
+import axios from 'axios';
 
 
 export default function Team(props:any) {
@@ -10,15 +11,29 @@ export default function Team(props:any) {
   const [list, setList] = useState([''])
   const [myTeamName, setMyTeamName] = useState('')
   const [loading, setLoading] = useState(false)
+  const login = useLogin()
   
+  //console.log('yes',login?.loginInfo)
+  const fetchData = async (obj:any) => {
+    axios.get(`http://localhost:3002/user/${obj._id}`)
+      .then(response => {
+        const test = JSON.stringify(response.data)
+        localStorage.setItem("login state", test)
+        const data = response.data
+
+        setMyTeamName(data.teams[0].teamName)
+        setList([...data.teams])
+      })
+  }
+
   useEffect(()=>{
     setLoading(true)
     setTimeout(()=>{
       const temp:any = localStorage.getItem("login state")
       const obj:any = JSON.parse(temp)
-      console.log('login in use effect ', obj)
-      setMyTeamName(obj.teams[0].teamName)
-      setList([...obj.teams])
+      fetchData(obj)
+      // setMyTeamName(obj.teams[0].teamName)
+      // setList([...obj.teams])
       setLoading(false)
     }, 2000)
   },[props.trigger])
@@ -26,7 +41,7 @@ export default function Team(props:any) {
   //TODO: change this page to select team ig idk what to do tbh
 
   return (
-    <div className='z-10'>
+    <div>
       {loading ? 
       <div className='w-full h-screen flex items-center justify-center '>
         <ClipLoader color={'#1D3557'}

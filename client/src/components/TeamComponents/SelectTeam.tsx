@@ -9,10 +9,10 @@ export default function SelectTeam(props:any) {
 
   const handleClick = (e:any) => {
     const value = e.target.getAttribute('value')
-    console.log(value)
     props.setMyTeamName(value)
     setIsExpanded(prev => !prev)
   }
+
 
   return (
     <>
@@ -28,10 +28,10 @@ export default function SelectTeam(props:any) {
               <div>
                 <hr className='border-1 border-black'></hr>
                 <ul className='z-10'>
-                  {props.list.map((item: string, index: number) => {
+                  {props.list.map((item: any, index: number) => {
                     return (
-                      <li value={item} onClick={(e:any) => {handleClick(e)}} className='cursor-pointer hover:bg-blue-500 hover:text-white p-1 bg-white' key={index}>
-                        {item}
+                      <li value={item.teamName} onClick={(e:any) => {handleClick(e)}} className='cursor-pointer hover:bg-blue-500 hover:text-white p-1 bg-white' key={index}>
+                        {item.teamName}
                       </li>
                     )
                   })}

@@ -1,4 +1,4 @@
-import express from 'express'
+import express, { query } from 'express'
 const router = express.Router()
 import User from '../models/userModel'
 import bcrypt from 'bcryptjs'
@@ -69,50 +69,33 @@ router.route('/user/:id').get(async (req, res) => {
     })
     .catch((error) => {
       //res.status(404).send(error.data)
-      res.status(404).send({message: "There was an error getting the user data"})
+      res.status(404).send({message: 'error getting user data'})
     })
 })
 
-//update admin
-router.route('/user/:id').patch(async(req, res) => {
-  let id = req.params.id
-  User.findByIdAndUpdate(id, {isAdmin: true})
-    .then((user) => {
-      if(user){
-        res.status(200).send(user)
-      }})
-    .catch((error) => {
-      res.status(404).send({message: 'there was an error'})
-    })
-})
 
+//create team and setting isAdmin
 router.route('/user/teams/:id').patch(async (req, res) => {
   let title:string = req.body.title
-  let manager:string = req.params.id
-  console.log(title, manager)
-
+  let manager:string = req.body.manager
   let id = req.params.id
 
-
   // {$push: {"teams": title}}
-  User.findByIdAndUpdate(id, {title, manager})
+  User.findByIdAndUpdate(id, 
+    {$set: {isAdmin: true, "teams": {teamName: title, manager: manager}}}
+    )
     .then((user) => {
       if(user){
-        //console.log(user.teams[0])
-        console.log(title, manager)
-        console.log(user.teams)
-
-        user.teams[0].teamName = title
-        user.teams[0].manager = manager
-        console.log(user.teams)
         res.status(200).send(user)
       }
     })
     .catch((error) => {
       console.log(error)
-      res.status(404).send({error: "error updating team information"})
+      res.status(404)
     })
 })
+
+
 
 
 module.exports = router
