@@ -13,11 +13,11 @@ const UserSchema = new Schema({
     {
       teamName: String,  //name of the team 
       manager: String, //manager of the team (gets special permissions)
-      members: [{ //list of members in the team
-        id: String,
-        firstName: String,
-        lastName: String
-      }],
+      members: [
+        { //list of members in the team
+          memberName: String
+        }
+      ],
       projects: [{ //list of projects associated with the team
         title: String,
         status: String

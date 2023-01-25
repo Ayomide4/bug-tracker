@@ -4,38 +4,49 @@ import { useLogin } from '/Users/ayoomotosho/web_development/projects/bug-tracke
 import ClipLoader from "react-spinners/ClipLoader";
 import SelectTeam from './SelectTeam';
 import axios from 'axios';
+import AddMember from './AddMember';
+
+
+
 
 
 export default function Team(props:any) {
   const [dropdownValue, setDropdownValue] = useState({prio: '', status: 'new'})
   const [list, setList] = useState([''])
-  const [myTeamName, setMyTeamName] = useState('')
   const [loading, setLoading] = useState(false)
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
+  const [memberName, setMemberName] = useState<string>('')
+
   const login = useLogin()
+  const id = props.id
   
-  //console.log('yes',login?.loginInfo)
+
+
+
   const fetchData = async (obj:any) => {
     axios.get(`http://localhost:3002/user/${obj._id}`)
       .then(response => {
         const test = JSON.stringify(response.data)
         localStorage.setItem("login state", test)
         const data = response.data
-
-        setMyTeamName(data.teams[0].teamName)
+        props.setMyTeamName(data.teams[0].teamName)
         setList([...data.teams])
       })
   }
 
+
   useEffect(()=>{
-    setLoading(true)
-    setTimeout(()=>{
-      const temp:any = localStorage.getItem("login state")
-      const obj:any = JSON.parse(temp)
-      fetchData(obj)
-      // setMyTeamName(obj.teams[0].teamName)
-      // setList([...obj.teams])
-      setLoading(false)
-    }, 2000)
+      setLoading(true)
+      setTimeout(()=>{
+        const temp:any = localStorage.getItem("login state")
+        const obj:any = JSON.parse(temp)
+        fetchData(obj)
+        setLoading((prev) => !prev)
+        props.setHasLoaded(true)
+        setLoading(false)
+      }, 350)
+    
+
   },[props.trigger])
 
   //TODO: change this page to select team ig idk what to do tbh
@@ -55,14 +66,14 @@ export default function Team(props:any) {
         <h1 className='ml-6 mt-6 font-semibold text-2xl text-[#1D3557] mb-8'>Teams</h1>
         <div className='absolute top-4 right-8'>
           {/* <DropdownMenu dropdownValue={dropdownValue} setDropdownValue={setDropdownValue} listType='teams' list={list}/> */}
-          <SelectTeam list={list} setMyTeamName={setMyTeamName}/>
+          <SelectTeam list={list} setMyTeamName={props.setMyTeamName}/>
         </div>
         <div className='flex items-start justify-evenly mb-8 z-0'>
           {/* TEAM LIST */}
           <div className='w-5/12 h-80 bg-white border border-[#1D3557] shadow-sm rounded'>
             <div className='flex justify-between items-center py-2'>
-              <h2 className=' text-xl font-semibold ml-2 text-[#1D3557]'>{myTeamName}</h2>
-              <button className='w-32 mr-2 px-2 h-8 text-md bg-[#1D3557] text-white'>Add Member</button>  
+              <h2 className=' text-xl font-semibold ml-2 text-[#1D3557]'>{props.myTeamName}</h2>
+              <button className='w-32 mr-2 px-2 h-8 text-md bg-[#1D3557] text-white' onClick={()=>setIsModalOpen(prev=>!prev)}>Add Member</button>  
             </div>
             <div className="border border-black border-b-0 border-x-0 w-full">
               <table className='w-full h-full'>
@@ -83,7 +94,6 @@ export default function Team(props:any) {
           </div>
 
           {/* PROJECT LIST */}
-
           <div className='border border-[#1D3557] shadow-sm rounded w-6/12 h-80 bg-white'>
             <div className='flex items-center justify-between w-full pt-2'>
               <h2 className='text-xl font-semibold px-2 mb-2 text-[#1D3557]'>Projects</h2>
@@ -117,9 +127,11 @@ export default function Team(props:any) {
             </div>
           </div>
         </div>
-        {/* TODO: TEAM COMMENTS PAGE */}
+        {/* TODO: TICKETS */}
         <div className=' h-72 mx-8 bg-white rounded shadow-lg'></div>
+        <AddMember id={id} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} memberName={memberName} setMemberName={setMemberName}/>
         </>
+
 }
     </div>
   ) 

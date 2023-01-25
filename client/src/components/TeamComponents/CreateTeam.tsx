@@ -65,11 +65,12 @@ export default function CreateTeam({trigger, setTrigger} : Props) {
 
       {isModalOpen && 
         <div className='h-full w-full bg-black bg-opacity-20 flex justify-center items-center absolute top-0 left-0 z-50'>
-          <div className='relative p-10 w-2/5 h-32 bg-white opacity-100'>
+          <div className='relative p-10 w-2/5 h-40 bg-white opacity-100'>
+            <button className='w-20 h-6 bg-[#1D3557] text-white absolute top-4 left-6' onClick={() => setIsModalOpen(false)}>Cancel</button>
             <form onSubmit={e=> handleSubmit(e)} className=''>
-              <div className='flex justify-between items-center mb-4'>
+              <div className='flex justify-between items-center mt-6'>
                 <div className='flex items-center'>
-                  <label className='text-xl mb-1 font-semibold' >Team Name</label>
+                  <label className='text-xl mb-1 font-medium' >Team Name</label>
                   <input id='team' onChange={e => handleChange(e)} value={team.title} className='border border-black w-52 ml-4 p-2 h-8'/>
                 </div>
                 <button className='w-36 h-12 text-lg bg-[#1D3557] text-white '>Create Team</button>

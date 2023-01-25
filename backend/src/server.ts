@@ -2,6 +2,7 @@ import express, { Request, Response} from 'express'
 import mongoose from 'mongoose'
 import cors from 'cors'
 import {config} from 'dotenv'
+import User from './models/userModel'
 
 
 config()

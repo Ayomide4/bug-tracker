@@ -76,9 +76,9 @@ router.route('/user/:id').get(async (req, res) => {
 
 //create team and setting isAdmin
 router.route('/user/teams/:id').patch(async (req, res) => {
-  let title:string = req.body.title
-  let manager:string = req.body.manager
-  let id = req.params.id
+  const title:string = req.body.title
+  const manager:string = req.body.manager
+  const id = req.params.id
 
   // {$push: {"teams": title}}
   User.findByIdAndUpdate(id, 
@@ -95,6 +95,25 @@ router.route('/user/teams/:id').patch(async (req, res) => {
     })
 })
 
+
+//ADD MEMBER ROUTE
+router.route('/user/teams/members/:id').post(async (req,res) => {
+  const id = req.params.id
+  const memberName = req.body.memberName
+  console.log(req.body)
+
+
+  User.findByIdAndUpdate(id, {$push: {"teams.$[].members" : {"memberName": memberName}}})
+      .then((user) => {
+        res.status(200).send(user)
+      })
+      .catch((error) => {
+        res.status(404).send(error)
+      })
+
+
+  
+})
 
 
 

@@ -17,24 +17,17 @@ export const Dashboard = () => {
 
   let id = login?.loginInfo._id
 
-  // if(!id){
-    // let temp:any = localStorage.getItem('login state')
-    // let obj:any = JSON.parse(temp)
-    // id = obj._id
-    // console.log(obj)
-    // }
-    
     useEffect(() => {
       if(!id){
         const temp:any = localStorage.getItem("login state")
         const obj = JSON.parse(temp)
         let newId = obj._id
-        console.log('refresh id ', newId)
+        // console.log('refresh id ', newId)
         axios.get(`http://localhost:3002/user/${newId}`)
           .then((response) => {
             localStorage.setItem("login state", JSON.stringify(response.data))
             login?.setLoginInfo({...response.data})
-            console.log('refresh response', response.data)
+            // console.log('refresh response', response.data)
           })
           .catch(error => {
             console.log('error')
@@ -46,8 +39,8 @@ export const Dashboard = () => {
             //console.log('response ', response.data)
             localStorage.setItem("login state", JSON.stringify(response.data))
             login?.setLoginInfo({...response.data})
-            console.log('dash login',login?.loginInfo)
-            console.log('dash response',response.data)
+            // console.log('dash login',login?.loginInfo)
+            // console.log('dash response',response.data)
           })
           .catch(error => {
             console.log('to')
