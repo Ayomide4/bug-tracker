@@ -100,8 +100,6 @@ router.route('/user/teams/:id').patch(async (req, res) => {
 router.route('/user/teams/members/:id').post(async (req,res) => {
   const id = req.params.id
   const memberName = req.body.memberName
-  console.log(req.body)
-
 
   User.findByIdAndUpdate(id, {$push: {"teams.$[].members" : {"memberName": memberName}}})
       .then((user) => {
@@ -109,10 +107,18 @@ router.route('/user/teams/members/:id').post(async (req,res) => {
       })
       .catch((error) => {
         res.status(404).send(error)
-      })
+      })  
+})
 
+router.route('/user/teams/members/:id').get(async (req, res) =>{
+  const id = req.params.id
+  try{
 
-  
+    const members = await User.findById(id)
+    res.status(200).send(members)
+  } catch {
+    res.status(404).send({error: "could not find user"})
+  }
 })
 
 

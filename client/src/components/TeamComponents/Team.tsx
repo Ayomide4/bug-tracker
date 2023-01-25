@@ -8,7 +8,10 @@ import AddMember from './AddMember';
 
 
 
-
+interface memberType {
+  memberArray: []
+  memberArrayLength: number
+}
 
 export default function Team(props:any) {
   const [dropdownValue, setDropdownValue] = useState({prio: '', status: 'new'})
@@ -16,6 +19,10 @@ export default function Team(props:any) {
   const [loading, setLoading] = useState(false)
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
   const [memberName, setMemberName] = useState<string>('')
+  const [members, setMembers] = useState<memberType>({
+    memberArrayLength: 0,
+    memberArray: []
+  })
 
   const login = useLogin()
   const id = props.id
@@ -31,6 +38,8 @@ export default function Team(props:any) {
         const data = response.data
         props.setMyTeamName(data.teams[0].teamName)
         setList([...data.teams])
+        //setMembers({...members, memberArrayLength: data.teams[0].members.length})
+        setMembers({...members, memberArray: data.teams[0].members})
       })
   }
 
@@ -45,11 +54,18 @@ export default function Team(props:any) {
         props.setHasLoaded(true)
         setLoading(false)
       }, 350)
-    
+  },[props.trigger, members.memberArrayLength])
 
-  },[props.trigger])
 
-  //TODO: change this page to select team ig idk what to do tbh
+  const renderMembers = members.memberArray.map((entry:any, index:number) => {
+    return(
+      <tr className='cursor-pointer hover:bg-gray-200 table-row' key={index}>
+        <td id='memberName' key={index}  className='pl-2 w-1/12'>{entry.memberName}</td>
+      </tr>
+    )
+  })
+
+  //TODO: change this page to select team
 
   return (
     <div>
@@ -76,18 +92,19 @@ export default function Team(props:any) {
               <button className='w-32 mr-2 px-2 h-8 text-md bg-[#1D3557] text-white' onClick={()=>setIsModalOpen(prev=>!prev)}>Add Member</button>  
             </div>
             <div className="border border-black border-b-0 border-x-0 w-full">
-              <table className='w-full h-full'>
+              <table className='w-full h-full table-fixed'>
                 <thead className='text-[#707785] bg-[#F3F4F6] text-left'>
                   <tr>
                     <th className='pl-2 w-full'>Members</th>
                   </tr>
                 </thead>
-                <tbody className='text-left'>
+                <tbody className='text-left block w-full overflow-scroll max-h-60 z-0 flex-none relative'>
+                  {/* <tr className='cursor-pointer hover:bg-gray-200'><td className='pl-2'>Ayo Omotosho</td></tr>
                   <tr className='cursor-pointer hover:bg-gray-200'><td className='pl-2'>Ayo Omotosho</td></tr>
                   <tr className='cursor-pointer hover:bg-gray-200'><td className='pl-2'>Ayo Omotosho</td></tr>
                   <tr className='cursor-pointer hover:bg-gray-200'><td className='pl-2'>Ayo Omotosho</td></tr>
-                  <tr className='cursor-pointer hover:bg-gray-200'><td className='pl-2'>Ayo Omotosho</td></tr>
-                  <tr className='cursor-pointer hover:bg-gray-200'><td className='pl-2'>Ayo Omotosho</td></tr>
+                  <tr className='cursor-pointer hover:bg-gray-200'><td className='pl-2'>Ayo Omotosho</td></tr> */}
+                  {renderMembers}
                 </tbody>
               </table>
             </div>
@@ -129,7 +146,7 @@ export default function Team(props:any) {
         </div>
         {/* TODO: TICKETS */}
         <div className=' h-72 mx-8 bg-white rounded shadow-lg'></div>
-        <AddMember id={id} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} memberName={memberName} setMemberName={setMemberName}/>
+        <AddMember members={members} setMembers={setMembers} id={id} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} memberName={memberName} setMemberName={setMemberName}/>
         </>
 
 }

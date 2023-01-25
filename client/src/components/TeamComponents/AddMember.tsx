@@ -1,7 +1,14 @@
 import React, { useState } from 'react'
 import axios from 'axios'
 
+interface memberType {
+  memberArray: []
+  memberArrayLength: number
+}
+
 type Props = {
+  members: memberType
+  setMembers:  React.Dispatch<React.SetStateAction<memberType>>
   id: string,
   isModalOpen: boolean,
   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>
@@ -9,16 +16,16 @@ type Props = {
   setMemberName: React.Dispatch<React.SetStateAction<string>>
 }
 
-export default function AddMember({id, isModalOpen, setIsModalOpen, memberName, setMemberName} : Props){
+export default function AddMember({members, setMembers, id, isModalOpen, setIsModalOpen, memberName, setMemberName} : Props){
 
   const handleSubmit = (e:React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setIsModalOpen(prev => !prev)
-    console.log(memberName)
-    
+    //update length on submit / get members and update len
+
     axios.post(`http://localhost:3002/user/teams/members/${id}`, {"memberName": memberName})
       .then(response => {
-        console.log(`member post response ${response.data}`)
+        setMembers({...members, memberArrayLength: response.data.teams[0].members.length})
       })
       .catch(error => {
         console.log(`error ${error}`)
