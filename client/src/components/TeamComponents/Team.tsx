@@ -20,7 +20,7 @@ export default function Team(props:any) {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
   const [memberName, setMemberName] = useState<string>('')
   const [members, setMembers] = useState<memberType>({
-    memberArrayLength: 0,
+    memberArrayLength: 1,
     memberArray: []
   })
 

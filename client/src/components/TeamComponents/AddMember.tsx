@@ -21,8 +21,9 @@ export default function AddMember({members, setMembers, id, isModalOpen, setIsMo
   const handleSubmit = (e:React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setIsModalOpen(prev => !prev)
-    //update length on submit / get members and update len
 
+
+    
     axios.post(`http://localhost:3002/user/teams/members/${id}`, {"memberName": memberName})
       .then(response => {
         setMembers({...members, memberArrayLength: response.data.teams[0].members.length})

@@ -9,19 +9,12 @@ const UserSchema = new Schema({
   password: String,
   isAdmin: Boolean,
   //teams: [String]
-  teams: [ //array of teams
+  teams: [
     {
-      teamName: String,  //name of the team 
-      manager: String, //manager of the team (gets special permissions)
-      members: [
-        { //list of members in the team
-          memberName: String
-        }
-      ],
-      projects: [{ //list of projects associated with the team
-        title: String,
-        status: String
-      }]
+      team: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Team"
+      }
     }
   ]
 })

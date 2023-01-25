@@ -3,6 +3,7 @@ const router = express.Router()
 import User from '../models/userModel'
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
+import Team from '../models/teamModel'
 
 
 
@@ -30,12 +31,7 @@ router.route("/register").post(async(req,res) => {
     email,
     password: encryptedPassword, 
     isAdmin,
-    teams: [
-      {
-        teamName: '',
-        manager: '',
-      }
-    ]
+    teams: []
 
   })
   res.status(201).send({success: 'user created'})
@@ -57,7 +53,7 @@ router.route("/login").post(async(req,res) => {
   return res.status(404).json({error: 'Incorrect password'})
 })
 
-//get user with id
+//GET USER WITH ID
 router.route('/user/:id').get(async (req, res) => {
   const id = req.params.id
   const user = await User.findById(id)
@@ -74,25 +70,34 @@ router.route('/user/:id').get(async (req, res) => {
 })
 
 
-//create team and setting isAdmin
+//CREATE TEAM AND SET IS ADMIN
 router.route('/user/teams/:id').patch(async (req, res) => {
-  const title:string = req.body.title
-  const manager:string = req.body.manager
-  const id = req.params.id
+  const newTeam = new Team({
+    teamName: req.body.title,
+    manager: req.params.id,
+  })
+  const id:string = req.params.id
+
 
   // {$push: {"teams": title}}
   User.findByIdAndUpdate(id, 
-    {$set: {isAdmin: true, "teams": {teamName: title, manager: manager}}}
-    )
-    .then((user) => {
-      if(user){
-        res.status(200).send(user)
-      }
-    })
-    .catch((error) => {
-      console.log(error)
-      res.status(404)
-    })
+    {$set: {isAdmin: true, teams: {team: id}}})
+      .then((user) => {
+        if(user){
+          newTeam.save()
+          res.status(200).send(user)
+        }
+      })
+      .catch((error) => {
+        console.log(error)
+        res.status(404)
+      })
+
+  //CREATE NEW TEAM AND SETS ISADMIN TRUE
+  // User.findById(manager, {$set: {isAdmin: true}}, {$push: {"teams": manager}})  
+  // 
+  // res.status(200).send(newTeam)
+  // newTeam.save()
 })
 
 
@@ -102,24 +107,20 @@ router.route('/user/teams/members/:id').post(async (req,res) => {
   const memberName = req.body.memberName
 
   User.findByIdAndUpdate(id, {$push: {"teams.$[].members" : {"memberName": memberName}}})
-      .then((user) => {
-        res.status(200).send(user)
-      })
-      .catch((error) => {
-        res.status(404).send(error)
-      })  
+    .then(response => {
+      User.findOneAndUpdate({firstName: memberName}, {$push: {"_id": id}})
+        .then((user) => {
+          res.status(200).send({message: "success added team"})
+        })
+        .catch((error) => {
+          res.status(404).send({error: "could not add team"})
+        })
+    })
+      
 })
 
-router.route('/user/teams/members/:id').get(async (req, res) =>{
-  const id = req.params.id
-  try{
 
-    const members = await User.findById(id)
-    res.status(200).send(members)
-  } catch {
-    res.status(404).send({error: "could not find user"})
-  }
-})
+
 
 
 
