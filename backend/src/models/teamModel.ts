@@ -9,8 +9,12 @@ const TeamSchema = new Schema({
     ref: "User"
   },
   members: [
-    {type: mongoose.Schema.Types.ObjectId,
-    ref: "User"}
+    {
+      memberId : {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User"
+      }
+    }
   ],
   projects: [
     {
