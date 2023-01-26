@@ -56,22 +56,14 @@ router.route("/login").post(async(req,res) => {
 //GET USER WITH ID
 router.route('/user/:id').get(async (req, res) => {
   const id = req.params.id
-  const user = await User.findById(id)
-    .then((user) => {
-      if(user){
-        res.status(200).send(user)
-        //console.log(user)
-      }
-    })
-    .catch((error) => {
-      //res.status(404).send(error.data)
-      res.status(404).send({message: 'error getting user data'})
-    })
+  const user  = await User.findById(id).populate({path: "teams.team"})
+  res.status(200).send(user)
 })
 
 
 //CREATE TEAM AND SET IS ADMIN
 router.route('/user/teams/:id').patch(async (req, res) => {
+  //create new team obj
   const newTeam = new Team({
     teamName: req.body.title,
     manager: req.params.id,
@@ -79,9 +71,9 @@ router.route('/user/teams/:id').patch(async (req, res) => {
   const id:string = req.params.id
 
 
-  // {$push: {"teams": title}}
+  //FINDS USER AND UPDATES ADMIN TO TRUE, CREATES NEW TEAM IN TEAM DOC WITH USER/MANAGER AS REF
   User.findByIdAndUpdate(id, 
-    {$set: {isAdmin: true, teams: {team: id}}})
+    {$set: {isAdmin: true, teams: {team: newTeam._id}}})
       .then((user) => {
         if(user){
           newTeam.save()
@@ -93,11 +85,6 @@ router.route('/user/teams/:id').patch(async (req, res) => {
         res.status(404)
       })
 
-  //CREATE NEW TEAM AND SETS ISADMIN TRUE
-  // User.findById(manager, {$set: {isAdmin: true}}, {$push: {"teams": manager}})  
-  // 
-  // res.status(200).send(newTeam)
-  // newTeam.save()
 })
 
 
