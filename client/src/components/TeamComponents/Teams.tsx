@@ -10,7 +10,7 @@ export default function Teams() {
   const login = useLogin()
 
   //trigger that renders create team or the team page
-  const [trigger, setTrigger] = useState<boolean>(false)
+  const [trigger, setTrigger] = useState<boolean>(true)
   
   //retrieve state from local storage into user obj
   
@@ -19,7 +19,8 @@ export default function Teams() {
   const [myTeamName, setMyTeamName] = useState(undefined)
   const [hasLoaded, setHasLoaded] = useState(false)
   let isAdmin = user.isAdmin
-  const id = user._id
+
+
 
   if(user){
     if(user.teams > 0){
@@ -28,13 +29,9 @@ export default function Teams() {
   }
 
 
-
-
-
-
   return (
     <div className='w-full h-full'>
-      {!trigger && !isAdmin ? <CreateTeam trigger={trigger} setTrigger={setTrigger}/>: <Team id={id} trigger={trigger} myTeamName={myTeamName} setMyTeamName={setMyTeamName} hasLoaded={hasLoaded} setHasLoaded={setHasLoaded}/>}
+      {!trigger && !isAdmin ? <CreateTeam trigger={trigger} setTrigger={setTrigger}/>: <Team  trigger={trigger} myTeamName={myTeamName} setMyTeamName={setMyTeamName} hasLoaded={hasLoaded} setHasLoaded={setHasLoaded}/>}
     </div>
   )
 }

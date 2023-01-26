@@ -39,7 +39,7 @@ export default function CreateTeam({trigger, setTrigger} : Props) {
     setTrigger((prev) => !prev)
     
     //gets user obj
-    axios.patch(`http://localhost:3002/user/teams/${obj._id}`, {title: team.title, manager: team.manager})
+    axios.patch(`http://localhost:3002/user/teams/${obj._id}`, {title: team.title})
       .then((response) => {
         let obj = {...response.data}
         console.log('obj response', obj)

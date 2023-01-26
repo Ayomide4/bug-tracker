@@ -5,7 +5,7 @@ import ClipLoader from "react-spinners/ClipLoader";
 import SelectTeam from './SelectTeam';
 import axios from 'axios';
 import AddMember from './AddMember';
-
+import { ToastContainer } from 'react-toastify';
 
 
 interface memberType {
@@ -25,26 +25,27 @@ export default function Team(props:any) {
   })
 
   const login = useLogin()
-  const id = props.id
-  
-
 
 
   const fetchData = async (obj:any) => {
-    axios.get(`http://localhost:3002/user/${obj._id}`)
+
+    //GET TEAMS FOR DROPDOWN
+
+    axios.get(`http://localhost:3002/team/${obj._id}`)
       .then(response => {
+        //console.log('RESPONSE MEMBERS',response.data)
         const test = JSON.stringify(response.data)
-        localStorage.setItem("login state", test)
-        const data = response.data
-        props.setMyTeamName(data.teams[0].teamName)
-        setList([...data.teams])
+        localStorage.setItem("team state", test)
+        props.setMyTeamName(response.data.teamName)
+        console.log(`LOCAL STORAGE FROM FETCH DATA ${test}`)
+        //setList([...response.data.members])
         //setMembers({...members, memberArrayLength: data.teams[0].members.length})
-        setMembers({...members, memberArray: data.teams[0].members})
+        setMembers({...members, memberArray: response.data.members})
       })
-  }
-
-
-  useEffect(()=>{
+    }
+    
+    
+    useEffect(()=>{
       setLoading(true)
       setTimeout(()=>{
         const temp:any = localStorage.getItem("login state")
@@ -53,6 +54,8 @@ export default function Team(props:any) {
         setLoading((prev) => !prev)
         props.setHasLoaded(true)
         setLoading(false)
+        renderMembers
+        console.log('LOCAL STATE',obj)
       }, 350)
   },[props.trigger, members.memberArrayLength])
 
@@ -60,7 +63,7 @@ export default function Team(props:any) {
   const renderMembers = members.memberArray.map((entry:any, index:number) => {
     return(
       <tr className='cursor-pointer hover:bg-gray-200 table-row' key={index}>
-        <td id='memberName' key={index}  className='pl-2 w-1/12'>{entry.memberName}</td>
+        <td id='memberName' key={index}  className='pl-2 w-1/12'>{entry.memberId.fullName}</td>
       </tr>
     )
   })
@@ -99,11 +102,6 @@ export default function Team(props:any) {
                   </tr>
                 </thead>
                 <tbody className='text-left block w-full overflow-scroll max-h-60 z-0 flex-none relative'>
-                  {/* <tr className='cursor-pointer hover:bg-gray-200'><td className='pl-2'>Ayo Omotosho</td></tr>
-                  <tr className='cursor-pointer hover:bg-gray-200'><td className='pl-2'>Ayo Omotosho</td></tr>
-                  <tr className='cursor-pointer hover:bg-gray-200'><td className='pl-2'>Ayo Omotosho</td></tr>
-                  <tr className='cursor-pointer hover:bg-gray-200'><td className='pl-2'>Ayo Omotosho</td></tr>
-                  <tr className='cursor-pointer hover:bg-gray-200'><td className='pl-2'>Ayo Omotosho</td></tr> */}
                   {renderMembers}
                 </tbody>
               </table>
@@ -146,10 +144,11 @@ export default function Team(props:any) {
         </div>
         {/* TODO: TICKETS */}
         <div className=' h-72 mx-8 bg-white rounded shadow-lg'></div>
-        <AddMember members={members} setMembers={setMembers} id={id} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} memberName={memberName} setMemberName={setMemberName}/>
+        <AddMember members={members} setMembers={setMembers} id={login?.loginInfo._id} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} memberName={memberName} setMemberName={setMemberName}/>
         </>
 
-}
+} 
+  <ToastContainer/>
     </div>
   ) 
 }

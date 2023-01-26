@@ -9,6 +9,15 @@ router.route('/team').get(async(req,res) => {
   res.send(teams)
 })
 
+//get and populate manager and members 
+router.route('/team/:id').get(async (req,res)=> {
+  const id = req.params.id
+  const team = await Team.findOne({manager: id})
+    .populate({path: "manager", select: "fullName"})
+    .populate({path: "members.memberId", select: "fullName"})
+  res.send(team)
+})
+
 //ADD MEMBER
 router.route('/team/members/:id').patch(async (req,res) => {
   const id = req.params.id
@@ -20,13 +29,21 @@ router.route('/team/members/:id').patch(async (req,res) => {
   //if user could not be found
   if(!member){
     res.status(404).send({error: "member does not exist"})
-  } else {
+  } else if (member){
     //find team where manager is equal to that id and push 
-    const team = await Team.findOneAndUpdate({"manager": id}, {$push: { "members": {memberId : member._id}}})
-    
-    //push team reference id to the member we just added
-    await User.findOneAndUpdate({fullName: memberName}, {$push: {"teams": {"team": team?._id}}})
-    res.status(200).send({team})
+    const alreadyMember = await Team.findOne({"members.memberId": member._id})
+    if(alreadyMember){
+      return res.status(409).send({message: `${memberName} is already in your team`})
+    }
+    else{ 
+
+      const team = await Team.findOneAndUpdate({"manager": id}, {$push: { "members": {memberId : member._id}}})
+      
+      //push team reference id to the member we just added
+      await User.findOneAndUpdate({fullName: memberName}, {$push: {"teams": {"team": team?._id}}})
+      res.status(200).send({team})
+    }
+
   }
 
 })

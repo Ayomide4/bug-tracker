@@ -1,5 +1,45 @@
 import React, { useState } from 'react'
 import axios from 'axios'
+import {toast} from 'react-toastify'
+
+const notifyTeam = (payload: number) => {
+  if (payload === 200){
+    toast.success('Member Added', {
+    position: "top-right",
+    autoClose: 3000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "light",
+    });
+  }
+  else if (payload ===  409) {
+    toast.error('User is already a part of your team!', {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      });
+  }
+  else if (payload === 404){
+    toast.error('User does not exist!', {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      });
+  }
+}
 
 interface memberType {
   memberArray: []
@@ -17,18 +57,24 @@ type Props = {
 }
 
 export default function AddMember({members, setMembers, id, isModalOpen, setIsModalOpen, memberName, setMemberName} : Props){
-
+  console.log(`id in add member function ${id}`)
   const handleSubmit = (e:React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setIsModalOpen(prev => !prev)
-
-
     
-    axios.post(`http://localhost:3002/user/teams/members/${id}`, {"memberName": memberName})
+    axios.patch(`http://localhost:3002/team/members/${id}`, {"memberName": memberName})
       .then(response => {
-        setMembers({...members, memberArrayLength: response.data.teams[0].members.length})
+        console.log(response.data.team.members)
+        notifyTeam(response.status)
+        setMembers({...members, memberArrayLength: response.data.team.members.length})
       })
       .catch(error => {
+        if(error.response.status === 409){
+          notifyTeam(error.response.status)
+        } 
+        else if(error.response.status === 404){
+          notifyTeam(error.response.status)
+        }
         console.log(`error ${error}`)
       })
   }
