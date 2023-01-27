@@ -6,6 +6,8 @@ import User from "../models/userModel";
 //get teams and populate
 router.route('/team').get(async(req,res) => {
   const teams = await Team.find({}).populate({path: "members.memberId"})
+  .populate({path: "manager", select: "fullName"})
+  .populate({path: "members.memberId", select: "fullName"})
   res.send(teams)
 })
 

@@ -29,7 +29,7 @@ export default function Team(props:any) {
 
 
   const fetchData = async (obj:any) => {
-    //GET TEAMS FOR DROPDOWN
+    //GET TEAMS FOR 
 
     //GET TEAM DATA
     axios.get(`http://localhost:3002/team/${obj._id}`)
@@ -52,6 +52,8 @@ export default function Team(props:any) {
       setTimeout(()=>{
         const temp:any = localStorage.getItem("login state")
         const obj:any = JSON.parse(temp)
+        console.log('obj', obj.teams)
+        setList(obj.teams)
         fetchData(obj)
         setLoading((prev) => !prev)
         props.setHasLoaded(true)
@@ -62,7 +64,8 @@ export default function Team(props:any) {
             localStorage.setItem("login state", JSON.stringify(response.data))
             login?.setLoginInfo({...response.data})
           })
-      }, 350)
+        }, 350)
+
   },[props.trigger, members.memberArrayLength])
 
 

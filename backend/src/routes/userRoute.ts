@@ -53,10 +53,18 @@ router.route("/login").post(async (req, res) => {
   return res.status(404).json({ error: "Incorrect password" });
 });
 
+router.route("/users").get(async (req, res) => {
+  const users = await User.find({})
+    .populate({path: "teams.team", select: "teamName"})
+
+    res.send(users)
+})
+
 //GET USER WITH ID
 router.route("/user/:id").get(async (req, res) => {
   const id = req.params.id;
   const user = await User.findById(id).populate({ path: "teams.team" });
+
   res.status(200).send(user);
 });
 
@@ -70,21 +78,55 @@ router.route("/user/teams/:id").patch(async (req, res) => {
 
   const id: string = req.params.id;
 
+
   //FINDS USER AND UPDATES ADMIN TO TRUE
   //CREATES NEW TEAM IN TEAM DOC WITH USER/MANAGER AS REF
-  User.findByIdAndUpdate(id, {
-    $set: { isAdmin: true, teams: { team: newTeam._id } },
-  })
-    .then((user) => {
-      if (user) {
-        newTeam.save();
-        res.status(200).send(user);
-      }
-    })
-    .catch((error) => {
-      console.log(error);
-      res.status(404);
-    });
+  
+  const userQuery = await User.findOne({_id: id, "teams.0": {$exists: true}})
+
+  if(userQuery === null){
+    User.findByIdAndUpdate(id, {$set: { isAdmin: true, teams: {team: newTeam._id}}})
+      .then((user)=>{
+        if(user){
+          newTeam.save()
+          res.status(200).send(user)
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        res.status(404);
+      });
+  } 
+  else if(userQuery){
+    User.findByIdAndUpdate(id, {$set: {isAdmin:true}}, {$push :  {"teams": { "team": newTeam._id }}})
+      .then((user)=>{
+        if(user){
+          newTeam.save()
+          res.status(200).send(user)
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        res.status(404);
+      });
+  }
+
+  
+
+  // User.findByIdAndUpdate(id, 
+  //     {$set: { isAdmin: true, teams: {team: newTeam._id}}}, 
+  //     // {$push :  {"teams": { "team": newTeam._id }},}
+  //     )
+  //   .then((user) => {
+  //     if (user) {
+  //       newTeam.save();
+  //       res.status(200).send(user);
+  //     }
+  //   })
+  //   .catch((error) => {
+  //     console.log(error);
+  //     res.status(404);
+  //   });
 });
 
 
