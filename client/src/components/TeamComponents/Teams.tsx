@@ -10,7 +10,7 @@ export default function Teams() {
   const login = useLogin()
 
   //trigger that renders create team or the team page
-  const [trigger, setTrigger] = useState<boolean>(true)
+  const [trigger, setTrigger] = useState<boolean>(false)
   
   //retrieve state from local storage into user obj
   

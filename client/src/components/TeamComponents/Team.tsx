@@ -9,7 +9,7 @@ import { ToastContainer } from 'react-toastify';
 
 
 interface memberType {
-  memberArray: []
+  memberArray : any[]
   memberArrayLength: number
 }
 
@@ -25,22 +25,24 @@ export default function Team(props:any) {
   })
 
   const login = useLogin()
+  let manager = {}
 
 
   const fetchData = async (obj:any) => {
-
     //GET TEAMS FOR DROPDOWN
 
+    //GET TEAM DATA
     axios.get(`http://localhost:3002/team/${obj._id}`)
       .then(response => {
-        //console.log('RESPONSE MEMBERS',response.data)
+        //console.log('RESPONSE ',response.data)
         const test = JSON.stringify(response.data)
         localStorage.setItem("team state", test)
         props.setMyTeamName(response.data.teamName)
-        console.log(`LOCAL STORAGE FROM FETCH DATA ${test}`)
+        manager = response.data.manager
+        let tempData = [...response.data.members, manager]
         //setList([...response.data.members])
         //setMembers({...members, memberArrayLength: data.teams[0].members.length})
-        setMembers({...members, memberArray: response.data.members})
+        setMembers({...members, memberArray: tempData.reverse()})
       })
     }
     
@@ -55,13 +57,22 @@ export default function Team(props:any) {
         props.setHasLoaded(true)
         setLoading(false)
         renderMembers
-        console.log('LOCAL STATE',obj)
+        axios.get(`http://localhost:3002/user/${obj._id}`)
+          .then((response) => {
+            localStorage.setItem("login state", JSON.stringify(response.data))
+            login?.setLoginInfo({...response.data})
+          })
       }, 350)
   },[props.trigger, members.memberArrayLength])
 
 
   const renderMembers = members.memberArray.map((entry:any, index:number) => {
     return(
+      entry.fullName ? 
+      <tr className='cursor-pointer hover:bg-gray-200 table-row' key={index}>
+        <td id='memberName' key={index}  className='pl-2 w-1/12'>{entry.fullName}</td>
+      </tr>
+      :
       <tr className='cursor-pointer hover:bg-gray-200 table-row' key={index}>
         <td id='memberName' key={index}  className='pl-2 w-1/12'>{entry.memberId.fullName}</td>
       </tr>
@@ -144,7 +155,7 @@ export default function Team(props:any) {
         </div>
         {/* TODO: TICKETS */}
         <div className=' h-72 mx-8 bg-white rounded shadow-lg'></div>
-        <AddMember members={members} setMembers={setMembers} id={login?.loginInfo._id} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} memberName={memberName} setMemberName={setMemberName}/>
+        <AddMember manager={manager={}} members={members} setMembers={setMembers} id={login?.loginInfo._id} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} memberName={memberName} setMemberName={setMemberName}/>
         </>
 
 } 

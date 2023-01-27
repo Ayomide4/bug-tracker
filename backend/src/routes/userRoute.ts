@@ -87,22 +87,5 @@ router.route("/user/teams/:id").patch(async (req, res) => {
     });
 });
 
-//ADD MEMBER ROUTE
-// router.route("/user/teams/members/:id").post(async (req, res) => {
-//   const id = req.params.id;
-//   const memberName = req.body.memberName;
-
-//   User.findByIdAndUpdate(id, {
-//     $push: { "teams.$[].members": { memberName: memberName } },
-//   }).then((response) => {
-//     User.findOneAndUpdate({ firstName: memberName }, { $push: { _id: id } })
-//       .then((user) => {
-//         res.status(200).send({ message: "success added team" });
-//       })
-//       .catch((error) => {
-//         res.status(404).send({ error: "could not add team" });
-//       });
-//   });
-// });
 
 module.exports = router;

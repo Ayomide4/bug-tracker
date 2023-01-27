@@ -42,11 +42,12 @@ const notifyTeam = (payload: number) => {
 }
 
 interface memberType {
-  memberArray: []
+  memberArray: any[]
   memberArrayLength: number
 }
 
 type Props = {
+  manager: any
   members: memberType
   setMembers:  React.Dispatch<React.SetStateAction<memberType>>
   id: string,
@@ -56,12 +57,19 @@ type Props = {
   setMemberName: React.Dispatch<React.SetStateAction<string>>
 }
 
-export default function AddMember({members, setMembers, id, isModalOpen, setIsModalOpen, memberName, setMemberName} : Props){
+export default function AddMember({manager, members, setMembers, id, isModalOpen, setIsModalOpen, memberName, setMemberName} : Props){
   console.log(`id in add member function ${id}`)
   const handleSubmit = (e:React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setIsModalOpen(prev => !prev)
-    
+    console.log('MANAGER',members.memberArray)
+
+
+    if(memberName === members.memberArray[0].fullName)
+    {
+      notifyTeam(409)
+      return
+    }
     axios.patch(`http://localhost:3002/team/members/${id}`, {"memberName": memberName})
       .then(response => {
         console.log(response.data.team.members)
