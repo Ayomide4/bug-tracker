@@ -64,7 +64,7 @@ export default function Team(props:any) {
             localStorage.setItem("login state", JSON.stringify(response.data))
             login?.setLoginInfo({...response.data})
           })
-        }, 350)
+        }, 450)
 
   },[props.trigger, members.memberArrayLength])
 

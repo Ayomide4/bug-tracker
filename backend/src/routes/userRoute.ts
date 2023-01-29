@@ -8,7 +8,7 @@ import Team from "../models/teamModel";
 router.route("/register").post(async (req, res) => {
   const firstName = req.body.firstName;
   const lastName = req.body.lastName;
-  const fullName = `${firstName} ${lastName}`
+  const fullName = `${firstName} ${lastName}`;
   const email = req.body.email;
   const password = req.body.password;
   const isAdmin = req.body.isAdmin;
@@ -54,11 +54,13 @@ router.route("/login").post(async (req, res) => {
 });
 
 router.route("/users").get(async (req, res) => {
-  const users = await User.find({})
-    .populate({path: "teams.team", select: "teamName"})
+  const users = await User.find({}).populate({
+    path: "teams.team",
+    select: "teamName",
+  });
 
-    res.send(users)
-})
+  res.send(users);
+});
 
 //GET USER WITH ID
 router.route("/user/:id").get(async (req, res) => {
@@ -78,31 +80,25 @@ router.route("/user/teams/:id").patch(async (req, res) => {
 
   const id: string = req.params.id;
 
-
   //FINDS USER AND UPDATES ADMIN TO TRUE
   //CREATES NEW TEAM IN TEAM DOC WITH USER/MANAGER AS REF
-  
-  const userQuery = await User.findOne({_id: id, "teams.0": {$exists: true}})
 
-  if(userQuery === null){
-    User.findByIdAndUpdate(id, {$set: { isAdmin: true, teams: {team: newTeam._id}}})
-      .then((user)=>{
-        if(user){
-          newTeam.save()
-          res.status(200).send(user)
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-        res.status(404);
-      });
-  } 
-  else if(userQuery){
-    User.findByIdAndUpdate(id, {$set: {isAdmin:true}}, {$push :  {"teams": { "team": newTeam._id }}})
-      .then((user)=>{
-        if(user){
-          newTeam.save()
-          res.status(200).send(user)
+
+  const userQuery = await User.findOne({
+    _id: id,
+    "teams.0": { $exists: true },
+  });
+
+  //IF USER HAS NO TEAMS
+  if (userQuery === null) {
+    console.log("NULL");
+    User.findByIdAndUpdate(id, {
+      $set: { isAdmin: true, teams: { team: newTeam._id } },
+    })
+      .then((user) => {
+        if (user) {
+          newTeam.save();
+          res.status(200).send(user);
         }
       })
       .catch((error) => {
@@ -111,23 +107,22 @@ router.route("/user/teams/:id").patch(async (req, res) => {
       });
   }
 
-  
+  //IF USER HAS AT LEAST ONE TEAM
+  if (userQuery !== null) {
+    const user = await User.findById(id);
 
-  // User.findByIdAndUpdate(id, 
-  //     {$set: { isAdmin: true, teams: {team: newTeam._id}}}, 
-  //     // {$push :  {"teams": { "team": newTeam._id }},}
-  //     )
-  //   .then((user) => {
-  //     if (user) {
-  //       newTeam.save();
-  //       res.status(200).send(user);
-  //     }
-  //   })
-  //   .catch((error) => {
-  //     console.log(error);
-  //     res.status(404);
-  //   });
+    User.findByIdAndUpdate(id, {
+      $push: { teams: { team: newTeam._id } },
+      $set: { isAdmin: true },
+    })
+      .then((userData) => {
+        newTeam.save();
+        res.status(200).send(user);
+      })
+      .catch((error) => {
+        res.status(400).send({ error: error });
+      });
+  }
 });
-
 
 module.exports = router;
