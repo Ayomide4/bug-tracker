@@ -18,7 +18,7 @@ export default function SelectTeam(props:any) {
   return (
     <>
       <div className='border border-gray-500 rounded-sm'>
-        <button type='button' onClick={() => {setIsExpanded(prev => !prev)}} className='bg-white w-32 h-10 py-1 flex justify-center items-center'>
+        <button type='button' onClick={() => {setIsExpanded(prev => !prev)}} className='bg-white w-32 h-11 flex justify-center items-center'>
         <div className='mr-1'>{btnTitle /* change title when dropdown value changes*/}</div> 
         <div>
           {!isExpanded && <AiOutlineRight/>}

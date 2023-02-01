@@ -51,6 +51,7 @@ export default function CreateTeam({trigger, setTrigger} : Props) {
       }) 
   },[team])
 
+  
   const handleClick = () => {
     setIsModalOpen((prev) => !prev)
   }

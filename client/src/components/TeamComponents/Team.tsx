@@ -23,52 +23,11 @@ export default function Team(props:any) {
     memberArrayLength: 1,
     memberArray: []
   })
+  const [teams, setTeams] = useState([])
 
   const login = useLogin()
   let manager = {}
-
-
-  const fetchData = async (obj:any) => {
-    //GET TEAMS FOR 
-
-    //GET TEAM DATA
-    axios.get(`http://localhost:3002/team/${obj._id}`)
-      .then(response => {
-        //console.log('RESPONSE ',response.data)
-        const test = JSON.stringify(response.data)
-        localStorage.setItem("team state", test)
-        props.setMyTeamName(response.data.teamName)
-        manager = response.data.manager
-        let tempData = [...response.data.members, manager]
-        //setList([...response.data.members])
-        //setMembers({...members, memberArrayLength: data.teams[0].members.length})
-        setMembers({...members, memberArray: tempData.reverse()})
-      })
-    }
-    
-    
-    useEffect(()=>{
-      setLoading(true)
-      setTimeout(()=>{
-        const temp:any = localStorage.getItem("login state")
-        const obj:any = JSON.parse(temp)
-        console.log('obj', obj.teams)
-        setList(obj.teams)
-        fetchData(obj)
-        setLoading((prev) => !prev)
-        props.setHasLoaded(true)
-        setLoading(false)
-        renderMembers
-        axios.get(`http://localhost:3002/user/${obj._id}`)
-          .then((response) => {
-            localStorage.setItem("login state", JSON.stringify(response.data))
-            login?.setLoginInfo({...response.data})
-          })
-        }, 450)
-
-  },[props.trigger, members.memberArrayLength])
-
-
+  
   const renderMembers = members.memberArray.map((entry:any, index:number) => {
     return(
       entry.fullName ? 
@@ -82,7 +41,53 @@ export default function Team(props:any) {
     )
   })
 
-  //TODO: change this page to select team
+  const fetchData = async (obj:any) => {
+    //GET TEAM DATA
+    await axios.get(`http://localhost:3002/team/${obj._id}`)
+      .then(response => {
+        const test = JSON.stringify(response.data)
+        localStorage.setItem("team state", test)
+        props.setMyTeamName(response.data.teamName)
+        manager = response.data.manager
+        let tempData = [...response.data.members, manager]
+        //setList([...response.data.members])
+        //setMembers({...members, memberArrayLength: data.teams[0].members.length})
+        setMembers({...members, memberArray: tempData.reverse()})
+      })
+  }
+
+    
+  useEffect(()=>{
+    setLoading(true)
+    setTimeout(()=>{
+      const temp:any = localStorage.getItem("login state")
+      const obj:any = JSON.parse(temp)
+      console.log(`teams ${obj.teams}`)
+      setList(obj.teams)
+      if(!props.member){
+        fetchData(obj)
+      }
+      setLoading((prev) => !prev)
+      props.setHasLoaded(true)
+      setLoading(false)
+      renderMembers
+
+      //TODO: IF NOT ADMIN BUT A PART OF A TEAM, DISPLAY THAT TEAM
+      //TODO: RENDER PROJECTS/ ADD PROJECTS TO TEAMS
+
+
+      //GET USER DATA
+      axios.get(`http://localhost:3002/user/${obj._id}`)
+        .then((response) => {
+          localStorage.setItem("login state", JSON.stringify(response.data))
+          login?.setLoginInfo({...response.data})
+        })
+      }, 450)
+  }, [props.trigger, members.memberArrayLength])
+
+
+
+
 
   return (
     <div>
@@ -97,8 +102,10 @@ export default function Team(props:any) {
       :  
       <>
         <h1 className='ml-6 mt-6 font-semibold text-2xl text-[#1D3557] mb-8'>Teams</h1>
-        <div className='absolute top-4 right-8'>
-          {/* <DropdownMenu dropdownValue={dropdownValue} setDropdownValue={setDropdownValue} listType='teams' list={list}/> */}
+
+
+        <div className='absolute top-4 right-8 flex'>
+          <button className='w-32 mr-2 px-2 h-12 text-md bg-[#1D3557] text-white'>Create Team</button>
           <SelectTeam list={list} setMyTeamName={props.setMyTeamName}/>
         </div>
         <div className='flex items-start justify-evenly mb-8 z-0'>

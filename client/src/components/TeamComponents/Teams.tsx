@@ -13,25 +13,33 @@ export default function Teams() {
   const [trigger, setTrigger] = useState<boolean>(false)
   
   //retrieve state from local storage into user obj
-  
-  const temp:any = localStorage.getItem("login state")
-  const user:any = JSON.parse(temp)
-  const [myTeamName, setMyTeamName] = useState(undefined)
+  let isAdmin = false
+  const [myTeamName, setMyTeamName] = useState('')
   const [hasLoaded, setHasLoaded] = useState(false)
-  let isAdmin = user.isAdmin
+  const [showCreateBtn, setShowCreateBtn] = useState(false)
+  const [member, setMember] = useState<boolean>(false)
 
+  
+  useEffect(()=>{
+    const temp:any = localStorage.getItem("login state")
+    const user:any = JSON.parse(temp)
+    isAdmin = user.isAdmin
+    console.log(`is admin ${isAdmin} trigger ${trigger}`)
+    const teamLength:number = user.teams.length
 
-
-  if(user){
-    if(user.teams > 0){
-      setMyTeamName(user.teams[0])
+    if(teamLength > 0 && !isAdmin){
+      setMyTeamName(user.teams[0].team.teamName)
+      console.log()
+      setMember(true)
+      setTrigger(true)
     }
-  }
+    setTrigger(true)
+  }, [])
 
 
   return (
     <div className='w-full h-full'>
-      {!trigger && !isAdmin ? <CreateTeam trigger={trigger} setTrigger={setTrigger}/>: <Team  trigger={trigger} myTeamName={myTeamName} setMyTeamName={setMyTeamName} hasLoaded={hasLoaded} setHasLoaded={setHasLoaded}/>}
+      {!trigger && !isAdmin ? <CreateTeam trigger={trigger} setTrigger={setTrigger}/>: <Team member={member} trigger={trigger} myTeamName={myTeamName} setMyTeamName={setMyTeamName} hasLoaded={hasLoaded} setHasLoaded={setHasLoaded}/>}
     </div>
   )
 }

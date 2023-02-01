@@ -78,10 +78,10 @@ export default function TicketItem(props:any) {
       <CreateItem trigger={trigger} closeModal={handleClick} notify={notify} listLength={props.listLength} setListLength={props.setListLength} itemType={'ticket'} formData={formData} setFormData={setFormData}/>
       <div className='flex justify-between p-4'>
         <h2 className='text-xl text-[#1D3557]'>Tickets</h2>
-        <form>
+        {/* <form>
           <label>Filter</label>
           <input className='border border-black' maxLength={20} type="text"/>
-        </form>
+        </form> */}
         <button onClick={handleClick} className='border rounded-md bg-[#1D3557] p-2 text-white text-base'>New Ticket</button>
       </div>
       <div className='overflow-y-scroll max-h-96 h-96'>
