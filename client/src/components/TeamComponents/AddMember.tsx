@@ -58,12 +58,11 @@ type Props = {
 }
 
 export default function AddMember({manager, members, setMembers, id, isModalOpen, setIsModalOpen, memberName, setMemberName} : Props){
-  console.log(`id in add member function ${id}`)
+
   const handleSubmit = (e:React.FormEvent<HTMLFormElement>) => {
+    console.log(`ARRAY LENGTH BEFORE ${members.memberArrayLength}`)
     e.preventDefault()
     setIsModalOpen(prev => !prev)
-    console.log('MANAGER',members.memberArray)
-
 
     if(memberName === members.memberArray[0].fullName)
     {
@@ -72,7 +71,6 @@ export default function AddMember({manager, members, setMembers, id, isModalOpen
     }
     axios.patch(`http://localhost:3002/team/members/${id}`, {"memberName": memberName})
       .then(response => {
-        console.log(response.data.team.members)
         notifyTeam(response.status)
         setMembers({...members, memberArrayLength: response.data.team.members.length})
       })

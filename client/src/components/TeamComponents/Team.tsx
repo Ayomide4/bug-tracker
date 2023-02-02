@@ -24,9 +24,16 @@ export default function Team(props:any) {
     memberArray: []
   })
   const [teams, setTeams] = useState([])
+  const [isAdmin, setIsAdmin] = useState<boolean>(false)
 
   const login = useLogin()
   let manager = {}
+
+
+  const handleClick = () => {
+    props.setIsModalOpen((prev:boolean) => !prev)
+    console.log('click')
+  }
   
   const renderMembers = members.memberArray.map((entry:any, index:number) => {
     return(
@@ -62,19 +69,22 @@ export default function Team(props:any) {
     setTimeout(()=>{
       const temp:any = localStorage.getItem("login state")
       const obj:any = JSON.parse(temp)
-      console.log(`teams ${obj.teams}`)
       setList(obj.teams)
+      setIsAdmin(obj.isAdmin)
+      console.log(`obj is admin is ${isAdmin}`)
       if(!props.member){
         fetchData(obj)
       }
+
       setLoading((prev) => !prev)
       props.setHasLoaded(true)
       setLoading(false)
       renderMembers
 
-      //TODO: IF NOT ADMIN BUT A PART OF A TEAM, DISPLAY THAT TEAM
-      //TODO: RENDER PROJECTS/ ADD PROJECTS TO TEAMS
 
+      //TODO: RENDER PROJECTS/ ADD PROJECTS TO TEAMS
+      //TODO: add manager to members list when creating project
+      //TODO: MAKE CREATE TEAM BTN ACTIVATE MODAL instead of redir to create page
 
       //GET USER DATA
       axios.get(`http://localhost:3002/user/${obj._id}`)
@@ -102,10 +112,8 @@ export default function Team(props:any) {
       :  
       <>
         <h1 className='ml-6 mt-6 font-semibold text-2xl text-[#1D3557] mb-8'>Teams</h1>
-
-
         <div className='absolute top-4 right-8 flex'>
-          <button className='w-32 mr-2 px-2 h-12 text-md bg-[#1D3557] text-white'>Create Team</button>
+          {!isAdmin && <button onClick={handleClick} className='w-32 mr-2 px-2 h-12 text-md bg-[#1D3557] text-white'>Create Team</button>}
           <SelectTeam list={list} setMyTeamName={props.setMyTeamName}/>
         </div>
         <div className='flex items-start justify-evenly mb-8 z-0'>

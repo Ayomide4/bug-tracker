@@ -91,7 +91,6 @@ router.route("/user/teams/:id").patch(async (req, res) => {
 
   //IF USER HAS NO TEAMS
   if (userQuery === null) {
-    console.log("NULL");
     User.findByIdAndUpdate(id, {
       $set: { isAdmin: true, teams: { team: newTeam._id } },
     })
