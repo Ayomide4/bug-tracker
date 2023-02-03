@@ -59,7 +59,7 @@ export default function Team(props:any) {
         localStorage.setItem("team state", test)
         props.setMyTeamName(response.data.teamName)
         manager = response.data.manager
-        let tempData = [...response.data.members, manager]
+        let tempData = [...response.data.members]
         //setList([...response.data.members])
         //setMembers({...members, memberArrayLength: data.teams[0].members.length})
         setMembers({...members, memberArray: tempData.reverse()})
