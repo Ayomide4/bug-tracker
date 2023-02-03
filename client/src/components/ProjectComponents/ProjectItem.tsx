@@ -36,7 +36,7 @@ export default function ProjectItem(props:any) {
 
 
 
-  //ren
+  //render data
   const dataArray = data.map((entry:any, index:number) => {
     return(
       <tr className='cursor-pointer hover:bg-gray-200'onClick={(e) => clickItem(e, entry)} key={index}>

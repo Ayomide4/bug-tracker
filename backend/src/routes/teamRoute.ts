@@ -6,8 +6,8 @@ import User from "../models/userModel";
 //get teams and populate
 router.route('/team').get(async(req,res) => {
   const teams = await Team.find({}).populate({path: "members.memberId"})
-  .populate({path: "manager", select: "fullName"})
-  .populate({path: "members.memberId", select: "fullName"})
+    .populate({path: "manager", select: "fullName"})
+    .populate({path: "members.memberId", select: "fullName"})
   res.send(teams)
 })
 
@@ -39,7 +39,7 @@ router.route('/team/members/:id').patch(async (req,res) => {
       res.status(409).send({message: `${memberName} is already in your team`})
     }
 
-  else{ 
+  else { 
       const team = await Team.findOneAndUpdate({"manager": id}, {$push: { "members": {memberId : member._id}}})
       
       //push team reference id to the member we just added
