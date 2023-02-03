@@ -8,6 +8,9 @@ import AddMember from './AddMember';
 import { ToastContainer } from 'react-toastify';
 
 
+//TODO: RENDER PROJECTS/ ADD PROJECTS TO TEAMS
+//TODO: add manager to members list when creating project
+
 interface memberType {
   memberArray : any[]
   memberArrayLength: number
@@ -31,7 +34,7 @@ export default function Team(props:any) {
 
 
   const handleClick = () => {
-    props.setIsModalOpen((prev:boolean) => !prev)
+    props.setTrigger((prev:boolean) => !prev)
     console.log('click')
   }
   
@@ -63,36 +66,36 @@ export default function Team(props:any) {
       })
   }
 
+  const fetchUser = async (obj:any) => {
+    axios.get(`http://localhost:3002/user/${obj._id}`)
+        .then((response) => {
+          localStorage.setItem("login state", JSON.stringify(response.data))
+          login?.setLoginInfo({...response.data})
+        })
+  }
+
     
   useEffect(()=>{
     setLoading(true)
     setTimeout(()=>{
       const temp:any = localStorage.getItem("login state")
       const obj:any = JSON.parse(temp)
-      setList(obj.teams)
       setIsAdmin(obj.isAdmin)
       console.log(`obj is admin is ${isAdmin}`)
+      
       if(!props.member){
         fetchData(obj)
       }
-
+      
       setLoading((prev) => !prev)
       props.setHasLoaded(true)
       setLoading(false)
       renderMembers
+      fetchUser(obj)
+      setList(obj.teams)
 
 
-      //TODO: RENDER PROJECTS/ ADD PROJECTS TO TEAMS
-      //TODO: add manager to members list when creating project
-      //TODO: MAKE CREATE TEAM BTN ACTIVATE MODAL instead of redir to create page
-
-      //GET USER DATA
-      axios.get(`http://localhost:3002/user/${obj._id}`)
-        .then((response) => {
-          localStorage.setItem("login state", JSON.stringify(response.data))
-          login?.setLoginInfo({...response.data})
-        })
-      }, 450)
+    }, 450)
   }, [props.trigger, members.memberArrayLength])
 
 
