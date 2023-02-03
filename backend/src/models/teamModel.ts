@@ -18,8 +18,10 @@ const TeamSchema = new Schema({
   ],
   projects: [
     {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Project"
+      projectId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Project"
+      }
     }
   ]
 })

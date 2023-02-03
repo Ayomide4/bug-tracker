@@ -51,6 +51,10 @@ export default function Team(props:any) {
     )
   })
 
+  const renderProjects = () => {
+    
+  }
+
   const fetchData = async (obj:any) => {
     //GET TEAM DATA
     await axios.get(`http://localhost:3002/team/${obj._id}`)
@@ -94,8 +98,8 @@ export default function Team(props:any) {
       fetchUser(obj)
       setList(obj.teams)
 
-
-    }, 450)
+      //time out was 450 
+    }, 100)
   }, [props.trigger, members.memberArrayLength])
 
 
@@ -157,18 +161,7 @@ export default function Team(props:any) {
                   </tr>
                 </thead>
                 <tbody>
-                  <tr className='cursor-pointer hover:bg-gray-200'>
-                    <td className='px-2'>Bug Tracker Example</td>
-                    <td className='px-2'>Active</td>
-                  </tr>
-                  <tr className='cursor-pointer hover:bg-gray-200'>
-                    <td className='px-2'>Social Media Example</td>
-                    <td className='px-2'>Active</td>
-                  </tr>
-                  <tr className='cursor-pointer hover:bg-gray-200'>
-                    <td className='px-2'>Tiktok Example</td>
-                    <td className='px-2'>Inactive</td>
-                  </tr>
+                  
                 </tbody>
               </table>
             </div>

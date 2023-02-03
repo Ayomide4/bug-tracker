@@ -8,6 +8,7 @@ router.route('/team').get(async(req,res) => {
   const teams = await Team.find({}).populate({path: "members.memberId"})
     .populate({path: "manager", select: "fullName"})
     .populate({path: "members.memberId", select: "fullName"})
+    .populate({path: "projects"})
   res.send(teams)
 })
 
@@ -17,6 +18,7 @@ router.route('/team/:id').get(async (req,res)=> {
   const team = await Team.findOne({manager: id})
     .populate({path: "manager", select: "fullName"})
     .populate({path: "members.memberId", select: "fullName"})
+    .populate({path: "projects.projectId"})
   res.send(team)
 })
 
