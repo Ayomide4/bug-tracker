@@ -173,7 +173,7 @@ export default function Team(props:any) {
                       <th className='pl-2 w-1/2 '>Status</th>
                     </tr>
                   </thead>
-                  <tbody className=' h-32 relative z-0'>
+                  <tbody>
                     {renderProjects}
                   </tbody>
                 </table>

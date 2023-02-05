@@ -18,7 +18,6 @@ export default function ProjectItem(props:any) {
     axios.get("http://localhost:3002/project/list")
       .then(res => {
         const list = res.data
-        console.log('res', res.data);
         setData(list.reverse())
         props.setListLength(res.data.length)
       })
