@@ -70,7 +70,7 @@ export default function Project(props:any) {
           <h2 className='text-xl text-[#1D3557]'>Projects</h2>
           <button onClick={handleClick} className='border rounded-md bg-[#1D3557] p-2 text-white text-base'>New Project</button>
         </div>
-          <ProjectItem projectDashboard={props.projectDashboard} setProjectDashboard={props.setProjectDashboard} listLength={listLength} setListLength={setListLength} setSelectedInfo={props.setSelectedInfo} selectedInfo={props.selectedInfo} selected={props.selected} setIsSelected={props.setIsSelected}/>
+          <ProjectItem projectDashboard={props.projectDashboard} setProjectDashboard={props.setProjectDashboard} listLength={listLength} setListLength={setListLength} setSelectedInfo={props.setSelectedInfo} selectedInfo={props.selectedInfo} selected={props.selected} setIsSelected={props.setIsSelected} trigger={trigger}/>
       </div>
       <ToastContainer/>
     </div>

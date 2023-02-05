@@ -9,12 +9,13 @@ import { ToastContainer } from 'react-toastify';
 
 
 //TODO: RENDER PROJECTS/ ADD PROJECTS TO TEAMS
-//TODO: add manager to members list when creating project
+//TODO: figure out bug for list not uploading when adding member or creating projects
 
 interface memberType {
   memberArray : any[]
   memberArrayLength: number
 }
+
 
 export default function Team(props:any) {
   const [dropdownValue, setDropdownValue] = useState({prio: '', status: 'new'})
@@ -28,6 +29,7 @@ export default function Team(props:any) {
   })
   const [teams, setTeams] = useState([])
   const [isAdmin, setIsAdmin] = useState<boolean>(false)
+  const [projects, setProjects] = useState<object[]>([])
 
   const login = useLogin()
   let manager = {}
@@ -35,25 +37,35 @@ export default function Team(props:any) {
 
   const handleClick = () => {
     props.setTrigger((prev:boolean) => !prev)
-    console.log('click')
   }
   
   const renderMembers = members.memberArray.map((entry:any, index:number) => {
     return(
       entry.fullName ? 
       <tr className='cursor-pointer hover:bg-gray-200 table-row' key={index}>
-        <td id='memberName' key={index}  className='pl-2 w-1/12'>{entry.fullName}</td>
+        <td id='memberName' key={index} className='pl-2 w-1/12'>{entry.fullName}</td>
       </tr>
       :
       <tr className='cursor-pointer hover:bg-gray-200 table-row' key={index}>
-        <td id='memberName' key={index}  className='pl-2 w-1/12'>{entry.memberId.fullName}</td>
+        <td id='memberName' key={index} className='pl-2 w-1/12'>{entry.memberId.fullName}</td>
       </tr>
     )
   })
 
-  const renderProjects = () => {
-    
-  }
+  
+  const renderProjects = projects.map((entry:any, index:number) => {
+    return(
+      // <tr className='cursor-pointer hover:bg-gray-200 table-row' key={index}>
+      //   <td id='projectTitle' key={entry.projectId.title} className='pl-2 w-full table-cell'>{entry.projectId.title}</td>
+      //   <td id='projectStatus' key={entry.projectId.status} className='pl-2 w-full table-cell'>{entry.projectId.status}</td>
+      // </tr> 
+
+      <tr className='cursor-pointer hover:bg-gray-200 table-row' key={index}>
+        <td className='whitespace-nowrap pl-2 w-1/2'>{entry.projectId.title}</td>
+        <td className='whitespace-nowrap pl-2 w-1/2'>{entry.projectId.status}</td>
+      </tr>
+    )
+  })
 
   const fetchData = async (obj:any) => {
     //GET TEAM DATA
@@ -63,10 +75,11 @@ export default function Team(props:any) {
         localStorage.setItem("team state", test)
         props.setMyTeamName(response.data.teamName)
         manager = response.data.manager
+        let teamProjects = [...response.data.projects]
         let tempData = [...response.data.members]
         //setList([...response.data.members])
-        //setMembers({...members, memberArrayLength: data.teams[0].members.length})
         setMembers({...members, memberArray: tempData.reverse()})
+        setProjects([...response.data.projects])
       })
   }
 
@@ -77,7 +90,6 @@ export default function Team(props:any) {
           login?.setLoginInfo({...response.data})
         })
   }
-
     
   useEffect(()=>{
     setLoading(true)
@@ -85,16 +97,15 @@ export default function Team(props:any) {
       const temp:any = localStorage.getItem("login state")
       const obj:any = JSON.parse(temp)
       setIsAdmin(obj.isAdmin)
-      console.log(`obj is admin is ${isAdmin}`)
       
       if(!props.member){
         fetchData(obj)
       }
-      
+
       setLoading((prev) => !prev)
       props.setHasLoaded(true)
       setLoading(false)
-      renderMembers
+      // renderMembers
       fetchUser(obj)
       setList(obj.teams)
 
@@ -153,18 +164,24 @@ export default function Team(props:any) {
               </div>
             </div>
             <div className='border border-black border-b-0 border-x-0 w-full'>
-              <table className='w-full h-full'>
-                <thead className='text-[#707785] bg-[#F3F4F6] text-left'>
-                  <tr>
-                    <th className='pl-2 w-1/2'>Title</th>
-                    <th className='pl-2 w-1/2'>Status</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  
-                </tbody>
-              </table>
+              {/* PROJECT SCROLL */}
+              <div className='overflow-y-scroll max-h-66 w-full'>
+                <table className='w-full'>
+                  <thead className='text-[#707785] bg-[#F3F4F6] text-left w-full sticky top-0 z-10'>
+                    <tr>
+                      <th className='pl-2 w-1/2'>Title</th>
+                      <th className='pl-2 w-1/2 '>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody className=' h-32 relative z-0'>
+                    {renderProjects}
+                  </tbody>
+                </table>
+              </div>
+            
             </div>
+
+
           </div>
         </div>
         {/* TODO: TICKETS */}

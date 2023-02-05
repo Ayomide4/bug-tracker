@@ -18,33 +18,31 @@ export default function ProjectItem(props:any) {
     axios.get("http://localhost:3002/project/list")
       .then(res => {
         const list = res.data
+        console.log('res', res.data);
         setData(list.reverse())
-        props.setListLength((prev:number) => list.length)
+        props.setListLength(res.data.length)
       })
       .catch(err => console.log(err))
   }
 
-
   
   //updates list when length changes
   useEffect(() => {
-    fetchData()
+    setTimeout(() => {
+      fetchData()
+    }, 100)
   },[props.listLength])
-
-
-
-
 
 
   //render data
   const dataArray = data.map((entry:any, index:number) => {
     return(
       <tr className='cursor-pointer hover:bg-gray-200'onClick={(e) => clickItem(e, entry)} key={index}>
-        <td id='title' className='pl-4 text-lg'>{entry.title}</td>
-        <td id='desc' className='text-lg px-2 max-h-6 max-w-4xl'>{entry.desc !== undefined && entry.desc.length > 45 ? `${entry.desc.substring(0,50)}...`: entry.desc}</td>
-        <td id='manager' className='text-lg'>{entry.manager}</td>
-        <td id='team' className='text-lg'>{entry.team}</td>
-        <td id='status' className='text-lg'>{entry.status}</td>
+        <td id='title' className='whitespace-nowrap pl-4 text-lg'>{entry.title}</td>
+        <td id='desc' className='whitespace-nowrap text-lg px-2 max-h-6 max-w-4xl'>{entry.desc !== undefined && entry.desc.length > 45 ? `${entry.desc.substring(0,50)}...`: entry.desc}</td>
+        <td id='manager' className='whitespace-nowrap text-lg'>{entry.manager}</td>
+        <td id='team' className='whitespace-nowrap text-lg'>{entry.team}</td>
+        <td id='status' className='whitespace-nowrap text-lg'>{entry.status}</td>
       </tr>
     )
   })
@@ -62,7 +60,7 @@ export default function ProjectItem(props:any) {
               <th className='py-3 bg-[#F3F4F6] sticky max-h-4 top-0 w-32'>Team</th>
               <th className='py-3 bg-[#F3F4F6] sticky max-h-4 top-0 w-32'>Status</th>
             </tr>
-          </thead>
+          </thead> 
           <tbody className='text-left'>
             {dataArray !== undefined ? dataArray : null}
           </tbody>

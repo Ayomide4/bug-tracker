@@ -7,7 +7,8 @@ module.exports = {
   theme: {
     extend: {
       spacing: {
-        'itemContainer': '33rem'
+        'itemContainer': '33rem',
+        '66': '264px'
       },
       
       

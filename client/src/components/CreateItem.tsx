@@ -2,7 +2,7 @@ import Form from './Form.js'
 import axios from 'axios'
 import { notify } from './ProjectComponents/Project.js'
 
-
+//TODO: ADD ERROR NOTIFICATION IF PROJECT DOESNT HAVE A TEAM
 
 
 export default function CreateItem(props:any) {
@@ -34,18 +34,20 @@ export default function CreateItem(props:any) {
         axios.post("http://localhost:3002/project/create", formData)
           .catch(function (error){
             if (error.response){
+
               console.log(error.data)
               console.log(error.status)
               console.log(error.headers)
             }
           })
 
-        props.setListLength((prev:number) => props.setListLength(prev+1)) //
-        props.setFormData(blankData) //reset form input
+        props.setListLength((prev:number) =>prev+1) //
+        // props.setFormData(blankData) //reset form input
         props.notify(true)
         props.closeModal()
       }
     }
+
     else if(props.itemType === 'ticket'){
       if(formData.title === '' || formData.desc === '' || formData.prio === '- Select -')
       {
@@ -62,7 +64,7 @@ export default function CreateItem(props:any) {
         })
 
 
-        props.setListLength((prev:number) => props.setListLength(prev+1)) //
+        props.setListLength((prev:number) => prev+1) //
         props.setFormData(blankData) //reset form input
         props.notify(true)
         props.closeModal()

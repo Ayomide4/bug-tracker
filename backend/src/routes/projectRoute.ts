@@ -24,18 +24,18 @@ router.route("/project/create").post(async (req, res) => {
   })
 
   const teamMatch =  await Team.findOne({teamName: team})
-  console.log(teamMatch)
+
 
   if(teamMatch === null){
     res.status(404).send({message: "TEAM DOESN'T EXIST"})
   }
 
-  else if(teamMatch !== null){
+  else {
+    newProject.save()
     const updatedTeam = await Team.findOneAndUpdate({teamName: team}, {$push: {"projects": {projectId: newProject._id}}})
     res.status(200).send(updatedTeam)
   }
-
-  newProject.save()
+  
 })
 
 //LIST PROJECTS

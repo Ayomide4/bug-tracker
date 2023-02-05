@@ -25,11 +25,12 @@ export default function TicketItem(props:any) {
   let devCount = 0
   
   const fetchData = async () => {
+    //FETCH DATA FROM TICKET DB
     axios.get("http://localhost:3002/ticket/list")
     .then(res => {
       const list: {}[] = res.data
       setData(list.reverse())
-      props.setListLength((prev:number) => list.length) //getting the length of the array of objects to render total items
+      props.setListLength(res.data.length) //getting the length of the array of objects to render total items
       props.setTicketStatus({development: devCount, open: openCount})
     })
     .catch(err => console.log(err))
@@ -48,11 +49,11 @@ export default function TicketItem(props:any) {
     
     return (
         <tr className='cursor-pointer hover:bg-gray-200' key={index}>
-          <td className='pl-4 text-lg max-h-1'>{entry.title}</td>
-          <td className='text-lg px-2 max-h-1 max-w-4xl'>{entry.desc !== undefined && entry.desc.length > 40 ? `${entry.desc.substring(0,40)}...`: entry.desc}</td>
-          <td className='text-lg max-h-1'>{entry.status}</td>
-          <td className='text-lg max-h-1'>{entry.prio}</td>
-          <td className='text-lg max-h-1'>{entry.dev}</td>
+          <td className='whitespace-nowrap pl-4 text-lg max-h-1'>{entry.title}</td>
+          <td className='whitespace-nowrap text-lg px-2 max-h-1 max-w-4xl'>{entry.desc !== undefined && entry.desc.length > 40 ? `${entry.desc.substring(0,40)}...`: entry.desc}</td>
+          <td className='whitespace-nowrap text-lg max-h-1'>{entry.status}</td>
+          <td className='whitespace-nowrap text-lg max-h-1'>{entry.prio}</td>
+          <td className='whitespace-nowrap text-lg max-h-1'>{entry.dev}</td>
         </tr>
     )
   })
