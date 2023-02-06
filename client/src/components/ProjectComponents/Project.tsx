@@ -3,8 +3,8 @@ import ProjectItem from './ProjectItem'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import CreateItem from '../CreateItem';
-export const notify = (success:boolean) => {
-  if (success){
+export const notify = (response:any) => {
+  if (response === true){
     toast.success('Created new project 🚀', {
     position: "top-right",
     autoClose: 3000,
@@ -16,8 +16,20 @@ export const notify = (success:boolean) => {
     theme: "light",
     });
   }
-  else if (!success) {
+  else if (response === false) {
     toast.error('Inputs cannot be empty', {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      });
+  }
+  else if ('projectErr'){
+    toast.error('Team does not exist', {
       position: "top-right",
       autoClose: 3000,
       hideProgressBar: false,

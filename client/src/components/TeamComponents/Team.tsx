@@ -6,10 +6,11 @@ import SelectTeam from './SelectTeam';
 import axios from 'axios';
 import AddMember from './AddMember';
 import { ToastContainer } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 
-//TODO: RENDER PROJECTS/ ADD PROJECTS TO TEAMS
-//TODO: figure out bug for list not uploading when adding member or creating projects
+
+//TODO: WHEN SWITCHING TEAM DATA IS UPDATED
 
 interface memberType {
   memberArray : any[]
@@ -30,6 +31,7 @@ export default function Team(props:any) {
   const [teams, setTeams] = useState([])
   const [isAdmin, setIsAdmin] = useState<boolean>(false)
   const [projects, setProjects] = useState<object[]>([])
+  const navigate = useNavigate()
 
   const login = useLogin()
   let manager = {}
@@ -37,6 +39,10 @@ export default function Team(props:any) {
 
   const handleClick = () => {
     props.setTrigger((prev:boolean) => !prev)
+  }
+
+  const handleClickProjects = () => {
+    navigate('/projects')
   }
   
   const renderMembers = members.memberArray.map((entry:any, index:number) => {
@@ -160,7 +166,7 @@ export default function Team(props:any) {
             <div className='flex items-center justify-between w-full pt-2'>
               <h2 className='text-xl font-semibold px-2 mb-2 text-[#1D3557]'>Projects</h2>
               <div className='flex items-center pb-2'>
-              <button  className='w-32 mr-2 px-2 h-8 text-md bg-[#1D3557] text-white'>Create Project</button>
+              <button  className='w-32 mr-2 px-2 h-8 text-md bg-[#1D3557] text-white' onClick={handleClickProjects}>Create Project</button>
               </div>
             </div>
             <div className='border border-black border-b-0 border-x-0 w-full'>

@@ -2,7 +2,7 @@ import Form from './Form.js'
 import axios from 'axios'
 import { notify } from './ProjectComponents/Project.js'
 
-//TODO: ADD ERROR NOTIFICATION IF PROJECT DOESNT HAVE A TEAM
+
 
 
 export default function CreateItem(props:any) {
@@ -32,19 +32,18 @@ export default function CreateItem(props:any) {
         return false
       } else {
         axios.post("http://localhost:3002/project/create", formData)
+          .then(function (response){
+            console.log(response.status, 'status')
+            props.setListLength((prev:number) =>prev+1) //
+            notify(true)
+            props.closeModal()
+          })
           .catch(function (error){
-            if (error.response){
-
-              console.log(error.data)
-              console.log(error.status)
-              console.log(error.headers)
+            if (error){
+              notify('projectErr')
+              props.setFormData(blankData)
             }
           })
-
-        props.setListLength((prev:number) =>prev+1) //
-        // props.setFormData(blankData) //reset form input
-        props.notify(true)
-        props.closeModal()
       }
     }
 
@@ -55,19 +54,19 @@ export default function CreateItem(props:any) {
         return false
       } else {
         axios.post("http://localhost:3002/ticket/create", formData)
+          .then(function(response){
+            if(response.status === 200){
+              props.setListLength((prev:number) => prev+1) //        props.setFormData(blankData) //reset form input
+              notify(true)
+              props.closeModal()
+            }
+          })
           .catch(function (error){
             if (error.response){
-              console.log(error.data)
-              console.log(error.status)
-              console.log(error.headers)
+              notify('tickerErr')
+              console.log(error.response.status)
             }
         })
-
-
-        props.setListLength((prev:number) => prev+1) //
-        props.setFormData(blankData) //reset form input
-        props.notify(true)
-        props.closeModal()
       }
     }
   }
