@@ -10,19 +10,18 @@ import { useNavigate } from 'react-router-dom';
 
 
 
-//TODO: WHEN SWITCHING TEAM DATA IS UPDATED
+//TODO: WHEN SWITCHING TEAM IN DROPDOWN, DATA IS UPDATED
 
 interface memberType {
   memberArray : any[]
   memberArrayLength: number
 }
 
-
 export default function Team(props:any) {
   const [dropdownValue, setDropdownValue] = useState({prio: '', status: 'new'})
   const [list, setList] = useState([''])
   const [loading, setLoading] = useState(false)
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
+  const [isMemberModalOpen, setIsMemberModalOpen] = useState<boolean>(false)
   const [memberName, setMemberName] = useState<string>('')
   const [members, setMembers] = useState<memberType>({
     memberArrayLength: 1,
@@ -35,6 +34,7 @@ export default function Team(props:any) {
 
   const login = useLogin()
   let manager = {}
+  let id = ''
 
 
   const handleClick = () => {
@@ -58,14 +58,8 @@ export default function Team(props:any) {
     )
   })
 
-  
   const renderProjects = projects.map((entry:any, index:number) => {
     return(
-      // <tr className='cursor-pointer hover:bg-gray-200 table-row' key={index}>
-      //   <td id='projectTitle' key={entry.projectId.title} className='pl-2 w-full table-cell'>{entry.projectId.title}</td>
-      //   <td id='projectStatus' key={entry.projectId.status} className='pl-2 w-full table-cell'>{entry.projectId.status}</td>
-      // </tr> 
-
       <tr className='cursor-pointer hover:bg-gray-200 table-row' key={index}>
         <td className='whitespace-nowrap pl-2 w-1/2'>{entry.projectId.title}</td>
         <td className='whitespace-nowrap pl-2 w-1/2'>{entry.projectId.status}</td>
@@ -81,7 +75,6 @@ export default function Team(props:any) {
         localStorage.setItem("team state", test)
         props.setMyTeamName(response.data.teamName)
         manager = response.data.manager
-        let teamProjects = [...response.data.projects]
         let tempData = [...response.data.members]
         //setList([...response.data.members])
         setMembers({...members, memberArray: tempData.reverse()})
@@ -114,10 +107,9 @@ export default function Team(props:any) {
       // renderMembers
       fetchUser(obj)
       setList(obj.teams)
-
       //time out was 450 
     }, 100)
-  }, [props.trigger, members.memberArrayLength])
+  }, [props.trigger, members.memberArrayLength, props.isModalOpen])
 
 
 
@@ -138,14 +130,14 @@ export default function Team(props:any) {
         <h1 className='ml-6 mt-6 font-semibold text-2xl text-[#1D3557] mb-8'>Teams</h1>
         <div className='absolute top-4 right-8 flex'>
           {!isAdmin && <button onClick={handleClick} className='w-32 mr-2 px-2 h-12 text-md bg-[#1D3557] text-white'>Create Team</button>}
-          <SelectTeam list={list} setMyTeamName={props.setMyTeamName}/>
+          <SelectTeam list={list} setMyTeamName={props.setMyTeamName} setProjects={setProjects} members={members} setMembers={setMembers}/>
         </div>
         <div className='flex items-start justify-evenly mb-8 z-0'>
           {/* TEAM LIST */}
           <div className='w-5/12 h-80 bg-white border border-[#1D3557] shadow-sm rounded'>
             <div className='flex justify-between items-center py-2'>
               <h2 className=' text-xl font-semibold ml-2 text-[#1D3557]'>{props.myTeamName}</h2>
-              <button className='w-32 mr-2 px-2 h-8 text-md bg-[#1D3557] text-white' onClick={()=>setIsModalOpen(prev=>!prev)}>Add Member</button>  
+              <button className='w-32 mr-2 px-2 h-8 text-md bg-[#1D3557] text-white' onClick={()=>setIsMemberModalOpen(prev=>!prev)}>Add Member</button>  
             </div>
             <div className="border border-black border-b-0 border-x-0 w-full">
               <table className='w-full h-full table-fixed'>
@@ -173,7 +165,7 @@ export default function Team(props:any) {
               {/* PROJECT SCROLL */}
               <div className='overflow-y-scroll max-h-66 w-full'>
                 <table className='w-full'>
-                  <thead className='text-[#707785] bg-[#F3F4F6] text-left w-full sticky top-0 z-10'>
+                  <thead className='text-[#707785] bg-[#F3F4F6] text-left w-full sticky top-0 z-0'>
                     <tr>
                       <th className='pl-2 w-1/2'>Title</th>
                       <th className='pl-2 w-1/2 '>Status</th>
@@ -192,7 +184,7 @@ export default function Team(props:any) {
         </div>
         {/* TODO: TICKETS */}
         <div className=' h-72 mx-8 bg-white rounded shadow-lg'></div>
-        <AddMember manager={manager={}} members={members} setMembers={setMembers} id={login?.loginInfo._id} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} memberName={memberName} setMemberName={setMemberName}/>
+        <AddMember manager={manager={}} members={members} setMembers={setMembers} id={login?.loginInfo._id} isModalOpen={isMemberModalOpen} setIsModalOpen={setIsMemberModalOpen} memberName={memberName} setMemberName={setMemberName}/>
         </>
 
 } 

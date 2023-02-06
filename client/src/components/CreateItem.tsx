@@ -3,16 +3,12 @@ import axios from 'axios'
 import { notify } from './ProjectComponents/Project.js'
 
 
-
-
 export default function CreateItem(props:any) {
-
   const formData = {
     ...props.formData,
     date: new Date().toLocaleDateString('en-us', {year: 'numeric', month: 'short', day: '2-digit'})
   }
-
-
+  
   const handleSubmit = (e:React.FormEvent) => {
     //sends project info to database
     e.preventDefault()

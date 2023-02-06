@@ -5,7 +5,8 @@ import User from "../models/userModel";
 
 //get teams and populate
 router.route('/team').get(async(req,res) => {
-  const teams = await Team.find({}).populate({path: "members.memberId"})
+  const teams = await Team.find({})
+    .populate({path: "members.memberId"})
     .populate({path: "manager", select: "fullName"})
     .populate({path: "members.memberId", select: "fullName"})
     .populate({path: "projects"})
@@ -20,6 +21,22 @@ router.route('/team/:id').get(async (req,res)=> {
     .populate({path: "members.memberId", select: "fullName"})
     .populate({path: "projects.projectId"})
   res.send(team)
+})
+
+
+router.route("/dropdown").post(async (req,res) => {
+  const value = req.body.value
+  const team = await Team.findOne({"teamName": value})
+    .populate({path: "manager", select: "fullName"})
+    .populate({path: "members.memberId", select: "fullName"})
+    .populate({path: "projects.projectId"})
+  
+  res.status(200).send(team)
+})
+
+router.route("/test").get(async (req,res) => {
+  const test = await User.find({"fullName": "test test"})
+  res.send(test)
 })
 
 //ADD MEMBER
@@ -48,9 +65,7 @@ router.route('/team/members/:id').patch(async (req,res) => {
       await User.findOneAndUpdate({fullName: memberName}, {$push: {"teams": {"team": team?._id}}})
       res.status(200).send({team})
     }
-
   }
-
 })
 
 

@@ -43,10 +43,7 @@ export const notify = (response:any) => {
 }
 
 
-
-
 export default function Project(props:any) {
-
   const [trigger, setTrigger] = useState(false)
   const [listLength, setListLength] = useState<number>(0)
   const [formData, setFormData] = useState({
@@ -57,8 +54,6 @@ export default function Project(props:any) {
     status: 'active',
   })
 
-  
-
   const handleClick = () => {
     setTrigger(trigger => !trigger) 
     
@@ -68,11 +63,8 @@ export default function Project(props:any) {
       desc: '',
       team: '',
     }
-
     setFormData(blankData)
     }
-
-
 
   return (
     <div className='border mb-20 relative border-[#2A6470] rounded-lg w-11/12 mx-12 shadow-outline h-full bg-white mt-6'>

@@ -17,6 +17,7 @@ export default function CreateTeam({trigger, setTrigger, isModalOpen, setIsModal
   
   const handleClick = () => {
     setIsModalOpen((prev) => !prev)
+
   }
 
   return (
