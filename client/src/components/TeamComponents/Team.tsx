@@ -7,6 +7,7 @@ import axios from 'axios';
 import AddMember from './AddMember';
 import { ToastContainer } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
+import SelectedProject from '../ProjectComponents/SelectedProject';
 
 
 
@@ -32,6 +33,8 @@ export default function Team(props:any) {
   const [projects, setProjects] = useState<object[]>([])
   const navigate = useNavigate()
 
+  
+
   const login = useLogin()
   let manager = {}
   let id = ''
@@ -43,6 +46,10 @@ export default function Team(props:any) {
 
   const handleClickProjects = () => {
     navigate('/projects')
+  }
+
+  const selectProject = () => {
+    props.setIsSelected((prev:boolean) => !prev)
   }
   
   const renderMembers = members.memberArray.map((entry:any, index:number) => {
@@ -60,7 +67,7 @@ export default function Team(props:any) {
 
   const renderProjects = projects.map((entry:any, index:number) => {
     return(
-      <tr className='cursor-pointer hover:bg-gray-200 table-row' key={index}>
+      <tr className='cursor-pointer hover:bg-gray-200 table-row' key={index} onClick={selectProject}>
         <td className='whitespace-nowrap pl-2 w-1/2'>{entry.projectId.title}</td>
         <td className='whitespace-nowrap pl-2 w-1/2'>{entry.projectId.status}</td>
       </tr>
@@ -117,7 +124,7 @@ export default function Team(props:any) {
 
   return (
     <div>
-      {loading ? 
+      {loading || !props.selected ? 
       <div className='w-full h-screen flex items-center justify-center '>
         <ClipLoader color={'#1D3557'}
           loading={loading}
@@ -185,10 +192,10 @@ export default function Team(props:any) {
         {/* TODO: TICKETS */}
         <div className=' h-72 mx-8 bg-white rounded shadow-lg'></div>
         <AddMember manager={manager={}} members={members} setMembers={setMembers} id={login?.loginInfo._id} isModalOpen={isMemberModalOpen} setIsModalOpen={setIsMemberModalOpen} memberName={memberName} setMemberName={setMemberName}/>
-        </>
+        </>} 
 
-} 
-  <ToastContainer/>
+      
+        <ToastContainer/>
     </div>
   ) 
 }

@@ -3,6 +3,7 @@ import axios from 'axios'
 import CreateTeam from './CreateTeam'
 import Team from './Team'
 import { useLogin } from '/Users/ayoomotosho/web_development/projects/bug-tracker/client/src/LoginProvider'
+import SelectedProject from '../ProjectComponents/SelectedProject'
 
 
 export default function Teams() {
@@ -20,7 +21,19 @@ export default function Teams() {
   const [member, setMember] = useState<boolean>(false)
   const [isModalOpen, setIsModalOpen] = useState(false)
 
+  //select project variables
+  const [selected, setIsSelected] = useState<boolean>(true)
+  const [selectedInfo, setSelectedInfo] = useState({
+    title: '',
+    desc: '',
+    manager: '',
+    team: '',
+    status: '',
+    date: '',
+    id: ''
+  })
   
+
   useEffect(()=>{
     const temp:any = localStorage.getItem("login state")
     const user:any = JSON.parse(temp)
@@ -37,14 +50,13 @@ export default function Teams() {
       setMember(true)
       setTrigger(true)
     }
-
-
   }, [])
 
 
   return (
     <div className='w-full h-full'>
-      {!trigger && !isAdmin ? <CreateTeam isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} trigger={trigger} setTrigger={setTrigger}/>: <Team setIsModalOpen={setIsModalOpen} member={member} trigger={trigger} setTrigger={setTrigger} myTeamName={myTeamName} setMyTeamName={setMyTeamName} hasLoaded={hasLoaded} setHasLoaded={setHasLoaded}/>}
+      {!selected && <SelectedProject selectedInfo={selectedInfo} setSelectedInfo={setSelectedInfo} selected={selected} setIsSelected={setIsSelected}/>}
+      { (!trigger && !isAdmin) ? <CreateTeam isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} trigger={trigger} setTrigger={setTrigger}/> : selected && <Team setIsSelected={setIsSelected} selected={selected} setIsModalOpen={setIsModalOpen} member={member} trigger={trigger} setTrigger={setTrigger} myTeamName={myTeamName} setMyTeamName={setMyTeamName} hasLoaded={hasLoaded} setHasLoaded={setHasLoaded}/>}
     </div>
   )
 }

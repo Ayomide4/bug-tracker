@@ -64,7 +64,9 @@ export default function SelectedProject({selected, setIsSelected, selectedInfo, 
   const [trigger, setTrigger] = useState<boolean>(false)
   const [confirmDelete, setConfirmDelete] = useState<boolean>(false)
 
-  const handleClick = () => {
+  
+
+  const handleDelete = () => {
     //sends a delete request to the server 
     setTrigger((prev) => !prev)  //sets trigger to open so we can see the confirm delete page
 
@@ -85,11 +87,11 @@ export default function SelectedProject({selected, setIsSelected, selectedInfo, 
 
   useEffect(() => {
     //deletes project when confirm delete state changes
-      handleClick()
+      handleDelete()
   }, [confirmDelete])
 
   return (
-    <div className='w-full h-full'>
+    <div className='w-full'>
       <ToastContainer/>
       {trigger && <ConfirmDelete trigger={trigger} setTrigger={setTrigger} setConfirmDelete={setConfirmDelete} title={selectedInfo.title}/>}
       <div className='flex items-center w-full mt-6 justify-between'>
@@ -99,7 +101,7 @@ export default function SelectedProject({selected, setIsSelected, selectedInfo, 
         </div>
         <div className='mr-4'>
           <button className='w-24 h-15 border rounded-md bg-[#1D3557] p-2 text-white text-base'>Edit</button>
-          <button onClick={handleClick} className='w-24 h-15 border rounded-md bg-[#e63946] p-2 text-white text-base'>Delete</button>
+          <button onClick={handleDelete} className='w-24 h-15 border rounded-md bg-[#e63946] p-2 text-white text-base'>Delete</button>
         </div>
       </div>
 
