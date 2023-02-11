@@ -1,201 +1,241 @@
-import React, { useEffect, useState } from 'react'
-import DropdownMenu from '../DropdownMenu'
-import { useLogin } from '/Users/ayoomotosho/web_development/projects/bug-tracker/client/src/LoginProvider'
+import React, { useEffect, useState } from "react";
+import DropdownMenu from "../DropdownMenu";
+import { useLogin } from "/Users/ayoomotosho/web_development/projects/bug-tracker/client/src/LoginProvider";
 import ClipLoader from "react-spinners/ClipLoader";
-import SelectTeam from './SelectTeam';
-import axios from 'axios';
-import AddMember from './AddMember';
-import { ToastContainer } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
-import SelectedProject from '../ProjectComponents/SelectedProject';
-
+import SelectTeam from "./SelectTeam";
+import axios from "axios";
+import AddMember from "./AddMember";
+import { ToastContainer } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 
 //TODO: WHEN SWITCHING TEAM IN DROPDOWN, DATA IS UPDATED
 
 interface memberType {
-  memberArray : any[]
-  memberArrayLength: number
+  memberArray: any[];
+  memberArrayLength: number;
 }
 
-export default function Team(props:any) {
-  const [dropdownValue, setDropdownValue] = useState({prio: '', status: 'new'})
-  const [list, setList] = useState([''])
-  const [loading, setLoading] = useState(false)
-  const [isMemberModalOpen, setIsMemberModalOpen] = useState<boolean>(false)
-  const [memberName, setMemberName] = useState<string>('')
+export default function Team(props: any) {
+  const [dropdownValue, setDropdownValue] = useState({
+    prio: "",
+    status: "new",
+  });
+  const [list, setList] = useState([""]);
+  const [loading, setLoading] = useState(false);
+  const [isMemberModalOpen, setIsMemberModalOpen] = useState<boolean>(false);
+  const [memberName, setMemberName] = useState<string>("");
   const [members, setMembers] = useState<memberType>({
     memberArrayLength: 1,
-    memberArray: []
-  })
-  const [teams, setTeams] = useState([])
-  const [isAdmin, setIsAdmin] = useState<boolean>(false)
-  const [projects, setProjects] = useState<object[]>([])
-  const navigate = useNavigate()
+    memberArray: [],
+  });
+  const [teams, setTeams] = useState([]);
+  const [isAdmin, setIsAdmin] = useState<boolean>(false);
+  const [projects, setProjects] = useState<object[]>([]);
+  const navigate = useNavigate();
 
-  
-
-  const login = useLogin()
-  let manager = {}
-  let id = ''
-
+  const login = useLogin();
+  let manager = {};
+  let id = "";
 
   const handleClick = () => {
-    props.setTrigger((prev:boolean) => !prev)
-  }
+    props.setTrigger((prev: boolean) => !prev);
+  };
 
   const handleClickProjects = () => {
-    navigate('/projects')
-  }
+    navigate("/projects");
+  };
 
   const selectProject = () => {
-    props.setIsSelected((prev:boolean) => !prev)
-  }
-  
-  const renderMembers = members.memberArray.map((entry:any, index:number) => {
-    return(
-      entry.fullName ? 
-      <tr className='cursor-pointer hover:bg-gray-200 table-row' key={index}>
-        <td id='memberName' key={index} className='pl-2 w-1/12'>{entry.fullName}</td>
-      </tr>
-      :
-      <tr className='cursor-pointer hover:bg-gray-200 table-row' key={index}>
-        <td id='memberName' key={index} className='pl-2 w-1/12'>{entry.memberId.fullName}</td>
-      </tr>
-    )
-  })
+    props.setIsSelected((prev: boolean) => !prev);
+  };
 
-  const renderProjects = projects.map((entry:any, index:number) => {
-    return(
-      <tr className='cursor-pointer hover:bg-gray-200 table-row' key={index} onClick={selectProject}>
-        <td className='whitespace-nowrap pl-2 w-1/2'>{entry.projectId.title}</td>
-        <td className='whitespace-nowrap pl-2 w-1/2'>{entry.projectId.status}</td>
+  const renderMembers = members.memberArray.map((entry: any, index: number) => {
+    return entry.fullName ? (
+      <tr className="table-row cursor-pointer hover:bg-gray-200" key={index}>
+        <td id="memberName" key={index} className="w-1/12 pl-2">
+          {entry.fullName}
+        </td>
       </tr>
-    )
-  })
+    ) : (
+      <tr className="table-row cursor-pointer hover:bg-gray-200" key={index}>
+        <td id="memberName" key={index} className="w-1/12 pl-2">
+          {entry.memberId.fullName}
+        </td>
+      </tr>
+    );
+  });
 
-  const fetchData = async (obj:any) => {
+  const renderProjects = projects.map((entry: any, index: number) => {
+    return (
+      <tr
+        className="table-row cursor-pointer hover:bg-gray-200"
+        key={index}
+        onClick={selectProject}
+      >
+        <td className="w-1/2 whitespace-nowrap pl-2">
+          {entry.projectId.title}
+        </td>
+        <td className="w-1/2 whitespace-nowrap pl-2">
+          {entry.projectId.status}
+        </td>
+      </tr>
+    );
+  });
+
+  const fetchData = async (obj: any) => {
     //GET TEAM DATA
-    await axios.get(`http://localhost:3002/team/${obj._id}`)
-      .then(response => {
-        const test = JSON.stringify(response.data)
-        localStorage.setItem("team state", test)
-        props.setMyTeamName(response.data.teamName)
-        manager = response.data.manager
-        let tempData = [...response.data.members]
+    await axios
+      .get(`http://localhost:3002/team/${obj._id}`)
+      .then((response) => {
+        const test = JSON.stringify(response.data);
+        localStorage.setItem("team state", test);
+        props.setMyTeamName(response.data.teamName);
+        manager = response.data.manager;
+        let tempData = [...response.data.members];
         //setList([...response.data.members])
-        setMembers({...members, memberArray: tempData.reverse()})
-        setProjects([...response.data.projects])
-      })
-  }
+        setMembers({ ...members, memberArray: tempData.reverse() });
+        setProjects([...response.data.projects]);
+      });
+  };
 
-  const fetchUser = async (obj:any) => {
-    axios.get(`http://localhost:3002/user/${obj._id}`)
-        .then((response) => {
-          localStorage.setItem("login state", JSON.stringify(response.data))
-          login?.setLoginInfo({...response.data})
-        })
-  }
-    
-  useEffect(()=>{
-    setLoading(true)
-    setTimeout(()=>{
-      const temp:any = localStorage.getItem("login state")
-      const obj:any = JSON.parse(temp)
-      setIsAdmin(obj.isAdmin)
-      
-      if(!props.member){
-        fetchData(obj)
+  const fetchUser = async (obj: any) => {
+    axios.get(`http://localhost:3002/user/${obj._id}`).then((response) => {
+      localStorage.setItem("login state", JSON.stringify(response.data));
+      login?.setLoginInfo({ ...response.data });
+    });
+  };
+
+  useEffect(() => {
+    setLoading(true);
+    setTimeout(() => {
+      const temp: any = localStorage.getItem("login state");
+      const obj: any = JSON.parse(temp);
+      setIsAdmin(obj.isAdmin);
+
+      if (!props.member) {
+        fetchData(obj);
       }
 
-      setLoading((prev) => !prev)
-      props.setHasLoaded(true)
-      setLoading(false)
+      setLoading((prev) => !prev);
+      props.setHasLoaded(true);
+      setLoading(false);
       // renderMembers
-      fetchUser(obj)
-      setList(obj.teams)
-      //time out was 450 
-    }, 100)
-  }, [props.trigger, members.memberArrayLength, props.isModalOpen])
-
-
-
-
+      fetchUser(obj);
+      setList(obj.teams);
+      //time out was 450
+    }, 100);
+  }, [props.trigger, members.memberArrayLength, props.isModalOpen]);
 
   return (
     <div>
-      {loading || !props.selected ? 
-      <div className='w-full h-screen flex items-center justify-center '>
-        <ClipLoader color={'#1D3557'}
-          loading={loading}
-          size={50}
-          aria-label="Loading Spinner"
-          data-testid="loader"/> 
-      </div>
-      :  
-      <>
-        <h1 className='ml-6 mt-6 font-semibold text-2xl text-[#1D3557] mb-8'>Teams</h1>
-        <div className='absolute top-4 right-8 flex'>
-          {!isAdmin && <button onClick={handleClick} className='w-32 mr-2 px-2 h-12 text-md bg-[#1D3557] text-white'>Create Team</button>}
-          <SelectTeam list={list} setMyTeamName={props.setMyTeamName} setProjects={setProjects} members={members} setMembers={setMembers}/>
+      {loading || !props.selected ? (
+        <div className="flex h-screen w-full items-center justify-center ">
+          <ClipLoader
+            color={"#1D3557"}
+            loading={loading}
+            size={50}
+            aria-label="Loading Spinner"
+            data-testid="loader"
+          />
         </div>
-        <div className='flex items-start justify-evenly mb-8 z-0'>
-          {/* TEAM LIST */}
-          <div className='w-5/12 h-80 bg-white border border-[#1D3557] shadow-sm rounded'>
-            <div className='flex justify-between items-center py-2'>
-              <h2 className=' text-xl font-semibold ml-2 text-[#1D3557]'>{props.myTeamName}</h2>
-              <button className='w-32 mr-2 px-2 h-8 text-md bg-[#1D3557] text-white' onClick={()=>setIsMemberModalOpen(prev=>!prev)}>Add Member</button>  
-            </div>
-            <div className="border border-black border-b-0 border-x-0 w-full">
-              <table className='w-full h-full table-fixed'>
-                <thead className='text-[#707785] bg-[#F3F4F6] text-left'>
-                  <tr>
-                    <th className='pl-2 w-full'>Members</th>
-                  </tr>
-                </thead>
-                <tbody className='text-left block w-full overflow-scroll max-h-60 z-0 flex-none relative'>
-                  {renderMembers}
-                </tbody>
-              </table>
-            </div>
+      ) : (
+        <>
+          <h1 className="ml-6 mt-6 mb-8 text-2xl font-semibold text-[#1D3557]">
+            Teams
+          </h1>
+          <div className="absolute top-4 right-8 flex">
+            {!isAdmin && (
+              <button
+                onClick={handleClick}
+                className="text-md mr-2 h-12 w-32 bg-[#1D3557] px-2 text-white"
+              >
+                Create Team
+              </button>
+            )}
+            <SelectTeam
+              list={list}
+              setMyTeamName={props.setMyTeamName}
+              setProjects={setProjects}
+              members={members}
+              setMembers={setMembers}
+            />
           </div>
-
-          {/* PROJECT LIST */}
-          <div className='border border-[#1D3557] shadow-sm rounded w-6/12 h-80 bg-white'>
-            <div className='flex items-center justify-between w-full pt-2'>
-              <h2 className='text-xl font-semibold px-2 mb-2 text-[#1D3557]'>Projects</h2>
-              <div className='flex items-center pb-2'>
-              <button  className='w-32 mr-2 px-2 h-8 text-md bg-[#1D3557] text-white' onClick={handleClickProjects}>Create Project</button>
+          <div className="z-0 mb-8 flex items-start justify-evenly">
+            {/* TEAM LIST */}
+            <div className="h-80 w-5/12 rounded border border-[#1D3557] bg-white shadow-sm">
+              <div className="flex items-center justify-between py-2">
+                <h2 className=" ml-2 text-xl font-semibold text-[#1D3557]">
+                  {props.myTeamName}
+                </h2>
+                <button
+                  className="text-md mr-2 h-8 w-32 bg-[#1D3557] px-2 text-white"
+                  onClick={() => setIsMemberModalOpen((prev) => !prev)}
+                >
+                  Add Member
+                </button>
               </div>
-            </div>
-            <div className='border border-black border-b-0 border-x-0 w-full'>
-              {/* PROJECT SCROLL */}
-              <div className='overflow-y-scroll max-h-66 w-full'>
-                <table className='w-full'>
-                  <thead className='text-[#707785] bg-[#F3F4F6] text-left w-full sticky top-0 z-0'>
+              <div className="w-full border border-x-0 border-b-0 border-black">
+                <table className="h-full w-full table-fixed">
+                  <thead className="bg-[#F3F4F6] text-left text-[#707785]">
                     <tr>
-                      <th className='pl-2 w-1/2'>Title</th>
-                      <th className='pl-2 w-1/2 '>Status</th>
+                      <th className="w-full pl-2">Members</th>
                     </tr>
                   </thead>
-                  <tbody>
-                    {renderProjects}
+                  <tbody className="relative z-0 block max-h-60 w-full flex-none overflow-scroll text-left">
+                    {renderMembers}
                   </tbody>
                 </table>
               </div>
-            
             </div>
 
-
+            {/* PROJECT LIST */}
+            <div className="h-80 w-6/12 rounded border border-[#1D3557] bg-white shadow-sm">
+              <div className="flex w-full items-center justify-between pt-2">
+                <h2 className="mb-2 px-2 text-xl font-semibold text-[#1D3557]">
+                  Projects
+                </h2>
+                <div className="flex items-center pb-2">
+                  <button
+                    className="text-md mr-2 h-8 w-32 bg-[#1D3557] px-2 text-white"
+                    onClick={handleClickProjects}
+                  >
+                    Create Project
+                  </button>
+                </div>
+              </div>
+              <div className="w-full border border-x-0 border-b-0 border-black">
+                {/* PROJECT SCROLL */}
+                <div className="max-h-66 w-full overflow-y-scroll">
+                  <table className="w-full">
+                    <thead className="sticky top-0 z-0 w-full bg-[#F3F4F6] text-left text-[#707785]">
+                      <tr>
+                        <th className="w-1/2 pl-2">Title</th>
+                        <th className="w-1/2 pl-2 ">Status</th>
+                      </tr>
+                    </thead>
+                    <tbody>{renderProjects}</tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
-        {/* TODO: TICKETS */}
-        <div className=' h-72 mx-8 bg-white rounded shadow-lg'></div>
-        <AddMember manager={manager={}} members={members} setMembers={setMembers} id={login?.loginInfo._id} isModalOpen={isMemberModalOpen} setIsModalOpen={setIsMemberModalOpen} memberName={memberName} setMemberName={setMemberName}/>
-        </>} 
+          {/* TODO: TICKETS */}
+          <div className=" mx-8 h-72 rounded bg-white shadow-lg"></div>
+          <AddMember
+            manager={(manager = {})}
+            members={members}
+            setMembers={setMembers}
+            id={login?.loginInfo._id}
+            isModalOpen={isMemberModalOpen}
+            setIsModalOpen={setIsMemberModalOpen}
+            memberName={memberName}
+            setMemberName={setMemberName}
+          />
+        </>
+      )}
 
-      
-        <ToastContainer/>
+      <ToastContainer />
     </div>
-  ) 
+  );
 }
