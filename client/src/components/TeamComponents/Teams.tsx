@@ -5,6 +5,16 @@ import Team from './Team'
 import { useLogin } from '/Users/ayoomotosho/web_development/projects/bug-tracker/client/src/LoginProvider'
 import SelectedProject from '../ProjectComponents/SelectedProject'
 
+type infoType = {
+  title: string,
+  desc: string,
+  manager: string,
+  team: string,
+  status: string,
+  date: string,
+  id: string,
+  tickets: string[]
+}
 
 export default function Teams() {
   //get login info
@@ -21,16 +31,19 @@ export default function Teams() {
   const [member, setMember] = useState<boolean>(false)
   const [isModalOpen, setIsModalOpen] = useState(false)
 
+
+
   //select project variables
   const [selected, setIsSelected] = useState<boolean>(true)
-  const [selectedInfo, setSelectedInfo] = useState({
+  const [selectedInfo, setSelectedInfo] = useState<infoType>({
     title: '',
     desc: '',
     manager: '',
     team: '',
     status: '',
     date: '',
-    id: ''
+    id: '',
+    tickets: []
   })
   
 

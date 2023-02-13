@@ -2,17 +2,31 @@ import Project from "./Project";
 import { useState, SetStateAction, FC } from "react";
 import SelectedProject from "./SelectedProject";
 
+type infoType = {
+  title: string,
+  desc: string,
+  manager: string,
+  team: string,
+  status: string,
+  date: string,
+  id: string,
+  tickets: string[]
+}
+
 export default function Projects() {
   const [selected, setIsSelected] = useState<boolean>(true);
-  const [selectedInfo, setSelectedInfo] = useState({
-    title: "yo",
+  const [selectedInfo, setSelectedInfo] = useState<infoType>({
+    title: "",
     desc: "",
     manager: "",
     team: "",
     status: "",
     date: "",
     id: "",
+    tickets: []
   });
+
+  // console.log('SELECTED INFO IN PROJECTS COMP',selectedInfo)
 
   return (
     <>

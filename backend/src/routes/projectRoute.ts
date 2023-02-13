@@ -40,6 +40,12 @@ router.route("/project/list").get(async (req, res) => {
   res.send(projects);
 });
 
+router.route("/project").get(async (req,res) => {
+  const projectTitle = req.body.title
+  const project = await Project.find({title: projectTitle}).populate({path: "tickets.ticketId"})
+  res.status(200).send(project)
+})
+
 //DELETE PROJECTS
 router.delete("/project/:id", (req, res) => {
   Project.findByIdAndDelete(req.params.id)

@@ -44,6 +44,7 @@ export default function Team(props: any) {
 
   const handleClickProjects = () => {
     navigate("/projects");
+
   };
 
   const selectProject = () => {
@@ -93,7 +94,6 @@ export default function Team(props: any) {
         props.setMyTeamName(response.data.teamName);
         manager = response.data.manager;
         let tempData = [...response.data.members];
-        //setList([...response.data.members])
         setMembers({ ...members, memberArray: tempData.reverse() });
         setProjects([...response.data.projects]);
       });
