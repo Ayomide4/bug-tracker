@@ -1,59 +1,57 @@
 import express from "express";
-const router = express.Router()
+const router = express.Router();
 import Project from "../models/projectModel";
 import Team from "../models/teamModel";
 
-
-
 //CREATE PROJECT
 router.route("/project/create").post(async (req, res) => {
-  const title = req.body.title
-  const desc = req.body.desc
-  const team = req.body.team
-  const manager = req.body.manager
-  const status = req.body.status
-  const date = req.body.date
+  const title = req.body.title;
+  const desc = req.body.desc;
+  const team = req.body.team;
+  const manager = req.body.manager;
+  const status = req.body.status;
+  const date = req.body.date;
 
   const newProject = new Project({
     title,
     desc,
     manager,
     team,
-    status, 
-    date
-  })
+    status,
+    date,
+  });
 
-  const teamMatch =  await Team.findOne({teamName: team})
-  if(teamMatch === null){
-    return res.status(404).send({message: "TEAM DOESN'T EXIST"})
+  const teamMatch = await Team.findOne({ teamName: team });
+  if (teamMatch === null) {
+    return res.status(404).send({ message: "TEAM DOESN'T EXIST" });
+  } else {
+    newProject.save();
+    const updatedTeam = await Team.findOneAndUpdate(
+      { teamName: team },
+      { $push: { projects: { projectId: newProject._id } } }
+    );
+    return res.status(200).send(updatedTeam);
   }
-
-  else {
-    newProject.save()
-    const updatedTeam = await Team.findOneAndUpdate({teamName: team}, {$push: {"projects": {projectId: newProject._id}}})
-    return res.status(200).send(updatedTeam)
-  }
-})
+});
 
 //LIST PROJECTS
 router.route("/project/list").get(async (req, res) => {
-  const projects = await Project.find()
-  res.send(projects)
-})
-
+  const projects = await Project.find().populate({path: "tickets.ticketId"})
+  res.send(projects);
+});
 
 //DELETE PROJECTS
-router.delete('/project/:id', (req, res) => {
+router.delete("/project/:id", (req, res) => {
   Project.findByIdAndDelete(req.params.id)
     .then((project) => {
-      if(!project) {
-        return res.status(404).send()
+      if (!project) {
+        return res.status(404).send();
       }
-      res.send(project)
+      res.send(project);
     })
     .catch((error) => {
       res.status(500).send(error);
-  })
-})
+    });
+});
 
-module.exports = router
+module.exports = router;

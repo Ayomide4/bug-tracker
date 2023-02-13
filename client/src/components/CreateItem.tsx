@@ -19,6 +19,7 @@ export default function CreateItem(props:any) {
       title: '',
       desc: '', 
       team: '',
+      project: ''
     }
 
     //form validation
@@ -29,7 +30,7 @@ export default function CreateItem(props:any) {
       } else {
         axios.post("http://localhost:3002/project/create", formData)
           .then(function (response){
-            console.log(response.status, 'status')
+            // console.log(response.status, 'status')
             props.setListLength((prev:number) =>prev+1) //
             notify(true)
             props.closeModal()
@@ -44,7 +45,7 @@ export default function CreateItem(props:any) {
     }
 
     else if(props.itemType === 'ticket'){
-      if(formData.title === '' || formData.desc === '' || formData.prio === '- Select -')
+      if(formData.title === '' || formData.desc === '' || formData.project === '' || formData.prio === '- Select -')
       {
         notify(false)
         return false
@@ -52,15 +53,17 @@ export default function CreateItem(props:any) {
         axios.post("http://localhost:3002/ticket/create", formData)
           .then(function(response){
             if(response.status === 200){
-              props.setListLength((prev:number) => prev+1) //        props.setFormData(blankData) //reset form input
+              props.setListLength((prev:number) => prev+1)
               notify(true)
               props.closeModal()
             }
           })
           .catch(function (error){
             if (error.response){
-              notify('tickerErr')
+              console.log('PROJECT DONT EXIST')
+              notify('ticketError')
               console.log(error.response.status)
+              props.setFormData(blankData)
             }
         })
       }

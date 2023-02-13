@@ -76,14 +76,13 @@ router.route("/user/teams/:id").patch(async (req, res) => {
   const newTeam = new Team({
     teamName: req.body.title,
     manager: req.params.id,
-    "members.0": {"memberId": req.params.id}
+    "members.0": { memberId: req.params.id },
   });
 
   const id: string = req.params.id;
 
   //FINDS USER AND UPDATES ADMIN TO TRUE
   //CREATES NEW TEAM IN TEAM DOC WITH USER/MANAGER AS REF
-
 
   const userQuery = await User.findOne({
     _id: id,
@@ -93,7 +92,7 @@ router.route("/user/teams/:id").patch(async (req, res) => {
   //IF USER HAS NO TEAMS
   if (userQuery === null) {
     User.findByIdAndUpdate(id, {
-      $set: { isAdmin: true, teams: { team: newTeam._id }},
+      $set: { isAdmin: true, teams: { team: newTeam._id } },
     })
       .then((user) => {
         if (user) {
@@ -107,7 +106,7 @@ router.route("/user/teams/:id").patch(async (req, res) => {
       });
   }
 
-  //IF USER HAS AT LEAST ONE TEAM 
+  //IF USER HAS AT LEAST ONE TEAM
   //THIS IS SO WE CAN ADD A NEW TEAM INSTEAD OF OVERRIDING THE OTHER TEAMS
   if (userQuery !== null) {
     const user = await User.findById(id);

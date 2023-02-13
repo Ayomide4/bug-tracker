@@ -1,7 +1,6 @@
-import mongoose from 'mongoose'
+import mongoose from "mongoose";
 
-const Schema = mongoose.Schema
-//const objectId = Schema.Types.ObjectId
+const Schema = mongoose.Schema;
 
 const ProjectSchema = new Schema({
   title: String,
@@ -9,8 +8,16 @@ const ProjectSchema = new Schema({
   manager: String,
   team: String,
   status: String,
-  date: String
-})
+  date: String,
+  tickets: [
+    {
+      ticketId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Ticket",
+      },
+    },
+  ],
+});
 
-const Project = mongoose.model("Project", ProjectSchema)
-export default Project
+const Project = mongoose.model("Project", ProjectSchema);
+export default Project;

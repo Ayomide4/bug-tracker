@@ -28,8 +28,20 @@ export const notify = (response:any) => {
       theme: "light",
       });
   }
-  else if ('projectErr'){
+  else if (response === 'projectErr'){
     toast.error('Team does not exist', {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      });
+  }
+  else if(response === 'ticketError'){
+    toast.error('Project does not exist', {
       position: "top-right",
       autoClose: 3000,
       hideProgressBar: false,
