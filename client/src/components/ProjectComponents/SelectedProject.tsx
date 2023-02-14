@@ -3,6 +3,7 @@ import React, { SetStateAction, useEffect, useState } from "react";
 import { FaArrowLeft } from "react-icons/fa";
 import ConfirmDelete from "./ConfirmDelete";
 import { toast, ToastContainer } from "react-toastify";
+import TicketInfoModal from "./TicketInfoModal";
 //maybe should make this a shared component with ticket
 
 const notifyDelete = (success: boolean) => {
@@ -70,8 +71,10 @@ export default function SelectedProject({
 
   const [trigger, setTrigger] = useState<boolean>(false);
   const [confirmDelete, setConfirmDelete] = useState<boolean>(false);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(true)
+
+
   const renderTickets = selectedInfo.tickets.map((item: any, index) => {
-    
     return (
       <tr key={index} className="cursor-pointer hover:bg-gray-200">
         <td className="whitespace-nowrap pl-2">{item.ticketId.title}</td>
@@ -102,6 +105,8 @@ export default function SelectedProject({
 
   useEffect(() => {
     //deletes project when confirm delete state changes
+
+    //TODO: CONFIRM DELETE IS COMMENTED BECAUSE ON REFRESH IT ACCIDENTALLY DELETES PROJECT
     //handleDelete()
   }, [confirmDelete]);
 
@@ -190,7 +195,7 @@ export default function SelectedProject({
             <h1 className="mx-2 mb-2 text-lg font-semibold text-[#1D3557]">
               Tickets
             </h1>
-            <table className="w-full border border-x-0 border-black">
+            <table className="w-full border border-x-0 border-b-0 border-black">
               <thead className="bg-[#F3F4F6] text-left text-[#707785]">
                 <tr>
                   <th className="pl-2">Title</th>
@@ -204,6 +209,7 @@ export default function SelectedProject({
           </div>
         </div>
       </div>
+      <TicketInfoModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen}/>
     </div>
   );
 }
