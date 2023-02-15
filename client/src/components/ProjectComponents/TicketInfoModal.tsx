@@ -11,8 +11,8 @@ type Props = {
   setIsModalOpen : React.Dispatch<React.SetStateAction<boolean>>
 }
 
-//FIXME: LOW PRIO COLOR NOT WORKING #457B9D
-const prioColors = ['green','#FFC211','#E63946']
+
+const prioColors = ['lowPrio', 'medPrio', 'highPrio']
 
 export default function TicketInfoModal({ticketData, isModalOpen, setIsModalOpen} : Props) {
   let index:number = 0;
@@ -44,7 +44,7 @@ export default function TicketInfoModal({ticketData, isModalOpen, setIsModalOpen
                   <FaArrowLeft color='#1D3557' size={18}/>
                   <h1 className='text-xl font-bold ml-1 text-[#1D3557]'>{ticketData.title}</h1>
                 </div>
-                <div className={`ml-40 mr-4 bg-[${prioColors[index]}]  text-white w-fit py-1 px-2`}>
+                <div className={`ml-40 mr-4 bg-${prioColors[index]}  text-white w-fit py-1 px-2`}>
                   <h1 className=' font-semibold'>{ticketData.prio}</h1>
                 </div>
               </div>

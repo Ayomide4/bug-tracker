@@ -119,11 +119,26 @@ export default function SelectedProject({
   }
 
   const renderTickets = selectedInfo.tickets.map((item: any, index:number) => {
+    const prioColors = ['lowPrio', 'medPrio', 'highPrio']
+    let colorIndex = 0
+
+    switch (item.ticketId.prio){
+      case 'Low':
+        colorIndex = 0
+        break;
+      case 'Medium':
+        colorIndex = 1
+        break;
+      case 'High':
+        colorIndex = 2
+        break
+    }
+
     return (
       <tr key={index} className="cursor-pointer hover:bg-gray-200" onClick={()=>clickTicket(item)}>
         <td className="whitespace-nowrap pl-2">{item.ticketId.title}</td>
-        <td className="whitespace-nowrap">{item.ticketId.desc.length > 40 ? `${item.ticketId.desc.substring(0,40)}...`: item.ticketId.desc}</td>
-        <td className="whitespace-nowrap">{item.ticketId.prio}</td>
+        <td className="whitespace-nowrap  ">{item.ticketId.desc.length > 40 ? `${item.ticketId.desc.substring(0,40)}...`: item.ticketId.desc}</td>
+        <td className={`whitespace-nowrap bg-${prioColors[colorIndex]} text-white rounded px-1`}>{item.ticketId.prio}</td>
         <td className="whitespace-nowrap">Blank</td>
       </tr>
     );

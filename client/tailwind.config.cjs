@@ -10,6 +10,12 @@ module.exports = {
         'itemContainer': '33rem',
         '66': '264px'
       },
+
+      colors: {
+        lowPrio: '#457B9D',
+        medPrio: '#FFC211',
+        highPrio: '#E63946'
+      }
       
       
     }
