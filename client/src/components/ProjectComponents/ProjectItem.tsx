@@ -4,6 +4,9 @@ import { useState, useEffect } from "react";
 export default function ProjectItem(props: any) {
   const [data, setData] = useState([{}]);
 
+
+  //the entry arg is the same arg in the map func when we render
+  //this means when we click the item it gets the entry from the list of entries
   const clickItem = (e: any, entry: any) => {
     props.setIsSelected((prev: boolean) => !prev);
     props.setSelectedInfo({
@@ -20,6 +23,7 @@ export default function ProjectItem(props: any) {
     let test:any = "Test Project"
     
     console.log('ON CLICK ITEM',entry)
+
   };
 
   //TODO: Filter active projects and get length to send to dashboard

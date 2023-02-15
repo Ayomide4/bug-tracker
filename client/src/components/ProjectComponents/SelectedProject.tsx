@@ -59,6 +59,13 @@ interface Props {
   >;
 }
 
+interface ticketType{
+  title: string;
+  desc: string;
+  dev: string;
+  prio: string
+}
+
 export default function SelectedProject({
   selected,
   setIsSelected,
@@ -71,20 +78,15 @@ export default function SelectedProject({
 
   const [trigger, setTrigger] = useState<boolean>(false);
   const [confirmDelete, setConfirmDelete] = useState<boolean>(false);
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(true)
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
+  const [ticketData, setTicketData] = useState<ticketType>({
+    title: '',
+    desc: '',
+    dev: '',
+    prio: ''
+  })
 
-
-  const renderTickets = selectedInfo.tickets.map((item: any, index) => {
-    return (
-      <tr key={index} className="cursor-pointer hover:bg-gray-200">
-        <td className="whitespace-nowrap pl-2">{item.ticketId.title}</td>
-        <td className="whitespace-nowrap">{item.ticketId.desc}</td>
-        <td className="whitespace-nowrap">{item.ticketId.prio}</td>
-        <td className="whitespace-nowrap">Blank</td>
-      </tr>
-    );
-  });
-
+  
   const handleDelete = () => {
     //sends a delete request to the server
     setTrigger((prev) => !prev); //sets trigger to open so we can see the confirm delete page
@@ -102,6 +104,31 @@ export default function SelectedProject({
         });
     }
   };
+
+  //when we click item it gets that specific item from the mapped items
+  const clickTicket = ( item:any) => {
+    
+    setIsModalOpen((prev:boolean) => !prev)
+    setTicketData({
+      title: item.ticketId.title ,
+      desc: item.ticketId.desc ,
+      dev: item.ticketId.dev ,
+      prio: item.ticketId.prio ,
+    })
+    console.log(item.ticketId)
+  }
+
+  const renderTickets = selectedInfo.tickets.map((item: any, index:number) => {
+    return (
+      <tr key={index} className="cursor-pointer hover:bg-gray-200" onClick={()=>clickTicket(item)}>
+        <td className="whitespace-nowrap pl-2">{item.ticketId.title}</td>
+        <td className="whitespace-nowrap">{item.ticketId.desc.length > 40 ? `${item.ticketId.desc.substring(0,40)}...`: item.ticketId.desc}</td>
+        <td className="whitespace-nowrap">{item.ticketId.prio}</td>
+        <td className="whitespace-nowrap">Blank</td>
+      </tr>
+    );
+  });
+
 
   useEffect(() => {
     //deletes project when confirm delete state changes
@@ -209,7 +236,7 @@ export default function SelectedProject({
           </div>
         </div>
       </div>
-      <TicketInfoModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen}/>
+      <TicketInfoModal ticketData={ticketData} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen}/>
     </div>
   );
 }
