@@ -36,19 +36,23 @@ router.route("/project/create").post(async (req, res) => {
 
 //LIST PROJECTS
 router.route("/project/list").get(async (req, res) => {
-  const projects = await Project.find().populate({path: "tickets.ticketId"})
+  const projects = await Project.find().populate({ path: "tickets.ticketId" });
   res.send(projects);
 });
 
-router.route("/project").get(async (req,res) => {
-  const projectTitle = req.body.title
-  const project = await Project.find({title: projectTitle}).populate({path: "tickets.ticketId"})
-  res.status(200).send(project)
-})
+router.route("/project").get(async (req, res) => {
+  const projectTitle = req.body.title;
+  const project = await Project.find({ title: projectTitle }).populate({
+    path: "tickets.ticketId",
+  });
+  res.status(200).send(project);
+});
 
 //DELETE PROJECTS
 router.delete("/project/:id", (req, res) => {
-  Project.findByIdAndDelete(req.params.id)
+  const id = req.params.id;
+
+  Project.findByIdAndDelete(id)
     .then((project) => {
       if (!project) {
         return res.status(404).send();

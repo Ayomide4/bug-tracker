@@ -3,8 +3,8 @@ import React, { SetStateAction, useEffect, useState } from "react";
 import { FaArrowLeft } from "react-icons/fa";
 import ConfirmDelete from "./ConfirmDelete";
 import { toast, ToastContainer } from "react-toastify";
-import TicketInfoModal from "./TicketInfoModal";
-//maybe should make this a shared component with ticket
+import TicketInfoModal from "/Users/ayoomotosho/web_development/projects/bug-tracker/client/src/components/ProjectComponents/TicketInfoModal";
+
 
 const notifyDelete = (success: boolean) => {
   if (success) {
@@ -59,11 +59,11 @@ interface Props {
   >;
 }
 
-interface ticketType{
+interface ticketType {
   title: string;
   desc: string;
   dev: string;
-  prio: string
+  prio: string;
 }
 
 export default function SelectedProject({
@@ -74,19 +74,17 @@ export default function SelectedProject({
 }: Props) {
   //TODO: make it so only admin can delete/edit
   //  DELETE and EDIT button shouldn't show up for regular users
-  //TODO: highlight ticket colors based on prio
 
   const [trigger, setTrigger] = useState<boolean>(false);
   const [confirmDelete, setConfirmDelete] = useState<boolean>(false);
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [ticketData, setTicketData] = useState<ticketType>({
-    title: '',
-    desc: '',
-    dev: '',
-    prio: ''
-  })
+    title: "",
+    desc: "",
+    dev: "",
+    prio: "",
+  });
 
-  
   const handleDelete = () => {
     //sends a delete request to the server
     setTrigger((prev) => !prev); //sets trigger to open so we can see the confirm delete page
@@ -102,54 +100,66 @@ export default function SelectedProject({
           notifyDelete(false);
           console.error("There was an error!", error);
         });
+      
+      axios
+        .patch('http://localhost:3002/team/removeProject', {"projectId": selectedInfo.id})
     }
   };
 
   //when we click item it gets that specific item from the mapped items
-  const clickTicket = ( item:any) => {
-    
-    setIsModalOpen((prev:boolean) => !prev)
+  const clickTicket = (item: any) => {
+    setIsModalOpen((prev: boolean) => !prev);
     setTicketData({
-      title: item.ticketId.title ,
-      desc: item.ticketId.desc ,
-      dev: item.ticketId.dev ,
-      prio: item.ticketId.prio ,
-    })
-    console.log(item.ticketId)
-  }
+      title: item.ticketId.title,
+      desc: item.ticketId.desc,
+      dev: item.ticketId.dev,
+      prio: item.ticketId.prio,
+    });
+    console.log(item.ticketId);
+  };
 
-  const renderTickets = selectedInfo.tickets.map((item: any, index:number) => {
-    const prioColors = ['lowPrio', 'medPrio', 'highPrio']
-    let colorIndex = 0
+  const renderTickets = selectedInfo.tickets.map((item: any, index: number) => {
+    const prioColors = ["lowPrio", "medPrio", "highPrio"];
+    let colorIndex = 0;
 
-    switch (item.ticketId.prio){
-      case 'Low':
-        colorIndex = 0
+    switch (item.ticketId.prio) {
+      case "Low":
+        colorIndex = 0;
         break;
-      case 'Medium':
-        colorIndex = 1
+      case "Medium":
+        colorIndex = 1;
         break;
-      case 'High':
-        colorIndex = 2
-        break
+      case "High":
+        colorIndex = 2;
+        break;
     }
 
     return (
-      <tr key={index} className="cursor-pointer hover:bg-gray-200" onClick={()=>clickTicket(item)}>
+      <tr
+        key={index}
+        className="cursor-pointer hover:bg-gray-200"
+        onClick={() => clickTicket(item)}
+      >
         <td className="whitespace-nowrap pl-2">{item.ticketId.title}</td>
-        <td className="whitespace-nowrap  ">{item.ticketId.desc.length > 40 ? `${item.ticketId.desc.substring(0,40)}...`: item.ticketId.desc}</td>
-        <td className={`whitespace-nowrap bg-${prioColors[colorIndex]} text-white rounded px-1`}>{item.ticketId.prio}</td>
+        <td className="whitespace-nowrap  ">
+          {item.ticketId.desc.length > 40
+            ? `${item.ticketId.desc.substring(0, 40)}...`
+            : item.ticketId.desc}
+        </td>
+        <td
+          className={`whitespace-nowrap bg-${prioColors[colorIndex]} rounded px-1 font-semibold text-white`}
+        >
+          {item.ticketId.prio}
+        </td>
         <td className="whitespace-nowrap">Blank</td>
       </tr>
     );
   });
 
-
   useEffect(() => {
     //deletes project when confirm delete state changes
-
     //TODO: CONFIRM DELETE IS COMMENTED BECAUSE ON REFRESH IT ACCIDENTALLY DELETES PROJECT
-    //handleDelete()
+    handleDelete()
   }, [confirmDelete]);
 
   return (
@@ -251,7 +261,11 @@ export default function SelectedProject({
           </div>
         </div>
       </div>
-      <TicketInfoModal ticketData={ticketData} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen}/>
+      <TicketInfoModal
+        ticketData={ticketData}
+        isModalOpen={isModalOpen}
+        setIsModalOpen={setIsModalOpen}
+      />
     </div>
   );
 }

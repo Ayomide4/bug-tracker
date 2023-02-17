@@ -9,7 +9,7 @@ router.route("/team").get(async (req, res) => {
   
     .populate({ path: "manager", select: "fullName" })
     .populate({ path: "members.memberId", select: "fullName" })
-    .populate({ path: "projects" });
+    .populate({ path: "projects.projectId" });
   res.send(teams);
 });
 
@@ -75,5 +75,21 @@ router.route("/team/members/:id").patch(async (req, res) => {
     }
   }
 });
+
+router.route("/team/removeProject").patch(async (req, res) => {
+  const projectId = req.body.projectId
+  const testProject = await Team.findOneAndUpdate({"projects.projectId": projectId}, 
+    {
+      $pull: {"projects": {"projectId": projectId}}
+    })
+    .then((response) => {
+      res.send(testProject)
+    })
+    .catch((error)=>{
+      res.status(404).send({error: "Could not find project"})
+    })
+})
+
+
 
 module.exports = router;
