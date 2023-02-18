@@ -1,4 +1,6 @@
-import mongoose from "mongoose";
+import mongoose, { Mongoose } from "mongoose";
+import Team from "./teamModel";
+import { response } from "express";
 
 const Schema = mongoose.Schema;
 
@@ -17,6 +19,20 @@ const ProjectSchema = new Schema({
       },
     },
   ],
+});
+
+//deletes ref id from team when deleting project
+ProjectSchema.pre("findOneAndDelete", async function (next) {
+  const Team = mongoose.model("Team");
+  const id = this.getQuery()["_id"];
+
+  await Team.findOneAndUpdate(
+    { "projects.projectId": id },
+    {
+      $pull: { projects: { projectId: id } },
+    }
+  );
+  next();
 });
 
 const Project = mongoose.model("Project", ProjectSchema);

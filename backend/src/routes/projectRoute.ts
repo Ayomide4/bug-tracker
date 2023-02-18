@@ -64,4 +64,12 @@ router.delete("/project/:id", (req, res) => {
     });
 });
 
+router.delete("/test/:id", (req,res) => {
+  const id = req.params.id
+
+
+})
+
+
+
 module.exports = router;

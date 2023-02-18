@@ -101,8 +101,8 @@ export default function SelectedProject({
           console.error("There was an error!", error);
         });
       
-      axios
-        .patch('http://localhost:3002/team/removeProject', {"projectId": selectedInfo.id})
+      // axios
+      //   .patch('http://localhost:3002/team/removeProject', {"projectId": selectedInfo.id})
     }
   };
 
