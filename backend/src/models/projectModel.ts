@@ -24,6 +24,7 @@ const ProjectSchema = new Schema({
 //deletes ref id from team when deleting project
 ProjectSchema.pre("findOneAndDelete", async function (next) {
   const Team = mongoose.model("Team");
+  const Ticket = mongoose.model("Ticket")
   const id = this.getQuery()["_id"];
 
   await Team.findOneAndUpdate(
@@ -32,8 +33,13 @@ ProjectSchema.pre("findOneAndDelete", async function (next) {
       $pull: { projects: { projectId: id } },
     }
   );
+
+  await Ticket.deleteMany()
+
   next();
 });
+
+
 
 const Project = mongoose.model("Project", ProjectSchema);
 export default Project;

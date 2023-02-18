@@ -76,19 +76,19 @@ router.route("/team/members/:id").patch(async (req, res) => {
   }
 });
 
-router.route("/team/removeProject").patch(async (req, res) => {
-  const projectId = req.body.projectId
-  const testProject = await Team.findOneAndUpdate({"projects.projectId": projectId}, 
-    {
-      $pull: {"projects": {"projectId": projectId}}
-    })
-    .then((response) => {
-      res.send(testProject)
-    })
-    .catch((error)=>{
-      res.status(404).send({error: "Could not find project"})
-    })
-})
+// router.route("/team/removeProject").patch(async (req, res) => {
+//   const projectId = req.body.projectId
+//   const testProject = await Team.findOneAndUpdate({"projects.projectId": projectId}, 
+//     {
+//       $pull: {"projects": {"projectId": projectId}}
+//     })
+//     .then((response) => {
+//       res.send(testProject)
+//     })
+//     .catch((error)=>{
+//       res.status(404).send({error: "Could not find project"})
+//     })
+// })
 
 
 
