@@ -64,12 +64,22 @@ router.delete("/project/:id", (req, res) => {
     });
 });
 
-router.delete("/test/:id", (req,res) => {
-  const id = req.params.id
+router.route("/project/:id").patch(async (req, res) => {
+
+  const newTitle = req.body.title;
+  const newDesc = req.body.desc;
+  const id: string = req.params.id;
 
 
-})
-
-
+  await Project.findByIdAndUpdate(id, {
+    $set: { title: newTitle, desc: newDesc },
+  })
+    .then((project) => {
+      res.status(200).send(project);
+    })
+    .catch((error) => {
+      res.status(404).send({ error: "error updating project" });
+    });
+});
 
 module.exports = router;

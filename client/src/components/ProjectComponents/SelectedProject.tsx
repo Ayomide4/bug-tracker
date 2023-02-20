@@ -1,10 +1,12 @@
 import axios from "axios";
-import React, { SetStateAction, useEffect, useState } from "react";
+import React, { FormEvent, SetStateAction, useEffect, useState } from "react";
 import { FaArrowLeft } from "react-icons/fa";
 import ConfirmDelete from "./ConfirmDelete";
 import { toast, ToastContainer } from "react-toastify";
 import TicketInfoModal from "/Users/ayoomotosho/web_development/projects/bug-tracker/client/src/components/ProjectComponents/TicketInfoModal";
-
+import Form from "/Users/ayoomotosho/web_development/projects/bug-tracker/client/src/components/Form";
+import { FormEncType } from "react-router-dom";
+import Edit from "../Edit";
 
 const notifyDelete = (success: boolean) => {
   if (success) {
@@ -78,12 +80,15 @@ export default function SelectedProject({
   const [trigger, setTrigger] = useState<boolean>(false);
   const [confirmDelete, setConfirmDelete] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [toggleEditModal, setToggleEditModal] = useState<boolean>(false)
   const [ticketData, setTicketData] = useState<ticketType>({
     title: "",
     desc: "",
     dev: "",
     prio: "",
   });
+
+
 
   const handleDelete = () => {
     //sends a delete request to the server
@@ -102,6 +107,10 @@ export default function SelectedProject({
         });
     }
   };
+
+  const toggleEdit = () => {
+    setToggleEditModal((prev:boolean) => !prev)
+  }
 
   //when we click item it gets that specific item from the mapped items
   const clickTicket = (item: any) => {
@@ -138,7 +147,7 @@ export default function SelectedProject({
         onClick={() => clickTicket(item)}
       >
         <td className="whitespace-nowrap pl-2">{item.ticketId.title}</td>
-        <td className="whitespace-nowrap  ">
+        <td className="whitespace-nowrap highPrio ">
           {item.ticketId.desc.length > 40
             ? `${item.ticketId.desc.substring(0, 40)}...`
             : item.ticketId.desc}
@@ -156,7 +165,7 @@ export default function SelectedProject({
   useEffect(() => {
     //deletes project when confirm delete state changes
     //TODO: CONFIRM DELETE IS COMMENTED BECAUSE ON REFRESH IT ACCIDENTALLY DELETES PROJECT
-    handleDelete()
+    // handleDelete();
   }, [confirmDelete]);
 
   return (
@@ -183,7 +192,9 @@ export default function SelectedProject({
           </h1>
         </div>
         <div className="mr-4">
-          <button className="h-15 w-24 rounded-md border bg-[#1D3557] p-2 text-base text-white">
+          <button className="h-15 w-24 rounded-md border bg-[#1D3557] p-2 text-base text-white"
+            onClick={toggleEdit}
+          >
             Edit
           </button>
           <button
@@ -204,15 +215,15 @@ export default function SelectedProject({
             <p className="mx-4 mb-4">{selectedInfo.desc}</p>
           </div>
           <div className="mb-4 mt-6 h-40 w-full rounded border border-[#2A6470] bg-white ">
-            <div className="mx-4 my-4 flex items-center justify-between">
+            <div className="mx-4 mt-4 mb-2 flex items-center justify-between">
               <h1 className="text-lg">Created: </h1>
               <h1 className="text-lg">{selectedInfo.date}</h1>
             </div>
-            <div className="mx-4 my-4 flex items-center justify-between">
+            <div className="mx-4 my-2 flex items-center justify-between">
               <h1 className="text-lg">Deadline: </h1>
               <h1 className="text-lg">Jan 31, 2023</h1>
             </div>
-            <div className="mx-4 flex items-center justify-between">
+            <div className="mx-4 my-2 flex items-center justify-between">
               <h1 className="text-lg">Status</h1>
               <h1 className="text-lg">{selectedInfo.status}</h1>
             </div>
@@ -244,7 +255,7 @@ export default function SelectedProject({
             <h1 className="mx-2 mb-2 text-lg font-semibold text-[#1D3557]">
               Tickets
             </h1>
-            <table className="w-full border border-x-0 border-b-0 border-black">
+            <table className="w-full border border-x-0 border-b-0 border-black ">
               <thead className="bg-[#F3F4F6] text-left text-[#707785]">
                 <tr>
                   <th className="pl-2">Title</th>
@@ -263,6 +274,7 @@ export default function SelectedProject({
         isModalOpen={isModalOpen}
         setIsModalOpen={setIsModalOpen}
       />
+    {toggleEditModal && <Edit selectedInfo={selectedInfo} setSelectedInfo={setSelectedInfo} toggleEdit={toggleEdit}/>}
     </div>
   );
 }

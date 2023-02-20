@@ -15,10 +15,11 @@ module.exports = {
         lowPrio: '#457B9D',
         medPrio: '#FFC211',
         highPrio: '#E63946'
-      }
-      
-      
+      } 
     }
   },
   plugins: [],
+  safelist: [{
+    pattern: /(bg|text|border)-highPrio|medPrio|lowPrio/
+  }]
 }
