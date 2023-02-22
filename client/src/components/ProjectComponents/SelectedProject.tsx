@@ -165,7 +165,7 @@ export default function SelectedProject({
   useEffect(() => {
     //deletes project when confirm delete state changes
     //TODO: CONFIRM DELETE IS COMMENTED BECAUSE ON REFRESH IT ACCIDENTALLY DELETES PROJECT
-    // handleDelete();
+    handleDelete();
   }, [confirmDelete]);
 
   return (

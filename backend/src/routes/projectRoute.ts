@@ -42,9 +42,11 @@ router.route("/project/list").get(async (req, res) => {
 
 router.route("/project").get(async (req, res) => {
   const projectTitle = req.body.title;
-  const project = await Project.find({ title: projectTitle }).populate({
+  const project:any = await Project.find({ title: projectTitle }).populate({
     path: "tickets.ticketId",
   });
+
+  
   res.status(200).send(project);
 });
 
@@ -64,8 +66,9 @@ router.delete("/project/:id", (req, res) => {
     });
 });
 
-router.route("/project/:id").patch(async (req, res) => {
 
+//update project
+router.route("/project/:id").patch(async (req, res) => {
   const newTitle = req.body.title;
   const newDesc = req.body.desc;
   const id: string = req.params.id;
