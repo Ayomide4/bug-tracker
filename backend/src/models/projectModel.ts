@@ -38,6 +38,9 @@ ProjectSchema.pre("findOneAndDelete", async function (next) {
   next();
 });
 
+
+
+//delete tickets that are related to the project
 async function removeTickets(doc: any) {
   let ticketList = doc.tickets.map(async (ticket: any, index: number) => {
     let tempId = ticket.ticketId;
