@@ -18,6 +18,7 @@ export default function ProjectItem(props: any) {
       status: entry.status,
       date: entry.date,
       id: entry._id,
+      deadline: entry.deadline,
       tickets: entry.tickets
     });
     let test:any = "Test Project"

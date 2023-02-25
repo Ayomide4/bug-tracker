@@ -11,6 +11,7 @@ router.route("/project/create").post(async (req, res) => {
   const manager = req.body.manager;
   const status = req.body.status;
   const date = req.body.date;
+  const deadline = req.body.date;
 
   const newProject = new Project({
     title,
@@ -18,6 +19,7 @@ router.route("/project/create").post(async (req, res) => {
     manager,
     team,
     status,
+    deadline,
     date,
   });
 
@@ -71,11 +73,12 @@ router.delete("/project/:id", (req, res) => {
 router.route("/project/:id").patch(async (req, res) => {
   const newTitle = req.body.title;
   const newDesc = req.body.desc;
+  const newDeadline = req.body.deadline;
   const id: string = req.params.id;
 
 
   await Project.findByIdAndUpdate(id, {
-    $set: { title: newTitle, desc: newDesc },
+    $set: { title: newTitle, desc: newDesc, deadline: newDeadline },
   })
     .then((project) => {
       res.status(200).send(project);

@@ -4,8 +4,6 @@ import { FaArrowLeft } from "react-icons/fa";
 import ConfirmDelete from "./ConfirmDelete";
 import { toast, ToastContainer } from "react-toastify";
 import TicketInfoModal from "/Users/ayoomotosho/web_development/projects/bug-tracker/client/src/components/ProjectComponents/TicketInfoModal";
-import Form from "/Users/ayoomotosho/web_development/projects/bug-tracker/client/src/components/Form";
-import { FormEncType } from "react-router-dom";
 import Edit from "../Edit";
 
 const notifyDelete = (success: boolean) => {
@@ -45,6 +43,7 @@ interface Props {
     status: string;
     date: string;
     id: string;
+    deadline: string;
     tickets: string[];
   };
   setSelectedInfo: React.Dispatch<
@@ -56,6 +55,7 @@ interface Props {
       status: string;
       date: string;
       id: string;
+      deadline:string;
       tickets: string[];
     }>
   >;
@@ -221,7 +221,7 @@ export default function SelectedProject({
             </div>
             <div className="mx-4 my-2 flex items-center justify-between">
               <h1 className="text-lg">Deadline: </h1>
-              <h1 className="text-lg">Jan 31, 2023</h1>
+              <h1 className="text-lg">{selectedInfo.deadline}</h1>
             </div>
             <div className="mx-4 my-2 flex items-center justify-between">
               <h1 className="text-lg">Status</h1>

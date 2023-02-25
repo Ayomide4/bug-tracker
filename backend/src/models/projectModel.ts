@@ -12,6 +12,7 @@ const ProjectSchema = new Schema({
   team: String,
   status: String,
   date: String,
+  deadline: String,
   tickets: [
     {
       ticketId: {

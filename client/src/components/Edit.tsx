@@ -1,34 +1,55 @@
 import axios from "axios";
 import React, { FormEvent, useState } from "react";
-import {AiOutlineRight, AiOutlineDown} from 'react-icons/ai'
+import { AiOutlineRight, AiOutlineDown } from "react-icons/ai";
 
 function Edit(props: any) {
+  const [isExpanded, setIsExpanded] = useState<boolean>(false);
+  const [status, setStatus] = useState<string>("Status");
+  const [newDeadline, setNewDeadline] = useState<string>('')
+  const [newInfo, setNewInfo] = useState(props.selectedInfo);
+  const list = ["Active", "Inactive"];
 
-  const [newInfo, setNewInfo] = useState(props.selectedInfo)
-  console.log('new info', newInfo)
-  const newData = { ...props.selectedInfo };
+  console.log(newDeadline)
+  console.log('NEW INFO',newInfo);
+  console.log('select info', props.selectedInfo);
+  
+
+  const selectStatus = (e: any) => {
+    const statusVal = e.target.getAttribute("value");
+    console.log(statusVal);
+    setStatus(statusVal);
+    setIsExpanded((prev) => !prev);
+  };
+
+  const selectDeadline = (e:any) => {
+    const tempDeadline:Date = new Date(e.target.value)
+    setNewInfo({...newInfo, deadline: new Date(tempDeadline.getTime() - tempDeadline.getTimezoneOffset() * -60000).toLocaleDateString('en-us', {year: 'numeric', month: 'short', day: '2-digit'})})
+    // tempDeadline.setDate(tempDeadline.getDay()+1)
+
+    
+    // setDeadline(tempDeadline.toLocaleDateString('en-us', {year: 'numeric', month: 'short', day: '2-digit'}))
+  }
 
 
   const handleChange = (e: any) => {
-    if(e.target.id === "title"){
-      setNewInfo({...newInfo, title: e.target.value})
+    if (e.target.id === "title") {
+      setNewInfo({ ...newInfo, title: e.target.value });
     }
-    if(e.target.id === "desc"){
-      setNewInfo({...newInfo, desc: e.target.value})
+    if (e.target.id === "desc") {
+      setNewInfo({ ...newInfo, desc: e.target.value });
     }
-    // newData[e.target.id] = e.target.value;
-    //props.setSelectedInfo(newData);
     console.log(newInfo);
   };
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    props.setSelectedInfo(newInfo)
+    props.setSelectedInfo(newInfo);
     axios.patch(`http://localhost:3002/project/${props.selectedInfo.id}`, {
       title: newInfo.title,
+      deadline: newInfo.deadline,
       desc: newInfo.desc,
     });
-    console.log('submitted info', props.selectedInfo)
+    console.log("submitted info", props.selectedInfo);
     props.toggleEdit();
   };
 
@@ -75,21 +96,55 @@ function Edit(props: any) {
                 />
               </div>
             </div>
-            
+
             <div className="w-1/2">
-              <div className="flex flex-col">
+              <div className="mb-6 flex flex-col">
                 <label className="mb-1 text-lg">Deadline</label>
                 <input
                   id="deadline"
+                  type="date"
                   className="w-60 rounded-md border border-gray-500 p-2"
+                  onChange={e=>selectDeadline(e)}
                 />
               </div>
-              <div>
+              <div className="h-40 w-full">
                 <label className="mb-1 text-lg">Status</label>
-                
+                <div
+                  unselectable="on"
+                  className="z-10 w-40 select-none rounded-sm border border-gray-500"
+                >
+                  <div
+                    className="flex h-11 w-32 cursor-pointer items-center justify-center bg-white"
+                    onClick={() => setIsExpanded((prev) => !prev)}
+                  >
+                    <div className="mr-1">{status}</div>
+                    <div>
+                      {!isExpanded && <AiOutlineRight />}
+                      {isExpanded && <AiOutlineDown />}
+                    </div>
+                  </div>
+                  {isExpanded && (
+                    <div>
+                      <hr className="border-1 border-black"></hr>
+                      <ul>
+                        {list.map((item: string, index: number) => {
+                          return (
+                            <li
+                              value={item}
+                              key={index}
+                              onClick={(e) => selectStatus(e)}
+                              className="cursor-pointer bg-white p-1 hover:bg-blue-500 hover:text-white"
+                            >
+                              {item}
+                            </li>
+                          );
+                        })}
+                      </ul>
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
-
 
             <button className="absolute bottom-0 h-12 w-36 bg-[#1D3557] text-lg text-white">
               Save

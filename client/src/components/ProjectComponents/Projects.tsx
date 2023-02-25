@@ -10,6 +10,7 @@ type infoType = {
   status: string,
   date: string,
   id: string,
+  deadline: string,
   tickets: string[]
 }
 
@@ -23,6 +24,7 @@ export default function Projects() {
     status: "",
     date: "",
     id: "",
+    deadline: "",
     tickets: []
   });
 
