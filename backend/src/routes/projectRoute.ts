@@ -74,11 +74,12 @@ router.route("/project/:id").patch(async (req, res) => {
   const newTitle = req.body.title;
   const newDesc = req.body.desc;
   const newDeadline = req.body.deadline;
+  const newStatus = req.body.status;
   const id: string = req.params.id;
 
 
   await Project.findByIdAndUpdate(id, {
-    $set: { title: newTitle, desc: newDesc, deadline: newDeadline },
+    $set: { title: newTitle, desc: newDesc, deadline: newDeadline, status: newStatus },
   })
     .then((project) => {
       res.status(200).send(project);

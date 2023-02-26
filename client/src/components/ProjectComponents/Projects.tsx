@@ -28,7 +28,6 @@ export default function Projects() {
     tickets: []
   });
 
-  // console.log('SELECTED INFO IN PROJECTS COMP',selectedInfo)
 
   return (
     <>

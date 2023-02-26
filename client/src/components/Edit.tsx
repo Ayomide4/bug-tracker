@@ -4,30 +4,23 @@ import { AiOutlineRight, AiOutlineDown } from "react-icons/ai";
 
 function Edit(props: any) {
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
-  const [status, setStatus] = useState<string>("Status");
+  const [newStatus, setNewStatus] = useState<string>("Status");
   const [newDeadline, setNewDeadline] = useState<string>('')
   const [newInfo, setNewInfo] = useState(props.selectedInfo);
   const list = ["Active", "Inactive"];
 
-  console.log(newDeadline)
-  console.log('NEW INFO',newInfo);
-  console.log('select info', props.selectedInfo);
-  
+  console.log(newInfo);
 
   const selectStatus = (e: any) => {
     const statusVal = e.target.getAttribute("value");
     console.log(statusVal);
-    setStatus(statusVal);
+    setNewInfo({...newInfo, status: statusVal})
     setIsExpanded((prev) => !prev);
   };
 
   const selectDeadline = (e:any) => {
     const tempDeadline:Date = new Date(e.target.value)
     setNewInfo({...newInfo, deadline: new Date(tempDeadline.getTime() - tempDeadline.getTimezoneOffset() * -60000).toLocaleDateString('en-us', {year: 'numeric', month: 'short', day: '2-digit'})})
-    // tempDeadline.setDate(tempDeadline.getDay()+1)
-
-    
-    // setDeadline(tempDeadline.toLocaleDateString('en-us', {year: 'numeric', month: 'short', day: '2-digit'}))
   }
 
 
@@ -48,6 +41,7 @@ function Edit(props: any) {
       title: newInfo.title,
       deadline: newInfo.deadline,
       desc: newInfo.desc,
+      status: newInfo.status
     });
     console.log("submitted info", props.selectedInfo);
     props.toggleEdit();
@@ -117,7 +111,7 @@ function Edit(props: any) {
                     className="flex h-11 w-32 cursor-pointer items-center justify-center bg-white"
                     onClick={() => setIsExpanded((prev) => !prev)}
                   >
-                    <div className="mr-1">{status}</div>
+                    <div className="mr-1">{newStatus}</div>
                     <div>
                       {!isExpanded && <AiOutlineRight />}
                       {isExpanded && <AiOutlineDown />}
