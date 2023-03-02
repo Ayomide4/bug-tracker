@@ -2,10 +2,12 @@ import axios from "axios";
 import React, { FormEvent, useState } from "react";
 import { AiOutlineRight, AiOutlineDown } from "react-icons/ai";
 
+//TODO: ADD DEVELOPER FUNCTIONALITY
+
 function Edit(props: any) {
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
   const [newStatus, setNewStatus] = useState<string>("Status");
-  const [newDeadline, setNewDeadline] = useState<string>('')
+  const [newDeadline, setNewDeadline] = useState<string>("");
   const [newInfo, setNewInfo] = useState(props.selectedInfo);
   const list = ["Active", "Inactive"];
 
@@ -14,15 +16,23 @@ function Edit(props: any) {
   const selectStatus = (e: any) => {
     const statusVal = e.target.getAttribute("value");
     console.log(statusVal);
-    setNewInfo({...newInfo, status: statusVal})
+    setNewInfo({ ...newInfo, status: statusVal });
     setIsExpanded((prev) => !prev);
   };
 
-  const selectDeadline = (e:any) => {
-    const tempDeadline:Date = new Date(e.target.value)
-    setNewInfo({...newInfo, deadline: new Date(tempDeadline.getTime() - tempDeadline.getTimezoneOffset() * -60000).toLocaleDateString('en-us', {year: 'numeric', month: 'short', day: '2-digit'})})
-  }
-
+  const selectDeadline = (e: any) => {
+    const tempDeadline: Date = new Date(e.target.value);
+    setNewInfo({
+      ...newInfo,
+      deadline: new Date(
+        tempDeadline.getTime() - tempDeadline.getTimezoneOffset() * -60000
+      ).toLocaleDateString("en-us", {
+        year: "numeric",
+        month: "short",
+        day: "2-digit",
+      }),
+    });
+  };
 
   const handleChange = (e: any) => {
     if (e.target.id === "title") {
@@ -41,7 +51,7 @@ function Edit(props: any) {
       title: newInfo.title,
       deadline: newInfo.deadline,
       desc: newInfo.desc,
-      status: newInfo.status
+      status: newInfo.status,
     });
     console.log("submitted info", props.selectedInfo);
     props.toggleEdit();
@@ -98,7 +108,7 @@ function Edit(props: any) {
                   id="deadline"
                   type="date"
                   className="w-60 rounded-md border border-gray-500 p-2"
-                  onChange={e=>selectDeadline(e)}
+                  onChange={(e) => selectDeadline(e)}
                 />
               </div>
               <div className="h-40 w-full">

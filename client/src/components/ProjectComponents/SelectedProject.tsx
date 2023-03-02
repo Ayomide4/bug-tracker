@@ -55,7 +55,7 @@ interface Props {
       status: string;
       date: string;
       id: string;
-      deadline:string;
+      deadline: string;
       tickets: string[];
     }>
   >;
@@ -80,15 +80,13 @@ export default function SelectedProject({
   const [trigger, setTrigger] = useState<boolean>(false);
   const [confirmDelete, setConfirmDelete] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [toggleEditModal, setToggleEditModal] = useState<boolean>(false)
+  const [toggleEditModal, setToggleEditModal] = useState<boolean>(false);
   const [ticketData, setTicketData] = useState<ticketType>({
     title: "",
     desc: "",
     dev: "",
     prio: "",
   });
-
-
 
   const handleDelete = () => {
     //sends a delete request to the server
@@ -109,8 +107,8 @@ export default function SelectedProject({
   };
 
   const toggleEdit = () => {
-    setToggleEditModal((prev:boolean) => !prev)
-  }
+    setToggleEditModal((prev: boolean) => !prev);
+  };
 
   //when we click item it gets that specific item from the mapped items
   const clickTicket = (item: any) => {
@@ -124,51 +122,56 @@ export default function SelectedProject({
     console.log(item.ticketId);
   };
 
-  console.log('SELECTED INFO',selectedInfo)
+  console.log("SELECTED INFO", selectedInfo);
 
-  const renderTickets = selectedInfo.tickets.map((ticketItem: any, index: number) => {
-    const prioColors = ["lowPrio", "medPrio", "highPrio"];
+  const renderTickets = selectedInfo.tickets.map(
+    (ticketItem: any, index: number) => {
+      //colors for the prio range
+      const prioColors = ["lowPrio", "medPrio", "highPrio"];
 
-    let colorIndex = 0;
+      let colorIndex = 0;
 
-    switch (ticketItem.ticketId.prio) {
-      case "Low":
-        colorIndex = 0;
-        break;
-      case "Medium":
-        colorIndex = 1;
-        break;
-      case "High":
-        colorIndex = 2;
-        break;
-    }
+      switch (ticketItem.ticketId.prio) {
+        case "Low":
+          colorIndex = 0;
+          break;
+        case "Medium":
+          colorIndex = 1;
+          break;
+        case "High":
+          colorIndex = 2;
+          break;
+      }
 
-    return (
-      <tr
-        key={index}
-        className="cursor-pointer hover:bg-gray-200"
-        onClick={() => clickTicket(ticketItem)}
-      >
-        <td className="whitespace-nowrap pl-2">{ticketItem.ticketId.title}</td>
-        <td className="whitespace-nowrap highPrio ">
-          {ticketItem.ticketId.desc.length > 40
-            ? `${ticketItem.ticketId.desc.substring(0, 40)}...`
-            : ticketItem.ticketId.desc}
-        </td>
-        <td
-          className={`whitespace-nowrap bg-${prioColors[colorIndex]} rounded px-1 font-semibold text-white`}
+      return (
+        <tr
+          key={index}
+          className="cursor-pointer hover:bg-gray-200"
+          onClick={() => clickTicket(ticketItem)}
         >
-          {ticketItem.ticketId.prio}
-        </td>
-        <td className="whitespace-nowrap">Blank</td>
-      </tr>
-    );
-  });
+          <td className="whitespace-nowrap pl-2">
+            {ticketItem.ticketId.title}
+          </td>
+          <td className="whitespace-nowrap">
+            {ticketItem.ticketId.desc.length > 40
+              ? `${ticketItem.ticketId.desc.substring(0, 40)}...`
+              : ticketItem.ticketId.desc}
+          </td>
+          <td
+            className={`whitespace-nowrap bg-${prioColors[colorIndex]} rounded px-1 font-semibold text-white`}
+          >
+            {ticketItem.ticketId.prio}
+          </td>
+          <td className="whitespace-nowrap">Blank</td>
+        </tr>
+      );
+    }
+  );
 
   useEffect(() => {
     //deletes project when confirm delete state changes
     //TODO: CONFIRM DELETE IS COMMENTED BECAUSE ON REFRESH IT ACCIDENTALLY DELETES PROJECT
-    handleDelete();
+    //handleDelete();
   }, [confirmDelete]);
 
   return (
@@ -195,7 +198,8 @@ export default function SelectedProject({
           </h1>
         </div>
         <div className="mr-4">
-          <button className="h-15 w-24 rounded-md border bg-[#1D3557] p-2 text-base text-white"
+          <button
+            className="h-15 w-24 rounded-md border bg-[#1D3557] p-2 text-base text-white"
             onClick={toggleEdit}
           >
             Edit
@@ -209,16 +213,16 @@ export default function SelectedProject({
         </div>
       </div>
 
-      <div className="flex h-3/4 justify-between">
+      <div className="flex h-itemContainer justify-between">
         <div className="mx-6 mt-6 flex h-full w-1/3 flex-col">
-          <div className="mb-4 h-40 w-full rounded border border-[#2A6470] bg-white">
-            <h1 className=" mx-2 text-lg font-semibold text-[#1D3557]">
+          <div className="mb-4 h-32 w-full rounded border border-[#2A6470] bg-white">
+            <h1 className="mx-2 text-lg font-semibold text-[#1D3557]">
               {selectedInfo.title}
             </h1>
             <p className="mx-4 mb-4">{selectedInfo.desc}</p>
           </div>
           <div className="mb-4 mt-6 h-40 w-full rounded border border-[#2A6470] bg-white ">
-            <div className="mx-4 mt-4 mb-2 flex items-center justify-between">
+            <div className="mx-4 mt-4 mb-2  flex items-center justify-between">
               <h1 className="text-lg">Created: </h1>
               <h1 className="text-lg">{selectedInfo.date}</h1>
             </div>
@@ -254,11 +258,11 @@ export default function SelectedProject({
         </div>
 
         <div className="mt-6 mr-6 h-full w-2/3 rounded border border-[#2A6470] bg-white">
-          <div className="mt-2">
+          <div className="mt-2 h-itemContainer">
             <h1 className="mx-2 mb-2 text-lg font-semibold text-[#1D3557]">
               Tickets
             </h1>
-            <table className="w-full border border-x-0 border-b-0 border-black ">
+            <table className="w-full border border-x-0 border-b-0 border-black">
               <thead className="bg-[#F3F4F6] text-left text-[#707785]">
                 <tr>
                   <th className="pl-2">Title</th>
@@ -277,7 +281,13 @@ export default function SelectedProject({
         isModalOpen={isModalOpen}
         setIsModalOpen={setIsModalOpen}
       />
-    {toggleEditModal && <Edit selectedInfo={selectedInfo} setSelectedInfo={setSelectedInfo} toggleEdit={toggleEdit}/>}
+      {toggleEditModal && (
+        <Edit
+          selectedInfo={selectedInfo}
+          setSelectedInfo={setSelectedInfo}
+          toggleEdit={toggleEdit}
+        />
+      )}
     </div>
   );
 }
