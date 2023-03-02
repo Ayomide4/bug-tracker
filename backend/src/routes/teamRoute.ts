@@ -19,7 +19,7 @@ router.route("/team/:id").get(async (req, res) => {
   const team = await Team.findOne({ manager: id })
     .populate({ path: "manager", select: "fullName" })
     .populate({ path: "members.memberId", select: "fullName" })
-    .populate({ path: "projects.projectId" })
+    .populate({ path: "projects.projectId", populate: {path: "tickets.ticketId"} })
   res.send(team);
 });
 

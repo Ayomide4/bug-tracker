@@ -9,8 +9,6 @@ import { ToastContainer } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
 
-//TODO: WHEN SWITCHING TEAM IN DROPDOWN, DATA IS UPDATED
-
 interface memberType {
   memberArray: any[];
   memberArrayLength: number;
@@ -34,6 +32,9 @@ export default function Team(props: any) {
   const [projects, setProjects] = useState<object[]>([]);
   const navigate = useNavigate();
 
+  //info for selected Item
+
+
   const login = useLogin();
   let manager = {};
   let id = "";
@@ -44,11 +45,28 @@ export default function Team(props: any) {
 
   const handleClickProjects = () => {
     navigate("/projects");
-
   };
 
   const selectProject = () => {
     props.setIsSelected((prev: boolean) => !prev);
+  };
+
+  const setInfo = (e: any, entry: any) => {
+    if(entry !== undefined || entry !== null){
+      props.setIsSelected((prev: boolean) => !prev);
+      props.setSelectedInfo({
+        ...props.selectedInfo,
+        title: entry.projectId.title,
+        desc: entry.projectId.desc,
+        manager: entry.projectId.manager,
+        team: entry.projectId.team,
+        status: entry.projectId.status,
+        date: entry.projectId.date,
+        id: entry.projectId._id,
+        deadline: entry.projectId.deadline,
+        tickets: entry.projectId.tickets
+      });
+    }
   };
 
   const renderMembers = members.memberArray.map((entry: any, index: number) => {
@@ -72,7 +90,7 @@ export default function Team(props: any) {
       <tr
         className="table-row cursor-pointer hover:bg-gray-200"
         key={index}
-        onClick={selectProject}
+        onClick={(e) => setInfo(e, entry)}
       >
         <td className="w-1/2 whitespace-nowrap pl-2">
           {entry.projectId.title}
