@@ -59,7 +59,7 @@ export default function Project(props: any) {
     desc: "",
     manager: "Test Value",
     team: "",
-    status: "Active",
+    status: "",
   });
 
   const handleClick = () => {

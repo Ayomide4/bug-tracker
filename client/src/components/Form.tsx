@@ -14,7 +14,7 @@ export default function Form(props: any) {
   const handleChange = (e: any) => {
     newData[e.target.id] = e.target.value; //looks for id that matches new data and saves the value at the id
     if (props.itemType === "project") {
-      props.setFormData((newData["status"] = "active")); //default for project statsu
+      props.setFormData((newData["status"] = "Active")); //default for project statsu
     }
     props.setFormData(newData); //sets formdata to new data from form
     // console.log(newData);

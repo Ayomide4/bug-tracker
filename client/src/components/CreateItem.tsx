@@ -30,7 +30,6 @@ export default function CreateItem(props:any) {
       } else {
         axios.post("http://localhost:3002/project/create", formData)
           .then(function (response){
-            // console.log(response.status, 'status')
             props.setListLength((prev:number) =>prev+1) //
             notify(true)
             props.closeModal()

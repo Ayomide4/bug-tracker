@@ -11,6 +11,7 @@ type infoType = {
   manager: string,
   team: string,
   status: string,
+  deadline: string,
   date: string,
   id: string,
   tickets: string[]
@@ -43,6 +44,7 @@ export default function Teams() {
     status: '',
     date: '',
     id: '',
+    deadline: '',
     tickets: []
   })
   
@@ -51,7 +53,6 @@ export default function Teams() {
     const temp:any = localStorage.getItem("login state")
     const user:any = JSON.parse(temp)
     isAdmin = user.isAdmin
-    console.log(`is admin ${isAdmin} trigger ${trigger}`)
     const teamLength:number = user.teams.length
 
     if(isAdmin){

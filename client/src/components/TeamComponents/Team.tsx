@@ -108,6 +108,7 @@ export default function Team(props: any) {
 
   useEffect(() => {
     setLoading(true);
+
     setTimeout(() => {
       const temp: any = localStorage.getItem("login state");
       const obj: any = JSON.parse(temp);
