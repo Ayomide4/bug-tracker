@@ -6,7 +6,6 @@ import User from "../models/userModel";
 //get teams and populate
 router.route("/team").get(async (req, res) => {
   const teams = await Team.find({})
-  
     .populate({ path: "manager", select: "fullName" })
     .populate({ path: "members.memberId", select: "fullName" })
     .populate({ path: "projects.projectId" });
@@ -23,6 +22,15 @@ router.route("/team/:id").get(async (req, res) => {
   res.send(team);
 });
 
+router.route("/members").patch((req,res) => {
+  const name = req.body.teamName
+  
+  Team.findOne({ teamName: name})
+    .populate( "members.memberId", "fullName")
+    .then((team) => {res.send(team)})
+
+})
+
 router.route("/dropdown").post(async (req, res) => {
   const value = req.body.value;
   const team = await Team.findOne({ teamName: value })
@@ -33,10 +41,6 @@ router.route("/dropdown").post(async (req, res) => {
   res.status(200).send(team);
 });
 
-router.route("/test").get(async (req, res) => {
-  const test = await User.find({ fullName: "test test" });
-  res.send(test);
-});
 
 //ADD MEMBER
 router.route("/team/members/:id").patch(async (req, res) => {
@@ -75,21 +79,5 @@ router.route("/team/members/:id").patch(async (req, res) => {
     }
   }
 });
-
-// router.route("/team/removeProject").patch(async (req, res) => {
-//   const projectId = req.body.projectId
-//   const testProject = await Team.findOneAndUpdate({"projects.projectId": projectId}, 
-//     {
-//       $pull: {"projects": {"projectId": projectId}}
-//     })
-//     .then((response) => {
-//       res.send(testProject)
-//     })
-//     .catch((error)=>{
-//       res.status(404).send({error: "Could not find project"})
-//     })
-// })
-
-
 
 module.exports = router;

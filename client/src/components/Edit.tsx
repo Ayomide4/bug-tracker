@@ -118,11 +118,11 @@ function Edit(props: any) {
                   className="z-10 w-40 select-none rounded-sm border border-gray-500"
                 >
                   <div
-                    className="flex h-11 w-32 cursor-pointer items-center justify-center bg-white"
+                    className="flex h-11 cursor-pointer items-center justify-between bg-white"
                     onClick={() => setIsExpanded((prev) => !prev)}
                   >
-                    <div className="mr-1">{newStatus}</div>
-                    <div>
+                    <div className="ml-2">{newStatus}</div>
+                    <div className="mr-2">
                       {!isExpanded && <AiOutlineRight />}
                       {isExpanded && <AiOutlineDown />}
                     </div>

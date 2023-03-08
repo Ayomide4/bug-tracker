@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 
 export default function ProjectItem(props: any) {
   const [data, setData] = useState([{}]);
-
+  let teamList = [{}];
 
   //the entry arg is the same arg in the map func when we render
   //this means when we click the item it gets the entry from the list of entries
@@ -21,10 +21,6 @@ export default function ProjectItem(props: any) {
       deadline: entry.deadline,
       tickets: entry.tickets
     });
-    let test:any = "Test Project"
-    
-    console.log('ON CLICK ITEM',entry)
-
   };
 
   //TODO: Filter active projects and get length to send to dashboard

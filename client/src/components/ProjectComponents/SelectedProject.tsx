@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { FormEvent, SetStateAction, useEffect, useState } from "react";
+import React, { SetStateAction, useEffect, useState } from "react";
 import { FaArrowLeft } from "react-icons/fa";
 import ConfirmDelete from "./ConfirmDelete";
 import { toast, ToastContainer } from "react-toastify";
@@ -45,6 +45,8 @@ interface Props {
     id: string;
     deadline: string;
     tickets: string[];
+    members: string[];
+  
   };
   setSelectedInfo: React.Dispatch<
     SetStateAction<{
@@ -57,6 +59,7 @@ interface Props {
       id: string;
       deadline: string;
       tickets: string[];
+      members: string[];
     }>
   >;
 }
@@ -67,6 +70,9 @@ interface ticketType {
   dev: string;
   prio: string;
 }
+
+
+
 
 export default function SelectedProject({
   selected,
@@ -87,7 +93,7 @@ export default function SelectedProject({
     dev: "",
     prio: "",
   });
-
+  const [members, setMembers] = useState<any>();
   const handleDelete = () => {
     //sends a delete request to the server
     setTrigger((prev) => !prev); //sets trigger to open so we can see the confirm delete page
@@ -119,10 +125,9 @@ export default function SelectedProject({
       dev: item.ticketId.dev,
       prio: item.ticketId.prio,
     });
-    console.log(item.ticketId);
   };
 
-  console.log("SELECTED INFO", selectedInfo);
+  // console.log("SELECTED INFO", selectedInfo);
 
   const renderTickets = selectedInfo.tickets.map(
     (ticketItem: any, index: number) => {
@@ -168,8 +173,14 @@ export default function SelectedProject({
     }
   );
 
+
   useEffect(() => {
     //deletes project when confirm delete state changes
+    axios.patch('http://localhost:3002/members', {teamName: selectedInfo.team})
+      .then((res) => {
+        console.log('hello', res.data.members);
+        setMembers(res.data.members);
+    })
     //TODO: CONFIRM DELETE IS COMMENTED BECAUSE ON REFRESH IT ACCIDENTALLY DELETES PROJECT
     //handleDelete();
   }, [confirmDelete]);
@@ -244,13 +255,11 @@ export default function SelectedProject({
               <thead className="bg-[#F3F4F6] text-left text-[#707785]">
                 <tr>
                   <th className="whitespace-nowrap pl-2">Name</th>
-                  <th className="whitespace-nowrap">Email</th>
                 </tr>
               </thead>
               <tbody className="text-left">
                 <tr>
                   <td className="whitespace-nowrap pl-2">Ayo Omotosho</td>
-                  <td className="whitespace-nowrap">aomotosho4@gmail.com</td>
                 </tr>
               </tbody>
             </table>
@@ -280,6 +289,7 @@ export default function SelectedProject({
         ticketData={ticketData}
         isModalOpen={isModalOpen}
         setIsModalOpen={setIsModalOpen}
+        members={members}
       />
       {toggleEditModal && (
         <Edit

@@ -11,7 +11,8 @@ type infoType = {
   date: string,
   id: string,
   deadline: string,
-  tickets: string[]
+  tickets: string[],
+  members: string[],
 }
 
 export default function Projects() {
@@ -25,7 +26,8 @@ export default function Projects() {
     date: "",
     id: "",
     deadline: "",
-    tickets: []
+    tickets: [],
+    members: []
   });
 
 
