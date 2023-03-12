@@ -167,7 +167,7 @@ export default function SelectedProject({
           >
             {ticketItem.ticketId.prio}
           </td>
-          <td className="whitespace-nowrap">{ticketItem.ticketId.dev}</td>
+          <td className=" px-1 whitespace-nowrap">{ticketItem.ticketId.dev}</td>
         </tr>
       );
     }
@@ -179,12 +179,10 @@ export default function SelectedProject({
     axios.patch('http://localhost:3002/members', {teamName: selectedInfo.team})
       .then((res) => {
         setMembers(res.data.members);
-        //console.log(res.data.members)
-        console.log('hello')
     })
     //TODO: CONFIRM DELETE IS COMMENTED BECAUSE ON REFRESH IT ACCIDENTALLY DELETES PROJECT
-    //handleDelete();
-  }, [confirmDelete, btnTitle]);
+    handleDelete();
+  }, [confirmDelete]);
 
   return (
     <div className="w-full">

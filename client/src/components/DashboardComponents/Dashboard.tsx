@@ -23,7 +23,7 @@ export const Dashboard = () => {
         const temp:any = localStorage.getItem("login state")
         const obj = JSON.parse(temp)
         let newId = obj._id
-        console.log(obj)
+        //console.log(obj)
         // console.log('refresh id ', newId)
         axios.get(`http://localhost:3002/user/${newId}`)
           .then((response) => {
