@@ -51,6 +51,19 @@ router.route("/ticket/list").get(async (req, res) => {
   res.send(tickets);
 });
 
+router.route("/update-ticket").patch(async (req,res) => {
+  const title = req.body.title
+  const dev = req.body.dev
+
+try{
+  await Ticket.findOneAndUpdate({"title": title}, {dev: dev})
+    .then(updated => res.status(200).send(updated))
+
+} catch {
+  res.status(404).send({"message": "error"})
+}
+  
+})
 
 
 module.exports = router;

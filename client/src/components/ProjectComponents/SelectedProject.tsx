@@ -93,6 +93,7 @@ export default function SelectedProject({
     dev: "",
     prio: "",
   });
+  const [btnTitle, setBtnTitle] = useState(ticketData.dev !== '' ? ticketData.dev : 'yo')
   const [members, setMembers] = useState<any>();
   const handleDelete = () => {
     //sends a delete request to the server
@@ -125,9 +126,8 @@ export default function SelectedProject({
       dev: item.ticketId.dev,
       prio: item.ticketId.prio,
     });
+    setBtnTitle(item.ticketId.dev)
   };
-
-  // console.log("SELECTED INFO", selectedInfo);
 
   const renderTickets = selectedInfo.tickets.map(
     (ticketItem: any, index: number) => {
@@ -167,7 +167,7 @@ export default function SelectedProject({
           >
             {ticketItem.ticketId.prio}
           </td>
-          <td className="whitespace-nowrap">Blank</td>
+          <td className="whitespace-nowrap">{ticketItem.ticketId.dev}</td>
         </tr>
       );
     }
@@ -178,12 +178,13 @@ export default function SelectedProject({
     //deletes project when confirm delete state changes
     axios.patch('http://localhost:3002/members', {teamName: selectedInfo.team})
       .then((res) => {
-        console.log('hello', res.data.members);
         setMembers(res.data.members);
+        //console.log(res.data.members)
+        console.log('hello')
     })
     //TODO: CONFIRM DELETE IS COMMENTED BECAUSE ON REFRESH IT ACCIDENTALLY DELETES PROJECT
     //handleDelete();
-  }, [confirmDelete]);
+  }, [confirmDelete, btnTitle]);
 
   return (
     <div className="w-full">
@@ -290,6 +291,8 @@ export default function SelectedProject({
         isModalOpen={isModalOpen}
         setIsModalOpen={setIsModalOpen}
         members={members}
+        btnTitle={btnTitle}
+        setBtnTitle={setBtnTitle}
       />
       {toggleEditModal && (
         <Edit

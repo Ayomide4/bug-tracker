@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { FaArrowLeft } from "react-icons/fa";
-import { AiOutlineRight, AiOutlineLeft } from "react-icons/ai";
+import { AiOutlineRight, AiOutlineDown } from "react-icons/ai";
+import axios from "axios";
 
 type Props = {
+  btnTitle: string;
+  setBtnTitle:  React.Dispatch<React.SetStateAction<string>>;
   ticketData: {
     title: string;
     desc: string;
@@ -25,13 +28,27 @@ export default function TicketInfoModal({
   isModalOpen,
   setIsModalOpen,
   members,
+  btnTitle,
+  setBtnTitle,
 }: Props) {
   let index: number = 0;
 
+  
   const [isClicked, setIsClicked] = useState<boolean>(false);
   const closeModal = () => {
     setIsModalOpen((prev: boolean) => !prev);
+    setIsClicked(prev => false)
   };
+
+
+  const handleClick = (e:any, item:any) => {
+    if(item.memberId.fullName !== btnTitle){
+      setIsClicked(prev => !prev)
+      setBtnTitle(item.memberId.fullName)
+      axios.patch("http://localhost:3002/update-ticket", {"title": ticketData.title, "dev": item.memberId.fullName})
+    }
+  }  
+
 
   if (ticketData.prio == "Low") {
     index = 0;
@@ -41,9 +58,7 @@ export default function TicketInfoModal({
     index = 2;
   }
 
-  console.log('clicked modal',members)
 
-  
 
   return (
     <>
@@ -78,17 +93,19 @@ export default function TicketInfoModal({
                   <label className="text-lg font-semibold text-[#1D3557]">Ticket Developer:</label>
                   <div className="border border-gray-500 w-40 select-none ml-2 rounded-sm">
                     <div className="flex justify-between items-center" onClick={() => setIsClicked(prev => !prev)}>
-                      <div className="ml-2">Dev</div>
+                      <div className="ml-2">{btnTitle}</div>
                       <div className="mr-2">
                         {!isClicked && <AiOutlineRight/>}
-                        {isClicked && <AiOutlineLeft/>}
+                        {isClicked && <AiOutlineDown/>}
                       </div>
                     </div>
-                    <div>{ isClicked &&
+                    <div>
+                      { isClicked &&
                       <ul>
+                        <hr className="border-1 border-black"></hr>
                         {members.map((item, index) => {
                           return (
-                            <li key={index}>
+                            <li key={index} onClick={(e) => handleClick(e, item)}  className="cursor-pointer hover:bg-gray-200 pl-2">
                               {item.memberId.fullName}
                             </li>
                           )
