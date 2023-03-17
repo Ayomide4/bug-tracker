@@ -3,6 +3,8 @@ import { FaArrowLeft } from "react-icons/fa";
 import { AiOutlineRight, AiOutlineDown } from "react-icons/ai";
 import axios from "axios";
 
+//todo: create delete ticket/edit ticket
+
 type Props = {
   btnTitle: string;
   setBtnTitle:  React.Dispatch<React.SetStateAction<string>>;

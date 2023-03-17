@@ -67,7 +67,7 @@ export default function SignUp({setTrigger, notify} : Props) {
 
 
   return (
-    <div className='bg-white w-2/5 h-full flex justify-center'>
+    <div className='bg-white m-4 md:w-2/5 h-full flex justify-center'>
       <ToastContainer/>
       <div className='flex flex-col  w-96'> 
       <form onSubmit={e => handleSubmit(e)}>
@@ -84,7 +84,7 @@ export default function SignUp({setTrigger, notify} : Props) {
           <label className='font-semibold'>Email Address</label>
           <input id='email' type='email' onChange={e => handleChange(e)} value={signUpInfo.email} className=' border-b-2 border-gray-500 w-full'/>
         </div>
-        <div className='flex flex-col pb-4 w-full'>
+        <div className='flex flex-col pb-10 md:pb-4 w-full'>
           <label className='font-semibold'>Password</label>
           <input id='password' onChange={e => handleChange(e)} type='password' value={signUpInfo.password} className='border-b-2 border-gray-500  w-full'/>
         </div>

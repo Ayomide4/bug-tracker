@@ -10,7 +10,7 @@ export default function Tickets(props: any) {
   }
 
   return (
-    <div className='w-5/6 h-full bg-[#F4F6F6] flex flex-col items-center'>
+    <div className='md:w-5/6 h-full bg-[#F4F6F6] flex flex-col items-center'>
       {selected && <Ticket />}
       {!selected && <SelectedTicket/>}
     </div>

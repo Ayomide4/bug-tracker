@@ -76,7 +76,7 @@ export default function Project(props: any) {
 
 
   return (
-    <div className="shadow-outline relative mx-12 mb-20 mt-6 h-full w-11/12 rounded-lg border border-[#2A6470] bg-white">
+    <div className=" shadow-outline mx-2 relative md:mx-12 mb-20 mt-6 h-full w-96 md:w-11/12 rounded-lg border border-[#2A6470] bg-white">
       <CreateItem trigger={trigger}
         closeModal={handleClick}
         notify={notify}
@@ -86,7 +86,7 @@ export default function Project(props: any) {
         formData={formData}
         setFormData={setFormData}/>
       <div>
-        <div className="flex justify-between p-4 ">
+        <div className="flex p-2 justify-between md:p-4 ">
           <h2 className="text-xl text-[#1D3557]">Projects</h2>
           <button
             onClick={handleClick}

@@ -6,8 +6,10 @@ import { RxDoubleArrowRight } from 'react-icons/rx'
 export default function DashboardProjectsInfo(props:any) {
 
   return (
-    <div className='mt-10 mx-4 grid grid-rows-2 grid-cols-3 gap-4 h-72'>
-      <div className=' bg-white rounded-md row-span-2 p-4 shadow-md'>
+    <div className=' mt-4 md:mt-10 mx-4 grid grid-rows-2 grid-cols-1 md:grid-cols-3 gap-4 h-full md:h-72'>
+
+      {/* Project Prio Comp */}
+      <div className=' bg-white rounded-md row-span-full p-4 shadow-md'>
           <h2 className='text-xl font-semibold text-center'>Projects Priority</h2>
           <PieChartComp data={data01}/> 
           <div className="flex w-full justify-evenly">
@@ -25,6 +27,7 @@ export default function DashboardProjectsInfo(props:any) {
           </div>
         </div>
 
+        {/* Your projects comp */}
         <div className=' bg-white rounded-md row-span-2 shadow-md'>
           <h2 className='text-xl text-center font-semibold p-4'>Your Projects</h2>
           <div className='flex flex-col px-8 '>
@@ -44,6 +47,7 @@ export default function DashboardProjectsInfo(props:any) {
           </div>
         </div>
 
+        {/* Assigned Tickets comp */}
         <div className='bg-white rounded-md row-span-2 shadow-md'>
           <h2 className='text-xl text-center font-semibold p-4'>Assigned Tickets</h2>
           <div className='flex flex-col px-8'>

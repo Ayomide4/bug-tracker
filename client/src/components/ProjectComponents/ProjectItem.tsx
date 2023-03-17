@@ -77,7 +77,7 @@ export default function ProjectItem(props: any) {
   });
 
   return (
-    <div className="relative z-0 max-h-itemContainer min-w-full flex-none overflow-scroll">
+    <div className="relative z-0 h-itemContainer max-h-itemContainer w-full md:min-w-full flex-none overflow-scroll">
       <table className="w-full">
         <thead className="text-left text-[#707785]">
           <tr>

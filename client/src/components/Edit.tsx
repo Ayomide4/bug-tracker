@@ -2,7 +2,6 @@ import axios from "axios";
 import React, { FormEvent, useState } from "react";
 import { AiOutlineRight, AiOutlineDown } from "react-icons/ai";
 
-//TODO: ADD DEVELOPER FUNCTIONALITY
 
 function Edit(props: any) {
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
@@ -149,8 +148,7 @@ function Edit(props: any) {
                 </div>
               </div>
             </div>
-
-            <button className="absolute bottom-0 h-12 w-36 bg-[#1D3557] text-lg text-white">
+            <button className="absolute bottom-10 h-12 w-36 bg-[#1D3557] text-lg text-white">
               Save
             </button>
           </div>

@@ -61,9 +61,9 @@ const [trigger, setTrigger] = useState<boolean>(true)
 
   return (
       <div className='w-screen h-screen relative'>
-          <div className='flex w-full h-full bg-white'>
+          <div className='md:flex md:w-full md:h-full bg-white'>
             {trigger ? <Login setTrigger={setTrigger} notify={notify}/> : <SignUp setTrigger={setTrigger} notify={notify}/>}
-            <img className='w-3/5 rounded-l-2xl' src={image}/>
+              <img className=' hidden md:block w-3/5 rounded-l-2xl' src={image}/>
           </div>
       
       </div>

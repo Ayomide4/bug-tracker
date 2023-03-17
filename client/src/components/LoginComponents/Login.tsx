@@ -81,10 +81,10 @@ export default function ({setTrigger, notify} : Props) {
   }
 
   return (
-      <div className='bg-white w-2/5 h-full flex justify-center '>
+      <div className='bg-white m-4 md:w-2/5 h-full flex justify-center'>
         <ToastContainer/>
           <div className='flex flex-col w-96'> 
-            <h1 className='text-3xl font-bold mt-10'>Bug Tracker</h1>
+            <h1 className='text-5xl text-center md:text-3xl font-bold mt-10'>Bug Tracker</h1>
             <form onSubmit={e => handleSubmit(e)}>
               <h1 className='text-2xl font-bold pb-6 w-full mt-28'>Sign In</h1>
               <div className='pb-4 flex flex-col w-full'>

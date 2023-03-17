@@ -23,8 +23,7 @@ export const Dashboard = () => {
         const temp:any = localStorage.getItem("login state")
         const obj = JSON.parse(temp)
         let newId = obj._id
-        //console.log(obj)
-        // console.log('refresh id ', newId)
+
         axios.get(`http://localhost:3002/user/${newId}`)
           .then((response) => {
             localStorage.setItem("login state", JSON.stringify(response.data))
@@ -52,7 +51,7 @@ export const Dashboard = () => {
     },[])
     
   return (
-    <div className='w-5/6 h-full bg-[#F4F6F6] flex flex-col'>
+    <div className='md:w-5/6 h-full bg-[#F4F6F6] flex flex-col w-full'>
       <DashboardStatus />
       <DashboardProjectsInfo sum={sum}/>  
     </div>

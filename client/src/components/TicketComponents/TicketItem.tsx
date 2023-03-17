@@ -76,7 +76,7 @@ export default function TicketItem(props:any) {
 
   
   return (
-    <div className={`border relative  border-[#2A6470] rounded-lg shadow-outline max-h-screen w-full bg-white`}>
+    <div className={`border relative border-[#2A6470] rounded-lg shadow-outline md:max-h-screen h-itemContainer w-full bg-white`}>
       <CreateItem trigger={trigger} closeModal={handleClick} notify={notify} listLength={props.listLength} setListLength={props.setListLength} itemType={'ticket'} formData={formData} setFormData={setFormData}/>
       <div className='flex justify-between p-4'>
         <h2 className='text-xl text-[#1D3557]'>Tickets</h2>

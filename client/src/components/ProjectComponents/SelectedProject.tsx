@@ -93,7 +93,8 @@ export default function SelectedProject({
     dev: "",
     prio: "",
   });
-  const [btnTitle, setBtnTitle] = useState(ticketData.dev !== '' ? ticketData.dev : 'yo')
+
+  const [btnTitle, setBtnTitle] = useState('none')
   const [members, setMembers] = useState<any>();
   const handleDelete = () => {
     //sends a delete request to the server
@@ -133,7 +134,7 @@ export default function SelectedProject({
     (ticketItem: any, index: number) => {
       //colors for the prio range
       const prioColors = ["lowPrio", "medPrio", "highPrio"];
-
+      
       let colorIndex = 0;
 
       switch (ticketItem.ticketId.prio) {
@@ -176,6 +177,7 @@ export default function SelectedProject({
 
   useEffect(() => {
     //deletes project when confirm delete state changes
+    console.log(ticketData)
     axios.patch('http://localhost:3002/members', {teamName: selectedInfo.team})
       .then((res) => {
         setMembers(res.data.members);
