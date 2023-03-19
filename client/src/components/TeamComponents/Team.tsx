@@ -181,9 +181,9 @@ export default function Team(props: any) {
               setMembers={setMembers}
             />
           </div>
-          <div className="z-0 mb-8 flex items-start justify-evenly">
+          <div className="z-0 mb-8 flex flex-col w-screen md:w-full items-center md:flex-row md:items-start md:justify-evenly">
             {/* TEAM LIST */}
-            <div className="h-80 w-5/12 rounded border border-[#1D3557] bg-white shadow-sm">
+            <div className="h-80 w-11/12 mb-4 md:w-5/12 rounded border border-[#1D3557] bg-white shadow-sm">
               <div className="flex items-center justify-between py-2">
                 <h2 className=" ml-2 text-xl font-semibold text-[#1D3557]">
                   {props.myTeamName}
@@ -210,7 +210,7 @@ export default function Team(props: any) {
             </div>
 
             {/* PROJECT LIST */}
-            <div className="h-80 w-6/12 rounded border border-[#1D3557] bg-white shadow-sm">
+            <div className="h-80 w-11/12 md:w-6/12 rounded border border-[#1D3557] bg-white shadow-sm">
               <div className="flex w-full items-center justify-between pt-2">
                 <h2 className="mb-2 px-2 text-xl font-semibold text-[#1D3557]">
                   Projects
@@ -240,8 +240,8 @@ export default function Team(props: any) {
               </div>
             </div>
           </div>
-          {/* TODO: TICKETS */}
-          <div className=" mx-8 h-72 rounded bg-white shadow-lg"></div>
+
+
           <AddMember
             manager={(manager = {})}
             members={members}

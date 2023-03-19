@@ -90,7 +90,7 @@ export default function Ticket() {
               Status: Development
             </h2>
           </div>
-        <div className="mt-4 md:col-span-3 mx-4 h-full md:h-3/5 ">
+        <div className="mt-4 col-span-3 mx-4 md:mx-0  ">
           <TicketItem
             title="Tickets"
             btn="Ticket"

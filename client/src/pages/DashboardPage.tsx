@@ -6,7 +6,7 @@ import { projectDashboardType } from '../App'
 
 export default function DashboardPage() {
   return (
-    <div className='max-w-full h-full flex p-0 m-0 bg-[#F4F6F6]'>
+    <div className='max-w-full h-screen flex p-0 m-0 bg-[#F4F6F6]'>
       <Navbar/>
       <Dashboard/>
     </div>

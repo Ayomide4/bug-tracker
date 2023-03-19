@@ -38,7 +38,7 @@ export default function Projects() {
           Your Projects
         </h1>
       )}
-      <div className="flex h-full w-full flex-col items-center bg-[#F4F6F6]">
+      <div className="flex h-full w-screen md:w-full flex-col items-center bg-[#F4F6F6]">
         {selected && (
           <Project
             selectedInfo={selectedInfo}

@@ -15,6 +15,7 @@ type infoType = {
   date: string;
   id: string;
   tickets: string[];
+  members: string[]
 };
 
 export default function Teams() {
@@ -44,6 +45,7 @@ export default function Teams() {
     id: "",
     deadline: "",
     tickets: [],
+    members: []
   });
 
   useEffect(() => {
