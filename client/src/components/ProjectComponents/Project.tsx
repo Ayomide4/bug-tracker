@@ -76,7 +76,7 @@ export default function Project(props: any) {
 
 
   return (
-    <div className=" shadow-outline relative md:mx-12 mb-20 mt-6 h-full w-screen md:w-11/12 rounded-lg border border-[#2A6470] bg-white">
+    <div className="shadow-outline relative md:mx-12 mb-20 mt-6 h-full w-11/12 rounded-lg border border-[#2A6470] bg-white">
       <CreateItem trigger={trigger}
         closeModal={handleClick}
         notify={notify}

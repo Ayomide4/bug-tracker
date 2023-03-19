@@ -93,13 +93,13 @@ export default function AddMember({manager, members, setMembers, id, isModalOpen
     <>
     {isModalOpen && 
       <div className='h-full w-full bg-black bg-opacity-20 flex justify-center items-center absolute top-0 left-0 z-50'>
-        <div className='relative p-10 w-2/5 h-32 bg-white opacity-100'>
+        <div className='relative md:p-10 w-72 md:w-2/5 h-40 md:h-32 bg-white opacity-100'>
         <button className='w-20 h-7 bg-[#1D3557] text-white absolute top-4 left-6' onClick={() => setIsModalOpen(prev => !prev)}>Cancel</button>
           <form onSubmit={e => handleSubmit(e)}>
-            <div className='flex justify-start items-center mt-4'>
-              <h1 className='text-lg font-medium'>Enter Full Name</h1>
-              <input className='ml-8 border border-black' onChange={e => handleChange(e)}/>
-              <button className='w-20 h-8 text-lg bg-[#1D3557] text-white ml-4'>Add</button>
+            <div className='flex flex-col md:flex-row justify-start items-center mt-12 md:mt-4'>
+              <h1 className='md:text-lg font-medium'>Enter Full Name</h1>
+              <input className='md:ml-8  border border-black' onChange={e => handleChange(e)}/>
+              <button className='w-20 h-8 mt-4 md:mt-0 text-lg bg-[#1D3557] text-white ml-4'>Add</button>
             </div>
           </form>
         </div>

@@ -25,7 +25,7 @@ export default function CreateTeam({trigger, setTrigger, isModalOpen, setIsModal
       <>
         <h1 className='ml-6 mt-6 font-semibold text-2xl text-[#1D3557] mb-8'>Teams</h1>
         <h1 className='text-xl h-32 text-center'>Create your team to see more!</h1>
-        <button className='absolute top-10 right-10 bg-[#1D3557] rounded-lg w-36 h-12 text-white ' onClick={handleClick}>Create Team</button>
+        <button className='absolute top-5 right-5 md:top-10 md:right-10 bg-[#1D3557] rounded-lg w-36 h-12 text-white ' onClick={handleClick}>Create Team</button>
       </>
 
       {isModalOpen && 

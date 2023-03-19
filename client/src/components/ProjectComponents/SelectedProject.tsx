@@ -183,7 +183,7 @@ export default function SelectedProject({
         setMembers(res.data.members);
     })
     //TODO: CONFIRM DELETE IS COMMENTED BECAUSE ON REFRESH IT ACCIDENTALLY DELETES PROJECT
-    //handleDelete();
+    handleDelete();
   }, [confirmDelete]);
 
   return (

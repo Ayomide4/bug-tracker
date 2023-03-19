@@ -2,7 +2,6 @@ import axios from "axios";
 import React, { FormEvent, useState } from "react";
 import { AiOutlineRight, AiOutlineDown } from "react-icons/ai";
 
-
 function Edit(props: any) {
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
   const [newStatus, setNewStatus] = useState<string>("Status");
@@ -58,13 +57,13 @@ function Edit(props: any) {
 
   return (
     <div className="fixed left-0 top-0 z-50 flex h-full w-full items-center justify-center bg-black bg-opacity-20">
-      <div className="relative h-3/4 w-3/5 bg-white p-20 opacity-100">
-        <h1 className="absolute top-10 left-10 text-xl font-semibold">
+      <div className="absolute md:relative top-12 md:top-0 h-3/4 w-4/5 bg-white md:py-20 opacity-100 md:w-3/5">
+        <h1 className="absolute top-8 left-7 text-xl font-semibold md:top-10 md:left-10">
           Edit Project
         </h1>
         <button
           onClick={props.toggleEdit}
-          className="absolute right-8 top-8 h-10 w-20 bg-[#1D3557] text-lg text-white"
+          className="absolute right-7 top-7 h-8 w-16 bg-[#1D3557] text-lg text-white md:h-10 md:w-20"
         >
           Close
         </button>
@@ -73,35 +72,35 @@ function Edit(props: any) {
           className="h-full w-full bg-white"
           autoComplete="off"
         >
-          <div className="ml-4 flex h-full">
-            <div className="w-1/2">
-              <div className="mb-6 flex flex-col">
+          <div className=" h-fit w-full md:px-10 md:flex ">
+            <div className="md:w-1/2">            
+              <div className="mb-4 md:mb-6 mt-20 md:mt-0 flex flex-col mx-6 md:mx-0 ">
                 <label className="mb-1 text-lg ">Title</label>
                 <input
                   id="title"
                   onChange={handleChange}
                   value={newInfo.title}
                   maxLength={30}
-                  className="w-60 rounded-md border border-gray-500 p-2"
+                  className="w-full md:w-60 rounded-md border border-gray-500 p-2"
                   type="text"
                   placeholder="Enter a title"
                 />
               </div>
-              <div className="mb-6 flex flex-col">
+              <div className="mb-4 md:mb-6 flex-col mx-6 md:mx-0 md:flex">
                 <label className="mb-1 text-lg">Description</label>
                 <textarea
                   id="desc"
                   onChange={handleChange}
                   value={newInfo.desc}
                   maxLength={150}
-                  className="h-60 w-60 resize-none border border-gray-500 pl-2 pt-2"
+                  className=" h-32 md:h-40 w-60 resize-none border border-gray-500 pl-2 pt-2"
                   placeholder="Enter a description"
                 />
-              </div>
+                </div>
             </div>
 
             <div className="w-1/2">
-              <div className="mb-6 flex flex-col">
+              <div className="mb-4 md:mb-6 mx-6 md:mx-0 flex-col md:flex">
                 <label className="mb-1 text-lg">Deadline</label>
                 <input
                   id="deadline"
@@ -110,7 +109,7 @@ function Edit(props: any) {
                   onChange={(e) => selectDeadline(e)}
                 />
               </div>
-              <div className="h-40 w-full">
+              <div className=" h-40 mx-6 md:mx-0 w-full">
                 <label className="mb-1 text-lg">Status</label>
                 <div
                   unselectable="on"
@@ -148,7 +147,7 @@ function Edit(props: any) {
                 </div>
               </div>
             </div>
-            <button className="absolute bottom-10 h-12 w-36 bg-[#1D3557] text-lg text-white">
+            <button className="absolute left-6 md:left-10 md:bottom-32 bottom-10 h-12 w-36 bg-[#1D3557] text-lg text-white">
               Save
             </button>
           </div>
