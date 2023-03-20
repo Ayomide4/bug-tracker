@@ -42,6 +42,7 @@ export default function Team(props: any) {
 
   const handleClick = () => {
     props.setTrigger((prev: boolean) => !prev);
+    console.log('click')
   };
 
   const handleClickProjects = () => {
@@ -164,7 +165,7 @@ export default function Team(props: any) {
           <h1 className="ml-6 mt-6 mb-8 text-2xl font-semibold text-[#1D3557]">
             Teams
           </h1>
-          <div className="absolute top-4 right-8 flex">
+          <div className="absolute top-4 right-24 md:right-8 flex">
             {!isAdmin && (
               <button
                 onClick={handleClick}

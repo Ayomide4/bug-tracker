@@ -1,79 +1,87 @@
-import {AiOutlineBug, AiOutlineHome, AiOutlineAppstore, AiOutlineTeam} from 'react-icons/ai'
-import {BiTask} from 'react-icons/bi'
-import { Link, useMatch, useResolvedPath} from 'react-router-dom'
-import Logout from './LoginComponents/Logout'
+import {
+  AiOutlineBug,
+  AiOutlineHome,
+  AiOutlineAppstore,
+  AiOutlineTeam,
+} from "react-icons/ai";
+import { BiTask } from "react-icons/bi";
+import { Link, useMatch, useResolvedPath } from "react-router-dom";
+import Logout from "./LoginComponents/Logout";
 
-
-
-
-
-
-
-
-export const Navbar = () => {
-
-
-  const Menu: Array<string> = ["Dashboard","Projects", "Tickets", "Team"]
+export const Navbar = (props: any) => {
+  const Menu: Array<string> = ["Dashboard", "Projects", "Tickets", "Team"];
   const Icons = [
-    <AiOutlineHome size='24' color='#9AD2D9'/>,
-    <AiOutlineAppstore size='24' color='#9AD2D9'/>,
-    <BiTask size='24' color='#9AD2D9'/>,
-    <AiOutlineTeam size='24' color='#9AD2D9'/>
-  ]
+    <AiOutlineHome size="24" color="#9AD2D9" />,
+    <AiOutlineAppstore size="24" color="#9AD2D9" />,
+    <BiTask size="24" color="#9AD2D9" />,
+    <AiOutlineTeam size="24" color="#9AD2D9" />,
+  ];
 
-  function CustomLink(item:string, index:number){
-    const resolvedPath = useResolvedPath(renderSwitch(index))
-    const isActive = useMatch({path: resolvedPath.pathname, end: true})
+  function CustomLink(item: string, index: number) {
+    const resolvedPath = useResolvedPath(renderSwitch(index));
+    const isActive = useMatch({ path: resolvedPath.pathname, end: true });
     return (
-        <Link to={renderSwitch(index)} key={index}>
-          <li className={`flex items-center gap-2 mx-2 px-1 mt-4 rounded ${isActive ? 'bg-[#1D3557]': null}`}>
-              <div className='flex items-center gap-2 cursor-pointer'>
-                {Icons[index]}
-                <h2 className='w-fit flex xl:text-xl text-white' key={item}>{item}</h2>
-              </div>
-          </li>
-        </Link>
-    )
+      <Link to={renderSwitch(index)} key={index}>
+        <li
+          className={`mx-2 mt-4 flex items-center gap-2 rounded px-1 ${
+            isActive ? "bg-[#1D3557]" : null
+          }`}
+        >
+          <div className="flex cursor-pointer items-center gap-2">
+            {Icons[index]}
+            <h2 className="flex w-fit text-white xl:text-xl" key={item}>
+              {item}
+            </h2>
+          </div>
+        </li>
+      </Link>
+    );
   }
 
-  function renderSwitch(index:number):string{
-    switch(index){
+  function renderSwitch(index: number): string {
+    switch (index) {
       case 0:
-        return '/'
-        break
+        return "/";
+        break;
       case 1:
-        return '/projects'
-        break
+        return "/projects";
+        break;
       case 2:
-        return '/tickets'
-        break
+        return "/tickets";
+        break;
       case 3:
-        return '/team'
-        break
+        return "/team";
+        break;
       default:
-        return '/'
+        return "/";
     }
   }
 
   return (
-    <section className='hidden md:flex flex-col w-1/6 bg-[#457b9d] max-h-screen z-0'>
-      <div className='mt-4 flex flex-col gap-5 relative pt-4 w-full'>
-        <Link to='/'>
-          <span className='flex items-center justify-center gap-2 cursor-pointer mb-10 '>
-              <AiOutlineBug  size='24' color='#64C2CA'/>
-              <h2 className='w-fit flex xl:text-xl font-bold text-white'>Bug Tracker</h2>
+    <section
+      className={
+        props.isOpen
+          ? "fixed z-20 h-full w-3/5 flex-col bg-[#457b9d] md:flex md:max-h-screen md:w-1/6 border-r-2 border-black "
+          : "z-0 hidden max-h-screen  w-2/5 flex-col bg-[#457b9d] md:flex md:w-1/6"
+      }
+    >
+      <div className="relative mt-4 flex w-full flex-col gap-5 pt-4">
+        <Link to="/">
+          <span className="mb-10 flex cursor-pointer items-center justify-center gap-2 ">
+            <AiOutlineBug size="24" color="#64C2CA" />
+            <h2 className="flex w-fit font-bold text-white md:text-xl">
+              Bug Tracker
+            </h2>
           </span>
         </Link>
 
         <ul>
-          {Menu.map((item, index)=>{
-            return (
-              CustomLink(item, index)
-            )
+          {Menu.map((item, index) => {
+            return CustomLink(item, index);
           })}
         </ul>
-          <Logout/>
+        <Logout />
       </div>
     </section>
-  )
-}
+  );
+};

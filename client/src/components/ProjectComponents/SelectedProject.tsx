@@ -34,6 +34,8 @@ const notifyDelete = (success: boolean) => {
 
 interface Props {
   selected: boolean;
+  setHidden: React.Dispatch<SetStateAction<boolean>>;
+  hidden: boolean;
   setIsSelected: React.Dispatch<SetStateAction<boolean>>;
   selectedInfo: {
     title: string;
@@ -79,6 +81,8 @@ export default function SelectedProject({
   setIsSelected,
   selectedInfo,
   setSelectedInfo,
+  setHidden,
+  hidden
 }: Props) {
   //TODO: make it so only admin can delete/edit
   //  DELETE and EDIT button shouldn't show up for regular users
@@ -177,7 +181,8 @@ export default function SelectedProject({
 
   useEffect(() => {
     //deletes project when confirm delete state changes
-    console.log(ticketData)
+    setHidden(prev=>true)
+
     axios.patch('http://localhost:3002/members', {teamName: selectedInfo.team})
       .then((res) => {
         setMembers(res.data.members);
@@ -202,6 +207,7 @@ export default function SelectedProject({
           className="ml-4 flex w-44 cursor-pointer items-center"
           onClick={() => {
             setIsSelected((prev) => !prev);
+            setHidden(prev=>false)
           }}
         >
           <FaArrowLeft color="#1D3557" size={20} />

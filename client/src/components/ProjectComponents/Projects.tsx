@@ -15,7 +15,7 @@ type infoType = {
   members: string[],
 }
 
-export default function Projects() {
+export default function Projects(props:any) {
   const [selected, setIsSelected] = useState<boolean>(true);
   const [selectedInfo, setSelectedInfo] = useState<infoType>({
     title: "",
@@ -49,6 +49,8 @@ export default function Projects() {
         )}
         {!selected && (
           <SelectedProject
+            setHidden={props.setHidden}
+            hidden={props.hidden}
             selectedInfo={selectedInfo}
             setSelectedInfo={setSelectedInfo}
             selected={selected}

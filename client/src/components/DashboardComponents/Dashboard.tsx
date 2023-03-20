@@ -4,6 +4,7 @@ import DashboardProjectsInfo from './DashboardProjectsInfo'
 import { useEffect } from 'react'
 import { useLogin } from '/Users/ayoomotosho/web_development/projects/bug-tracker/client/src/LoginProvider'
 import axios from 'axios'
+import MobileNavbar from '../MobileNavbar'
 
 
 
@@ -52,7 +53,7 @@ export const Dashboard = () => {
     },[])
     
   return (
-    <div className='md:w-5/6 h-full bg-[#F4F6F6] flex flex-col w-full'>
+    <div className='md:w-5/6 h-full  bg-[#F4F6F6] flex flex-col w-full'>
       <DashboardStatus />
       <DashboardProjectsInfo sum={sum}/>  
     </div>
