@@ -18,7 +18,7 @@ type infoType = {
   members: string[]
 };
 
-export default function Teams() {
+export default function Teams(props:any) {
   //get login info
   const login = useLogin();
 
@@ -67,6 +67,8 @@ export default function Teams() {
     <div className="h-full w-full">
       {!selected && (
         <SelectedProject
+          setHidden={props.setHidden}
+          hidden={props.hidden}
           selectedInfo={selectedInfo}
           setSelectedInfo={setSelectedInfo}
           selected={selected}

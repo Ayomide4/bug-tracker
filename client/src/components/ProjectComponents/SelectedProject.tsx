@@ -181,7 +181,8 @@ export default function SelectedProject({
 
   useEffect(() => {
     //deletes project when confirm delete state changes
-    setHidden(prev=>true)
+    setHidden(true)
+    console.log('inside selected ', hidden)
 
     axios.patch('http://localhost:3002/members', {teamName: selectedInfo.team})
       .then((res) => {
