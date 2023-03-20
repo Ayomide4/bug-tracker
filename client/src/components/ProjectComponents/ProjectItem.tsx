@@ -1,8 +1,10 @@
 import axios from "axios";
+import { useDashboard } from "/Users/ayoomotosho/web_development/projects/bug-tracker/client/src/DashboardProvider";
 import { useState, useEffect } from "react";
 
 export default function ProjectItem(props: any) {
   const [data, setData] = useState([{}]);
+  const dashStatus = useDashboard()
   let teamList = [{}];
 
   //the entry arg is the same arg in the map func when we render
@@ -23,7 +25,7 @@ export default function ProjectItem(props: any) {
     });
   };
 
-  //TODO: Filter active projects and get length to send to dashboard
+
 
   //fetches list of projects and saves it into data state
   const fetchData = async () => {
@@ -75,6 +77,11 @@ export default function ProjectItem(props: any) {
       </tr>
     );
   });
+
+
+
+
+
 
   return (
     <div className="relative z-0  h-itemContainer max-h-itemContainer w-full md:min-w-full flex-none overflow-scroll">

@@ -23,11 +23,21 @@ export default function DashboardStatus() {
         total = list.length
         dashStatus?.setProjectDashboard({...dashStatus.projectDashboard, totalTickets: total})
       })
+    axios.get('http://localhost:3002/project/list')
+      .then(res => {
+        const list = res.data
+        const activeList= list.filter((entry:any, index:number)=> {
+          return entry.status === "Active"
+        })
+        dashStatus?.setProjectDashboard({...dashStatus.projectDashboard, activeProjects: activeList.length})
+      })
     }
     
     useEffect(()=>{
       fetchDashInfo()
     }, [dashStatus?.projectDashboard.totalTickets])
+
+
 
   return (
     <div>
