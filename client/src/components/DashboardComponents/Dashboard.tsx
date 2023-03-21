@@ -11,19 +11,22 @@ interface PieObjectType {
   value: number;
 }
 
-interface PieArrayType {
-  [index: number]: PieObjectType;
-}
-
 export const Dashboard = () => {
   const dashStatus = useDashboard();
   const login = useLogin();
-  console.log("dash stat", dashStatus?.projectDashboard);
+
+  //get projects
+  const temp: any = localStorage.getItem("team state");
+  const obj = JSON.parse(temp);
+  const projects = obj.projects;
+
   const [pieData, setPieData] = useState<PieObjectType[]>([
     { name: "High", value: 0 },
     { name: "Medium", value: 0 },
     { name: "Low", value: 0 },
   ]);
+
+  const [userTicketList, setUserTicketList] = useState([{}]);
 
   let sum: number = pieData.reduce((accumulator: number, object: any) => {
     return accumulator + object.value;
@@ -55,7 +58,6 @@ export const Dashboard = () => {
           login?.setLoginInfo({ ...response.data });
         })
         .catch((error) => {
-          console.log("to");
           console.log(error.data);
         });
     }
@@ -63,8 +65,16 @@ export const Dashboard = () => {
 
   return (
     <div className="flex h-full  w-full flex-col bg-[#F4F6F6] md:w-5/6">
-      <DashboardStatus setPieData={setPieData} />
-      <DashboardProjectsInfo pieData={pieData} sum={sum} />
+      <DashboardStatus
+        setPieData={setPieData}
+        setUserTicketList={setUserTicketList}
+      />
+      <DashboardProjectsInfo
+        pieData={pieData}
+        sum={sum}
+        ticketList={userTicketList}
+        projectList={projects}
+      />
     </div>
   );
 };

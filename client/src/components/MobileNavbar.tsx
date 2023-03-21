@@ -8,7 +8,6 @@ interface Props {
 
 export default function MobileNavbar({hidden, handleClick} : Props) {
 
-  console.log(hidden, 'mobile')
   return (
     <div className="absolute top-0 right-0">
       <div

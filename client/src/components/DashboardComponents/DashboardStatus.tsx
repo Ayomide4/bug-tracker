@@ -13,14 +13,19 @@ interface Props {
       }[]
     >
   >;
+  setUserTicketList: React.Dispatch<React.SetStateAction<{}[]>>;
 }
 
-export default function DashboardStatus({ setPieData }: Props) {
+export default function DashboardStatus({
+  setPieData,
+  setUserTicketList,
+}: Props) {
   let total = 0;
 
   //TODO: Filter active projects and get length to send to dashboard
 
   // const login = useLogin()
+  const loginStatus = useLogin();
 
   const dashStatus = useDashboard();
   const fetchDashInfo = async () => {
@@ -58,8 +63,13 @@ export default function DashboardStatus({ setPieData }: Props) {
             { name: "Low", value: medPrioTickets.length },
           ]);
 
+          //list of tickets assigned to current user
+          const userTickets = ticketList.filter((entry: any, index: number) => {
+            return entry.dev === loginStatus?.loginInfo.fullName;
+          });
+          setUserTicketList(userTickets);
 
-
+          //Dashboard Stats
           const assignedTicketList = ticketList.filter(
             (entry: any, index: number) => {
               return entry.dev !== "none";
