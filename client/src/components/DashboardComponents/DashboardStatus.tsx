@@ -2,13 +2,14 @@ import axios from 'axios'
 import { useDashboard } from '/Users/ayoomotosho/web_development/projects/bug-tracker/client/src/DashboardProvider'
 import { useEffect} from 'react'
 import { useLogin } from '../../LoginProvider'
+import { toToastItem } from 'react-toastify/dist/utils'
 
 
 
 export default function DashboardStatus() {
 
   let total = 0
-
+  
 
   //TODO: Filter active projects and get length to send to dashboard
 
@@ -17,20 +18,39 @@ export default function DashboardStatus() {
 
   const dashStatus = useDashboard()
   const fetchDashInfo = async () => {
-    axios.get('http://localhost:3002/ticket/list')
-      .then(res => {
-        const list = res.data
-        total = list.length
-        dashStatus?.setProjectDashboard({...dashStatus.projectDashboard, totalTickets: total})
-      })
-    axios.get('http://localhost:3002/project/list')
-      .then(res => {
-        const list = res.data
-        const activeList= list.filter((entry:any, index:number)=> {
-          return entry.status === "Active"
+    // axios.get('http://localhost:3002/ticket/list')
+    //   .then(res => {
+    //     const list = res.data
+    //     total = list.length
+    //     dashStatus?.setProjectDashboard({...dashStatus.projectDashboard, totalTickets: total})
+    //   })
+    // axios.get('http://localhost:3002/project/list')
+    //   .then(res => {
+    //     const list = res.data
+    //     const activeList= list.filter((entry:any, index:number)=> {
+    //       return entry.status === "Active"
+    //     })
+    //     dashStatus?.setProjectDashboard({...dashStatus.projectDashboard, activeProjects: activeList.length})
+    //   })
+
+      axios.all([
+        axios.get('http://localhost:3002/ticket/list'),
+        axios.get('http://localhost:3002/project/list')
+      ]).then(axios.spread((data1, data2) => {
+        console.log(data1.data)
+        const ticketList = data1.data
+        const projectList = data2.data
+        const totalTickets = ticketList.length
+        const assignedTicketList = ticketList.filter((entry:any, index:number) => {
+          return entry.dev !== "none"
         })
-        dashStatus?.setProjectDashboard({...dashStatus.projectDashboard, activeProjects: activeList.length})
-      })
+        const activeProjects = projectList.filter((entry:any, index:number) => {
+          return entry.status === "Active"
+        } )
+        console.log(dashStatus?.projectDashboard)
+        dashStatus?.setProjectDashboard({...dashStatus.projectDashboard, totalTickets: totalTickets, activeProjects: activeProjects.length, assignedTickets: assignedTicketList.length, unassignedTickets: totalTickets-assignedTicketList.length})
+      }))
+
     }
     
     useEffect(()=>{

@@ -51,7 +51,7 @@ function Edit(props: any) {
       desc: newInfo.desc,
       status: newInfo.status,
     });
-    console.log("submitted info", props.selectedInfo);
+    // console.log("submitted info", props.selectedInfo);
     props.toggleEdit();
   };
 

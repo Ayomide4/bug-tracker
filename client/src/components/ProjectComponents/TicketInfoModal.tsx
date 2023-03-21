@@ -47,6 +47,7 @@ export default function TicketInfoModal({
     if(item.memberId.fullName !== btnTitle){
       setIsClicked(prev => !prev)
       setBtnTitle(item.memberId.fullName)
+      console.log(ticketData.title, item.memberId.fullName)
       axios.patch("http://localhost:3002/update-ticket", {"title": ticketData.title, "dev": item.memberId.fullName})
     }
   }  
@@ -65,8 +66,8 @@ export default function TicketInfoModal({
   return (
     <>
       {isModalOpen && (
-        <div className="absolute top-0 left-0 z-50 flex h-full w-full items-center justify-center bg-black bg-opacity-20">
-          <div className="relative h-3/5 w-2/5 bg-white">
+        <div className=" fixed top-0 left-0 z-50 flex h-full w-full items-center justify-center bg-black bg-opacity-20">
+          <div className="relative h-3/5 w-4/5 md:w-2/5 bg-white">
             <div className="h-full border border-black p-4">
               <div className="mb-2 flex items-center justify-between ">
                 <div
@@ -93,7 +94,7 @@ export default function TicketInfoModal({
                 </p>
                 <div className="flex">
                   <label className="text-lg font-semibold text-[#1D3557]">Ticket Developer:</label>
-                  <div className="border border-gray-500 w-40 select-none ml-2 rounded-sm">
+                  <div className="border border-gray-500 w-40 h-fit select-none ml-2 rounded-sm">
                     <div className="flex justify-between items-center" onClick={() => setIsClicked(prev => !prev)}>
                       <div className="ml-2">{btnTitle}</div>
                       <div className="mr-2">
