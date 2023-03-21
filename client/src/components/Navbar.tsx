@@ -8,7 +8,11 @@ import { BiTask } from "react-icons/bi";
 import { Link, useMatch, useResolvedPath } from "react-router-dom";
 import Logout from "./LoginComponents/Logout";
 
-export const Navbar = (props: any) => {
+interface Props {
+  isOpen: boolean
+}
+
+export const Navbar = ({isOpen}: Props) => {
   const Menu: Array<string> = ["Dashboard", "Projects", "Tickets", "Team"];
   const Icons = [
     <AiOutlineHome size="24" color="#9AD2D9" />,
@@ -60,7 +64,7 @@ export const Navbar = (props: any) => {
   return (
     <section
       className={
-        props.isOpen
+        isOpen
           ? "fixed z-20 h-full w-3/5 flex-col bg-[#457b9d] md:flex md:max-h-screen md:w-1/6 border-r-2 border-black "
           : "z-0 hidden max-h-screen  w-2/5 flex-col bg-[#457b9d] md:flex md:w-1/6"
       }

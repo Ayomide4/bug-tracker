@@ -3,23 +3,32 @@ import { PieChartComp } from '../PieChart'
 import { data01, projectList, ticketList } from '../../tempData'
 import { RxDoubleArrowRight } from 'react-icons/rx'
 
-export default function DashboardProjectsInfo(props:any) {
+
+interface Props {
+  sum:number,
+  pieData: any
+}
+
+export default function DashboardProjectsInfo({sum, pieData}: Props) {
+
+  
+
 
   return (
     <div className=' mt-4 md:mt-10 mx-4 grid grid-rows-2 grid-cols-1 md:grid-cols-3 gap-4 h-full md:h-72'>
 
       {/* Project Prio Comp */}
       <div className=' bg-white rounded-md row-span-full p-4 shadow-md'>
-          <h2 className='text-xl font-semibold text-center'>Projects Priority</h2>
+          <h2 className='text-xl font-semibold text-center'>Tickets Priority</h2>
           <PieChartComp data={data01}/> 
           <div className="flex w-full justify-evenly">
               {
                 //Returns the high/med/low categories and percent of each category
-                data01.map((entry, index)=>{
+                pieData.map((entry:any, index:number)=>{
                   return (
                   <div className='flex flex-col justify-center items-center' key={index}>
                     <h2 className='font-semibold'>{entry.name}</h2>
-                    <h2>{`${(((entry.value/props.sum))*100).toFixed(2)}%`}</h2>
+                    <h2>{`${(((entry.value/sum))*100).toFixed(2)}%`}</h2>
                   </div>
                   )
                 })

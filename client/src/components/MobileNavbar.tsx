@@ -1,14 +1,19 @@
 import React, { useState } from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
 
-export default function MobileNavbar(props: any) {
+interface Props { 
+  hidden?: boolean,
+  handleClick: any
+}
 
-  console.log(props.hidden, 'mobile')
+export default function MobileNavbar({hidden, handleClick} : Props) {
+
+  console.log(hidden, 'mobile')
   return (
     <div className="absolute top-0 right-0">
       <div
-        onClick={props.handleClick}
-        className={props.hidden ? "absolute hidden top-7 right-5 cursor-pointer md:hidden" : "absolute  top-7 right-5 cursor-pointer md:hidden"}
+        onClick={handleClick}
+        className={hidden ? "absolute hidden top-7 right-5 cursor-pointer md:hidden" : "absolute  top-7 right-5 cursor-pointer md:hidden"}
       >
         <GiHamburgerMenu size={30} />
       </div>
