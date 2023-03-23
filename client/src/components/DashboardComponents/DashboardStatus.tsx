@@ -28,71 +28,10 @@ export default function DashboardStatus({
   const loginStatus = useLogin();
 
   const dashStatus = useDashboard();
-  const fetchDashInfo = async () => {
-    axios
-      .all([
-        axios.get("http://localhost:3002/ticket/list"),
-        axios.get("http://localhost:3002/project/list"),
-      ])
-      .then(
-        axios.spread((data1, data2) => {
-          const ticketList = data1.data;
-          const projectList = data2.data;
-          const totalTickets = ticketList.length;
-
-          //get high/med/low prio numbers from tickets list
-          const highPrioTickets = ticketList.filter(
-            (entry: any, index: number) => {
-              return entry.prio === "High";
-            }
-          );
-          const medPrioTickets = ticketList.filter(
-            (entry: any, index: number) => {
-              return entry.prio === "Medium";
-            }
-          );
-          const lowPrioTicket = ticketList.filter(
-            (entry: any, index: number) => {
-              return entry.prio === "Low";
-            }
-          );
-
-          setPieData([
-            { name: "High", value: highPrioTickets.length },
-            { name: "Med", value: medPrioTickets.length },
-            { name: "Low", value: medPrioTickets.length },
-          ]);
-
-          //list of tickets assigned to current user
-          const userTickets = ticketList.filter((entry: any, index: number) => {
-            return entry.dev === loginStatus?.loginInfo.fullName;
-          });
-          setUserTicketList(userTickets);
-
-          //Dashboard Stats
-          const assignedTicketList = ticketList.filter(
-            (entry: any, index: number) => {
-              return entry.dev !== "none";
-            }
-          );
-          const activeProjects = projectList.filter(
-            (entry: any, index: number) => {
-              return entry.status === "Active";
-            }
-          );
-          dashStatus?.setProjectDashboard({
-            ...dashStatus.projectDashboard,
-            totalTickets: totalTickets,
-            activeProjects: activeProjects.length,
-            assignedTickets: assignedTicketList.length,
-            unassignedTickets: totalTickets - assignedTicketList.length,
-          });
-        })
-      );
-  };
+  
 
   useEffect(() => {
-    fetchDashInfo();
+    // fetchDashInfo();
   }, [dashStatus?.projectDashboard.totalTickets]);
 
   return (

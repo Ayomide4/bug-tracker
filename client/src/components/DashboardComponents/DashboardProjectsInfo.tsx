@@ -1,6 +1,6 @@
 import React from "react";
 import { PieChartComp } from "../PieChart";
-import { data01, projectList } from "../../tempData";
+
 import { RxDoubleArrowRight } from "react-icons/rx";
 
 interface Props {
@@ -16,13 +16,12 @@ export default function DashboardProjectsInfo({
   ticketList,
   projectList,
 }: Props) {
-  
   return (
     <div className=" mx-4 mt-4 grid h-full grid-cols-1 grid-rows-2 gap-4 md:mt-10 md:h-72 md:grid-cols-3">
       {/* Project Prio Comp */}
       <div className=" row-span-full rounded-md bg-white p-4 shadow-md">
         <h2 className="text-center text-xl font-semibold">Tickets Priority</h2>
-        <PieChartComp data={data01} />
+        <PieChartComp data={pieData} />
         <div className="flex w-full justify-evenly">
           {
             //Returns the high/med/low categories and percent of each category
@@ -49,9 +48,9 @@ export default function DashboardProjectsInfo({
             if (index < 5) {
               return (
                 <li key={index} className="mb-2 list-none">
-                  <a href="#" className="decoration-none">
+
                     {entry.projectId.title}
-                  </a>
+
                 </li>
               );
             }
@@ -78,9 +77,7 @@ export default function DashboardProjectsInfo({
             if (index < 5) {
               return (
                 <li key={index} className="mb-2 list-none">
-                  <a href="#" className="decoration-none">
                     {entry.title}
-                  </a>
                 </li>
               );
             }

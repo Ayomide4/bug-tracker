@@ -47,6 +47,7 @@ export default function ({setTrigger, notify} : Props) {
     let responseToken = ''
     let loginData:any = login?.loginInfo
 
+
     //send login info to db
     if(login?.loginInfo.email === "" || login?.loginInfo.password === ""){
       notify('input')
