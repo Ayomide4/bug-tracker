@@ -14,36 +14,45 @@ interface PieObjectType {
 export const Dashboard = () => {
   const dashStatus = useDashboard();
   const login = useLogin();
+  const id = login?.loginInfo._id;
+  let test: any = [];
 
+
+  //state for pie chart
   const [pieData, setPieData] = useState<PieObjectType[]>([
     { name: "High", value: 0 },
     { name: "Medium", value: 0 },
     { name: "Low", value: 0 },
   ]);
 
+  //state for user tickets
   const [userTicketList, setUserTicketList] = useState([{}]);
-  const [userProjectList, setUserProjectList] = useState([]);
-  let test: any = [];
 
+  //state for user projects
+  const [userProjectList, setUserProjectList] = useState([]);
+
+  //sum of all pie chart values
   let sum: number = pieData.reduce((accumulator: number, object: any) => {
     return accumulator + object.value;
   }, 0);
 
-  const id = login?.loginInfo._id;
 
+  //fetches all data for dashboard
   const fetchDashInfo = async () => {
+    // console.log("fetching dash info", id)
     axios
       .all([
         axios.get("http://localhost:3002/ticket/list"),
         axios.get("http://localhost:3002/project/list"),
+        axios.get(`http://localhost:3002/user/teams/${id}`)
       ])
       .then(
-        axios.spread((data1, data2) => {
+        axios.spread((data1, data2, data3) => {
           const ticketList = data1.data;
           test = data1.data;
           const projectList = data2.data;
           const totalTickets = ticketList.length;
-
+          console.log(data3.data)
           //get high/med/low prio numbers from tickets list
           const highPrioTickets = ticketList.filter(
             (entry: any, index: number) => {
@@ -61,6 +70,7 @@ export const Dashboard = () => {
             }
           );
 
+          //pie chart data updates every time dashboard is loaded
           setPieData([
             { name: "High", value: highPrioTickets.length },
             { name: "Med", value: medPrioTickets.length },
@@ -73,11 +83,14 @@ export const Dashboard = () => {
               return entry.dev !== "none";
             }
           );
+
           const activeProjects = projectList.filter(
             (entry: any, index: number) => {
               return entry.status === "Active";
             }
           );
+
+          //set dashboard stats
           dashStatus?.setProjectDashboard({
             ...dashStatus.projectDashboard,
             totalTickets: totalTickets,
@@ -98,6 +111,7 @@ export const Dashboard = () => {
     });
     setUserTicketList(userTickets);
 
+    //save user tickets to local storage
     if (userTickets.length > 0) {
       localStorage.setItem("assignedTickets", JSON.stringify(userTickets));
     }
@@ -128,9 +142,11 @@ export const Dashboard = () => {
           console.log("error");
         });
 
+        //FIX
       axios.get(`http://localhost:3002/team/${newId}`).then((response) => {
         const test = JSON.stringify(response.data);
         localStorage.setItem("team state", test);
+        console.log(response.data)
         setUserProjectList(response.data.projects);
       });
     }

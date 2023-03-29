@@ -37,7 +37,7 @@ router.route("/login").post(async (req, res) => {
     return res.status(404).json({ error: "user not found" });
   }
   if (user) {
-    if (await bcrypt.compare(password, user.password!)) {
+    if (await bcrypt.compare(password.toString(), user.password!.toString())) {
       const token = jwt.sign(
         { id: user.id, email: user.email, isAdmin: user.isAdmin },
         process.env.JWT_SECRET!
@@ -65,10 +65,17 @@ router.route("/users").get(async (req, res) => {
 //GET USER WITH ID
 router.route("/user/:id").get(async (req, res) => {
   const id = req.params.id;
-  const user = await User.findById(id).populate({ path: "teams.team" });
+  const user = await User.findById(id)
+    .populate({ path: "teams.team" })
 
   res.status(200).send(user);
 });
+
+router.route("/user/teams/:id").get(async (req,res) => {
+  const newTeam = await Team.find({"members.memberId" : req.params.id})
+    .populate("projects.projectId")
+  res.status(200).send(newTeam)
+})
 
 //CREATE TEAM AND SET IS ADMIN
 router.route("/user/teams/:id").patch(async (req, res) => {

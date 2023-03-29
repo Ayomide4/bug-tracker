@@ -14,11 +14,17 @@ const UserSchema = new Schema({
     {
       team: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Team"
-      }
-    }
-  ]
-})
+        ref: "Team",
+      },
+    },
+  ],
+}, {strictPopulate: false} as mongoose.SchemaOptions)
+
+
+// UserSchema.pre("findOne", async function(next) {
+  
+//   next()
+// })
 
 const User = mongoose.model('User', UserSchema)
 export default User
