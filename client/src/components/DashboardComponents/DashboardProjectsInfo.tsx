@@ -16,6 +16,8 @@ export default function DashboardProjectsInfo({
   ticketList,
   projectList,
 }: Props) {
+
+
   return (
     <div className=" mx-4 mt-4 grid h-full grid-cols-1 grid-rows-2 gap-4 md:mt-10 md:h-72 md:grid-cols-3">
       {/* Project Prio Comp */}
@@ -44,7 +46,7 @@ export default function DashboardProjectsInfo({
       <div className=" relative row-span-2 rounded-md bg-white shadow-md">
         <h2 className="p-4 text-center text-xl font-semibold">Your Projects</h2>
         <div className="flex h-44 flex-col px-8">
-          {projectList.map((entry: any, index: number) => {
+          {/* {projectList.map((entry: any, index: number) => {
             if (index < 5) {
               return (
                 <li key={index} className="mb-2 list-none">
@@ -54,7 +56,18 @@ export default function DashboardProjectsInfo({
                 </li>
               );
             }
-          })}
+          })} */
+          
+          projectList.map((entry: any, index: number) => {
+            if (index < 5) {
+              return (
+                <li key={index} className="mb-2 list-none">
+                    {entry}
+                </li>
+              );
+            }
+          })
+          }
           <div className="">
             <a
               href="/projects"

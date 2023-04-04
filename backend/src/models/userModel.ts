@@ -21,10 +21,5 @@ const UserSchema = new Schema({
 }, {strictPopulate: false} as mongoose.SchemaOptions)
 
 
-// UserSchema.pre("findOne", async function(next) {
-  
-//   next()
-// })
-
 const User = mongoose.model('User', UserSchema)
 export default User

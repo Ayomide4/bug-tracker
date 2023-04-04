@@ -44,7 +44,8 @@ export default function CreateItem(props:any) {
     }
 
     else if(props.itemType === 'ticket'){
-      if(formData.title === '' || formData.desc === '' || formData.project === '' || formData.prio === '- Select -')
+      console.log(formData.prio)
+      if(formData.title === '' || formData.desc === '' || formData.project === '' || formData.prio === '- Select -' || formData.prio === '')
       {
         notify(false)
         return false
