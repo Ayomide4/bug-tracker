@@ -117,13 +117,14 @@ export const Dashboard = () => {
 
   const fetchUserTickets = (fullName: string) => {
     const ticketList = test;
+    console.log('fetching user tickets', fullName)
 
     //list of tickets assigned to current user
     const userTickets = ticketList.filter((entry: any, index: number) => {
       return entry.dev === fullName;
     });
     setUserTicketList(userTickets);
-    console.log(userTickets)
+    // console.log(userTickets)
 
     //save user tickets to local storage
     if (userTickets.length > 0) {

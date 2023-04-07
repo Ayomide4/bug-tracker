@@ -102,6 +102,10 @@ export default function SelectedProject({
   const [members, setMembers] = useState<any>();
   const handleDelete = () => {
     //sends a delete request to the server
+    const temp = localStorage.getItem("assignedTickets");
+    const assignedTickets = temp ? JSON.parse(temp) : [];
+    // console.log('assigned tickets',assignedTickets)
+    // console.log('proj tickets',selectedInfo.tickets)
     setTrigger((prev) => !prev); //sets trigger to open so we can see the confirm delete page
 
     //if page is open delete project
@@ -109,6 +113,11 @@ export default function SelectedProject({
       axios
         .delete(`http://localhost:3002/project/${selectedInfo.id}`)
         .then(() => {
+          const updatedTickets = assignedTickets.filter((ticket: any) => {
+            return selectedInfo.tickets.includes(ticket);
+          })
+          console.log(updatedTickets)
+          localStorage.setItem("assignedTickets", JSON.stringify(updatedTickets));
           setIsSelected((prevSelected) => !prevSelected);
         })
         .catch((error) => {
