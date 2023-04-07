@@ -48,7 +48,6 @@ interface Props {
     deadline: string;
     tickets: string[];
     members: string[];
-  
   };
   setSelectedInfo: React.Dispatch<
     SetStateAction<{
@@ -73,16 +72,13 @@ interface ticketType {
   prio: string;
 }
 
-
-
-
 export default function SelectedProject({
   selected,
   setIsSelected,
   selectedInfo,
   setSelectedInfo,
   setHidden,
-  hidden
+  hidden,
 }: Props) {
   //TODO: make it so only admin can delete/edit
   //  DELETE and EDIT button shouldn't show up for regular users
@@ -97,9 +93,9 @@ export default function SelectedProject({
     dev: "",
     prio: "",
   });
-
-  const [btnTitle, setBtnTitle] = useState('none')
+  const [btnTitle, setBtnTitle] = useState("none");
   const [members, setMembers] = useState<any>();
+
   const handleDelete = () => {
     //sends a delete request to the server
     const temp = localStorage.getItem("assignedTickets");
@@ -115,9 +111,12 @@ export default function SelectedProject({
         .then(() => {
           const updatedTickets = assignedTickets.filter((ticket: any) => {
             return selectedInfo.tickets.includes(ticket);
-          })
-          console.log(updatedTickets)
-          localStorage.setItem("assignedTickets", JSON.stringify(updatedTickets));
+          });
+          console.log(updatedTickets);
+          localStorage.setItem(
+            "assignedTickets",
+            JSON.stringify(updatedTickets)
+          );
           setIsSelected((prevSelected) => !prevSelected);
         })
         .catch((error) => {
@@ -140,14 +139,14 @@ export default function SelectedProject({
       dev: item.ticketId.dev,
       prio: item.ticketId.prio,
     });
-    setBtnTitle(item.ticketId.dev)
+    setBtnTitle(item.ticketId.dev);
   };
 
   const renderTickets = selectedInfo.tickets.map(
     (ticketItem: any, index: number) => {
       //colors for the prio range
       const prioColors = ["lowPrio", "medPrio", "highPrio"];
-      
+
       let colorIndex = 0;
 
       switch (ticketItem.ticketId.prio) {
@@ -181,24 +180,34 @@ export default function SelectedProject({
           >
             {ticketItem.ticketId.prio}
           </td>
-          <td className=" px-1 whitespace-nowrap">{ticketItem.ticketId.dev}</td>
+          <td className=" whitespace-nowrap px-1">{ticketItem.ticketId.dev}</td>
         </tr>
       );
     }
   );
 
+  const renderMembers = members?.map((member: any, index: number) => {
+    if (index < 5) {
+      return (
+        <tr key={index} >
+          <td className="pl-2">{member.memberId.fullName}</td>
+        </tr>
+      );
+    }
+  });
 
   useEffect(() => {
     //deletes project when confirm delete state changes
-    setHidden(true)
-    console.log('inside selected ', hidden)
+    setHidden(true);
+    console.log("inside selected ", hidden);
 
-    axios.patch('http://localhost:3002/members', {teamName: selectedInfo.team})
+    axios
+      .patch("http://localhost:3002/members", { teamName: selectedInfo.team })
       .then((res) => {
         setMembers(res.data.members);
-    })
+      });
     //TODO: CONFIRM DELETE IS COMMENTED BECAUSE ON REFRESH IT ACCIDENTALLY DELETES PROJECT
-    handleDelete();
+    //handleDelete();
   }, [confirmDelete]);
 
   return (
@@ -212,12 +221,12 @@ export default function SelectedProject({
           title={selectedInfo.title}
         />
       )}
-      <div className="mt-6 flex w-screen md:w-full items-center justify-between">
+      <div className="mt-6 flex w-screen items-center justify-between md:w-full">
         <div
           className="ml-4 flex w-44 cursor-pointer items-center"
           onClick={() => {
             setIsSelected((prev) => !prev);
-            setHidden(prev=>false)
+            setHidden((prev) => false);
           }}
         >
           <FaArrowLeft color="#1D3557" size={20} />
@@ -225,24 +234,24 @@ export default function SelectedProject({
             Project Details
           </h1>
         </div>
-        <div className="md:mr-4  flex md:flex-none">
+        <div className="flex  md:mr-4 md:flex-none">
           <button
-            className="h-15 w-20 md:w-24 rounded-md border bg-[#1D3557] p-2 text-base text-white"
+            className="h-15 w-20 rounded-md border bg-[#1D3557] p-2 text-base text-white md:w-24"
             onClick={toggleEdit}
           >
             Edit
           </button>
           <button
             onClick={handleDelete}
-            className="h-15 w-20 md:w-24 rounded-md border bg-[#e63946] p-2 text-base text-white"
+            className="h-15 w-20 rounded-md border bg-[#e63946] p-2 text-base text-white md:w-24"
           >
             Delete
           </button>
         </div>
       </div>
 
-      <div className="w-screen md:flex md:w-full px-4 h-fit md:h-itemContainer justify-between">
-        <div className=" mt-6 flex h-full w-full md:w-1/3 flex-col">
+      <div className="h-fit w-screen justify-between px-4 md:flex md:h-itemContainer md:w-full">
+        <div className=" mt-6 flex h-full w-full flex-col md:w-1/3">
           {/* Title and Description */}
           <div className="mb-4 h-32 w-full rounded border border-[#2A6470] bg-white">
             <h1 className="mx-2 text-lg font-semibold text-[#1D3557]">
@@ -267,27 +276,23 @@ export default function SelectedProject({
             </div>
           </div>
 
-            {/*Team list */}
+          {/*Team list */}
           <div className="mt-4 h-52 w-full rounded border border-[#2A6470] bg-white">
             <h1 className=" mx-2 mb-2 text-lg font-semibold text-[#1D3557]">
               Team - {selectedInfo.team}
             </h1>
-            <table className="w-full border border-x-0 border-black">
+            <table className="w-full border border-x-0 border-b-0 border-black">
               <thead className="bg-[#F3F4F6] text-left text-[#707785]">
                 <tr>
                   <th className="whitespace-nowrap pl-2">Name</th>
                 </tr>
               </thead>
-              <tbody className="text-left">
-                <tr>
-                  <td className="whitespace-nowrap pl-2">Ayo Omotosho</td>
-                </tr>
-              </tbody>
+              <tbody className="text-left">{members && renderMembers}</tbody>
             </table>
           </div>
         </div>
 
-        <div className="mt-6 md:mx-3 h-itemContainer md:h-full md:w-2/3 rounded border border-[#2A6470] bg-white">
+        <div className="mt-6 h-itemContainer rounded border border-[#2A6470] bg-white md:mx-3 md:h-full md:w-2/3">
           <div className="mt-2 h-itemContainer">
             <h1 className="mx-2 mb-2 text-lg font-semibold text-[#1D3557]">
               Tickets
@@ -305,14 +310,15 @@ export default function SelectedProject({
             </table>
           </div>
         </div>
-
       </div>
-      <TicketInfoModal ticketData={ticketData}
+      <TicketInfoModal
+        ticketData={ticketData}
         isModalOpen={isModalOpen}
         setIsModalOpen={setIsModalOpen}
         members={members}
         btnTitle={btnTitle}
-        setBtnTitle={setBtnTitle}/>
+        setBtnTitle={setBtnTitle}
+      />
       {toggleEditModal && (
         <Edit
           selectedInfo={selectedInfo}

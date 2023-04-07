@@ -19,7 +19,8 @@ export default function CreateItem(props:any) {
       title: '',
       desc: '', 
       team: '',
-      project: ''
+      project: '',
+
     }
 
     //form validation
