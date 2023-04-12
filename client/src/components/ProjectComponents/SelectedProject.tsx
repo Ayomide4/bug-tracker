@@ -204,7 +204,7 @@ export default function SelectedProject({
       .then((res) => {
         setMembers(res.data.members);
       });
-    // handleDelete();
+    handleDelete();
   }, [confirmDelete]);
 
   return (

@@ -15,7 +15,7 @@ export default function TicketItem(props:any) {
   const [formData, setFormData] = useState({
     title: '',
     desc: '',
-    status: 'active',
+    status: 'Open',
     prio: '',
     dev: 'none',
     project: ''
@@ -23,7 +23,7 @@ export default function TicketItem(props:any) {
 
 
   let openCount = 0
-  let devCount = 0
+  let resCount = 0
   
   const fetchData = async () => {
     //FETCH DATA FROM TICKET DB
@@ -32,7 +32,15 @@ export default function TicketItem(props:any) {
       const list: {}[] = res.data
       setData(list.reverse())
       props.setListLength(res.data.length) //getting the length of the array of objects to render total items
-      props.setTicketStatus({development: devCount, open: openCount})
+      list.filter((entry:any) => {
+        if(entry.status === 'Open') {
+          openCount++
+        }
+        if (entry.status === 'Resolved') {
+          resCount++
+        }
+      })
+      props.setTicketStatus({resolved: resCount, open: openCount})
     })
     .catch(err => console.log(err))
   }
@@ -41,12 +49,12 @@ export default function TicketItem(props:any) {
   //const activeTickets = data.filter((entry:any) => entry.status === 'New')
   useEffect(()=>{
     fetchData()
+  //  / props.setTicketStatus({...props.ticketStatus, open: openCount, resolved: resCount})
+
   },[props.listLength])
 
 
   const displayItems = data.map((entry:any, index:number) => {
-    if(entry.status === 'Open'){openCount=openCount+1}
-    if(entry.status === 'Development'){devCount = devCount+1}
     
     return (
         <tr className='cursor-pointer hover:bg-gray-200' key={index}>
@@ -59,8 +67,7 @@ export default function TicketItem(props:any) {
     )
   })
 
-
-
+  
 
   const handleClick = () => {
     setTrigger(trigger => !trigger) 

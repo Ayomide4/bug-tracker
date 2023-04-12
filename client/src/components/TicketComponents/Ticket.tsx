@@ -15,7 +15,7 @@ export default function Ticket() {
   const [ticketStatus, setTicketStatus] = useState({
     total: 0,
     open: 0,
-    development: 0,
+    resolved: 0,
   });
   let percentage: string = "50";
   const ticketCategories: string[] = [
@@ -84,10 +84,10 @@ export default function Ticket() {
               />
             </div>
             <h2 className="text-center text-2xl font-bold text-black">
-              {ticketStatus.development}
+              {ticketStatus.resolved}
             </h2>
             <h2 className="text-md mb-2 text-center text-gray-500">
-              Status: Development
+              Status: Resolved
             </h2>
           </div>
         <div className="mt-4 col-span-3 mx-4 md:mx-0  ">

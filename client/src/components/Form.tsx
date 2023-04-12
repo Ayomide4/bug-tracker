@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 export default function Form(props: any) {
   const [dropdownValue, setDropdownValue] = useState({
     prio: "",
-    status: "New",
+    status: "Open",
   });
   const prioList: string[] = ["Low", "Medium", "High"];
   const newData: any = { ...props.formData };
