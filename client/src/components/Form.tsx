@@ -17,7 +17,7 @@ export default function Form(props: any) {
       props.setFormData((newData["status"] = "Active")); //default for project statsu
     }
     props.setFormData(newData); //sets formdata to new data from form
-    // console.log(newData);
+
   };
 
   useEffect(() => {

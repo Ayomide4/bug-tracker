@@ -8,12 +8,11 @@ export default function SelectTeam(props: any) {
   const [btnTitle, setBtnTitle] = useState("Teams");
   const login = useLogin();
   //props needed list, list type = select team, title
-  
+
   const handleClick = (e: any) => {
     const value: any = e.target.getAttribute("value");
     props.setMyTeamName(value);
     setIsExpanded((prev) => !prev);
-    // console.log('list', props.list)
     axios
       .post("http://localhost:3002/dropdown", { value: value })
       .then((response) => {

@@ -65,9 +65,6 @@ export default function ProjectItem(props: any) {
             ? `${entry.desc.substring(0, 50)}...`
             : entry.desc}
         </td>
-        <td id="manager" className="whitespace-nowrap text-lg">
-          {entry.manager}
-        </td>
         <td id="team" className="whitespace-nowrap text-lg">
           {entry.team}
         </td>
@@ -93,9 +90,6 @@ export default function ProjectItem(props: any) {
             </th>
             <th className="sticky top-0 max-h-4 bg-[#F3F4F6] py-3 px-2">
               Description
-            </th>
-            <th className="sticky top-0 max-h-4 w-32 bg-[#F3F4F6] py-3 ">
-              Manager
             </th>
             <th className="sticky top-0 max-h-4 w-32 bg-[#F3F4F6] py-3">
               Team

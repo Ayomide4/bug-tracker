@@ -65,5 +65,16 @@ try{
   
 })
 
+router.route("/ticket/resolve").patch(async (req, res) => {
+  //todo resolve ticket and update project
+  const title = req.body.title
+
+  try { await Ticket.findOneAndUpdate({"title": title}, {status: "Resolved", dev: "none"}
+  ).then(updated => res.status(200).send(updated))
+  } catch {
+    res.status(404).send({"message": "error"})
+  }
+
+})
 
 module.exports = router;

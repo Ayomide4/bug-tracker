@@ -90,7 +90,7 @@ export default function TicketItem(props:any) {
                 <th className='py-3 bg-[#F3F4F6] sticky max-h-6 top-0 px-2'>Description</th>
                 <th className='py-3 bg-[#F3F4F6] sticky max-h-6 top-0 w-32'>Status</th>
                 <th className='py-3 bg-[#F3F4F6] sticky max-h-6 top-0 w-32'>Priority</th>
-                <th className='py-3 bg-[#F3F4F6] sticky max-h-6 top-0 w-52'>Ticket Author</th>
+                <th className='py-3 bg-[#F3F4F6] sticky max-h-6 top-0 w-52'>Developer</th>
               </tr>
             </thead>
             <tbody className='text-left'>

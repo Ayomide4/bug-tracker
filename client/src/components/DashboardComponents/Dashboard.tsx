@@ -18,7 +18,6 @@ export const Dashboard = () => {
   let test: any = [];
   //fix: assigned tickets not updating when deleted
 
-
   //state for pie chart
   const [pieData, setPieData] = useState<PieObjectType[]>([
     { name: "High", value: 0 },
@@ -37,15 +36,13 @@ export const Dashboard = () => {
     return accumulator + object.value;
   }, 0);
 
-
   //fetches all data for dashboard
-  const fetchDashInfo = async (id:any) => {
-    // console.log("fetching dash info", id)
+  const fetchDashInfo = async (id: any) => {
     axios
       .all([
         axios.get("http://localhost:3002/ticket/list"),
         axios.get("http://localhost:3002/project/list"),
-        axios.get(`http://localhost:3002/user/teams/${id}`)
+        axios.get(`http://localhost:3002/user/teams/${id}`),
       ])
       .then(
         axios.spread((data1, data2, data3) => {
@@ -56,15 +53,15 @@ export const Dashboard = () => {
           const userTeamsResponse = data3.data;
 
           //get user projects
-          const userProjects = userTeamsResponse.flatMap((team: any) => team.projects);
-          const newProjectList = userProjects.map((entry:any) => {
-            return entry.projectId.title
+          const userProjects = userTeamsResponse.flatMap(
+            (team: any) => team.projects
+          );
+          const newProjectList = userProjects.map((entry: any) => {
+            return entry.projectId.title;
           });
-          
-
 
           localStorage.setItem("userProjects", JSON.stringify(newProjectList));
-          setUserProjectList(newProjectList)
+          setUserProjectList(newProjectList);
 
           //get high/med/low prio numbers from tickets list
           const highPrioTickets = ticketList.filter(
@@ -117,14 +114,12 @@ export const Dashboard = () => {
 
   const fetchUserTickets = (fullName: string) => {
     const ticketList = test;
-    console.log('fetching user tickets', fullName)
 
     //list of tickets assigned to current user
     const userTickets = ticketList.filter((entry: any, index: number) => {
       return entry.dev === fullName;
     });
     setUserTicketList(userTickets);
-    // console.log(userTickets)
 
     //save user tickets to local storage
     if (userTickets.length > 0) {
@@ -135,107 +130,36 @@ export const Dashboard = () => {
   useEffect(() => {
     const tempTickets: any = localStorage.getItem("assignedTickets");
     const tempProjects: any = localStorage.getItem("userProjects");
-    let newId = ''
+    let newId = "";
 
-
-    if(id){
-      fetchDashInfo(id)
-    } else{
-      const loginState:any = localStorage.getItem('login state')
-      console.log('else')
-      const obj = JSON.parse(loginState)
-      newId = obj._id
-      fetchDashInfo(newId)
-      fetchUserTickets(obj.fullName)
+    if (id) {
+      fetchDashInfo(id);
+    } else {
+      const loginState: any = localStorage.getItem("login state");
+      const obj = JSON.parse(loginState);
+      newId = obj._id;
+      fetchDashInfo(newId);
+      fetchUserTickets(obj.fullName);
     }
-
 
     if (tempTickets !== null) {
       const newTickets = JSON.parse(tempTickets);
       setUserTicketList(newTickets);
     }
 
-    if(tempProjects !== null) {
+    if (tempProjects !== null) {
       const newProjects = JSON.parse(tempProjects);
       setUserProjectList(newProjects);
     }
 
-    if(id){
-    //  saves login info to local storage
-    axios.get(`http://localhost:3002/user/${id}`).then((response) => {
-      localStorage.setItem("login state", JSON.stringify(response.data));
-      login?.setLoginInfo({ ...response.data });
-      fetchUserTickets(response.data.fullName);
-    })}
-
-      // axios
-      //   .get(`http://localhost:3002/user/${id}`)
-      //   .then((response) => {
-      //     localStorage.setItem("login state", JSON.stringify(response.data));
-      //     login?.setLoginInfo({ ...response.data });
-      //     fetchUserTickets(response.data.fullName);
-
-
-
-    // if (!id) {
-    //   const temp: any = localStorage.getItem("login state");
-    //   const obj = JSON.parse(temp);
-    //   let newId:string = obj._id;
-
-
-      // axios
-      //   .get(`http://localhost:3002/user/${newId}`)
-      //   .then((response) => {
-      //     localStorage.setItem("login state", JSON.stringify(response.data));
-      //     login?.setLoginInfo({ ...response.data });
-      //     console.log(response.data)
-      //   })
-      //   .catch((error) => {
-      //     console.log("error", error.message);
-      //   });
-
-      //   //FIX
-      // axios.get(`http://localhost:3002/team/${newId}`).then((response) => {
-      //   const test = JSON.stringify(response.data);
-      //   console.log('team newid response' , response.data)
-      //   localStorage.setItem("team state", test);
-      //   // console.log(response.data)
-      //   // setUserProjectList(response.data.projects);
-      // });
-    // }
-
-    // if (id) {
-    // fetchDashInfo();
-    //   const tempUserProjects:any = localStorage.getItem("userProjects")
-    //   const userProjectObj:any = JSON.parse(tempUserProjects)
-
-
-    //   axios
-    //     .get(`http://localhost:3002/user/${id}`)
-    //     .then((response) => {
-    //       localStorage.setItem("login state", JSON.stringify(response.data));
-    //       login?.setLoginInfo({ ...response.data });
-    //       fetchUserTickets(response.data.fullName);
-    //     })
-    //     .catch((error) => {
-    //       console.log(error.data);
-    //     });
-
-    //   //get projects
-    //   const temp: any = localStorage.getItem("team state");
-
-    //   if (!temp) {
-    //     axios.get(`http://localhost:3002/team/${id}`).then((response) => {
-    //       const test = JSON.stringify(response.data);
-    //       localStorage.setItem("team state", test);
-    //       // setUserProjectList(response.data.projects);
-    //     });
-    //   } else {
-    //     const obj = JSON.parse(temp);
-    //     // setUserProjectList(obj.projects);
-    //   }
-    // 
-    // }
+    if (id) {
+      //  saves login info to local storage
+      axios.get(`http://localhost:3002/user/${id}`).then((response) => {
+        localStorage.setItem("login state", JSON.stringify(response.data));
+        login?.setLoginInfo({ ...response.data });
+        fetchUserTickets(response.data.fullName);
+      });
+    }
   }, []);
 
   return (

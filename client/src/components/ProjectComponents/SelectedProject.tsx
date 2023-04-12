@@ -100,8 +100,6 @@ export default function SelectedProject({
     //sends a delete request to the server
     const temp = localStorage.getItem("assignedTickets");
     const assignedTickets = temp ? JSON.parse(temp) : [];
-    // console.log('assigned tickets',assignedTickets)
-    // console.log('proj tickets',selectedInfo.tickets)
     setTrigger((prev) => !prev); //sets trigger to open so we can see the confirm delete page
 
     //if page is open delete project
@@ -112,7 +110,6 @@ export default function SelectedProject({
           const updatedTickets = assignedTickets.filter((ticket: any) => {
             return selectedInfo.tickets.includes(ticket);
           });
-          console.log(updatedTickets);
           localStorage.setItem(
             "assignedTickets",
             JSON.stringify(updatedTickets)
@@ -161,35 +158,37 @@ export default function SelectedProject({
           break;
       }
 
-      return (
-        <tr
-          key={index}
-          className="cursor-pointer hover:bg-gray-200"
-          onClick={() => clickTicket(ticketItem)}
-        >
-          <td className="whitespace-nowrap pl-2">
-            {ticketItem.ticketId.title}
-          </td>
-          <td className="whitespace-nowrap">
-            {ticketItem.ticketId.desc.length > 40
-              ? `${ticketItem.ticketId.desc.substring(0, 40)}...`
-              : ticketItem.ticketId.desc}
-          </td>
-          <td
-            className={`whitespace-nowrap bg-${prioColors[colorIndex]} rounded px-1 font-semibold text-white`}
+      if(ticketItem.ticketId.status !== "Resolved"){
+        return (
+          <tr
+            key={index}
+            className="cursor-pointer hover:bg-gray-200"
+            onClick={() => clickTicket(ticketItem)}
           >
-            {ticketItem.ticketId.prio}
-          </td>
-          <td className=" whitespace-nowrap px-1">{ticketItem.ticketId.dev}</td>
-        </tr>
-      );
+            <td className="whitespace-nowrap pl-2">
+              {ticketItem.ticketId.title}
+            </td>
+            <td className="whitespace-nowrap">
+              {ticketItem.ticketId.desc.length > 40
+                ? `${ticketItem.ticketId.desc.substring(0, 40)}...`
+                : ticketItem.ticketId.desc}
+            </td>
+            <td
+              className={`whitespace-nowrap bg-${prioColors[colorIndex]} rounded px-1 font-semibold text-white`}
+            >
+              {ticketItem.ticketId.prio}
+            </td>
+            <td className=" whitespace-nowrap px-1">{ticketItem.ticketId.dev}</td>
+          </tr>
+        );
+      }
     }
   );
 
   const renderMembers = members?.map((member: any, index: number) => {
     if (index < 5) {
       return (
-        <tr key={index} >
+        <tr key={index}>
           <td className="pl-2">{member.memberId.fullName}</td>
         </tr>
       );
@@ -199,15 +198,13 @@ export default function SelectedProject({
   useEffect(() => {
     //deletes project when confirm delete state changes
     setHidden(true);
-    console.log("inside selected ", hidden);
 
     axios
       .patch("http://localhost:3002/members", { teamName: selectedInfo.team })
       .then((res) => {
         setMembers(res.data.members);
       });
-    //TODO: CONFIRM DELETE IS COMMENTED BECAUSE ON REFRESH IT ACCIDENTALLY DELETES PROJECT
-    //handleDelete();
+    // handleDelete();
   }, [confirmDelete]);
 
   return (

@@ -28,8 +28,6 @@ export default function CreateTeamModal(props: any) {
     axios.patch(`http://localhost:3002/user/teams/${obj._id}`, {title: team.title})
     .then((response) => {
       let obj = {...response.data}
-      console.log('obj response', obj)
-      console.log('team ', team)
       localStorage.setItem("login state",JSON.stringify(obj))
       props.setTrigger((prev:boolean) => !prev)
     })

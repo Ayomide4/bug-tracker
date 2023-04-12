@@ -45,7 +45,7 @@ export default function CreateItem(props:any) {
     }
 
     else if(props.itemType === 'ticket'){
-      console.log(formData.prio)
+
       if(formData.title === '' || formData.desc === '' || formData.project === '' || formData.prio === '- Select -' || formData.prio === '')
       {
         notify(false)
@@ -61,7 +61,6 @@ export default function CreateItem(props:any) {
           })
           .catch(function (error){
             if (error.response){
-              console.log('PROJECT DONT EXIST')
               notify('ticketError')
               console.log(error.response.status)
               props.setFormData(blankData)
