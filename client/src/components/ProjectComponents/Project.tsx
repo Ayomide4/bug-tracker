@@ -49,6 +49,18 @@ export const notify = (response: any) => {
       theme: "light",
     });
   }
+  else if (response === "ticketExists") {
+    toast.error("Ticket already exists", {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+  }
 };
 
 export default function Project(props: any) {

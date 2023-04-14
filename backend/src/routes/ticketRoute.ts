@@ -19,8 +19,14 @@ router.route("/ticket/create").post(async (req, res) => {
     dev,
   });
 
+  const existingTicket = await Ticket.findOne({ title });
   const projectMatch = await Project.findOne({ title: project });
-  if (projectMatch === null) {
+
+
+  if (existingTicket) {
+    res.status(409).send({ error: "Ticket already exists" });
+  }
+  else if (projectMatch === null) {
     res.status(404).send({ error: "Project does not exist" });
   } else {
     const ticketLength = await Project.findOne({
@@ -32,14 +38,14 @@ router.route("/ticket/create").post(async (req, res) => {
       newTicket.save();
       const updatedProject = await Project.findOneAndUpdate(
         { title: project },
-        { $set: { tickets: {ticketId: newTicket._id} } }
+        { $set: { tickets: { ticketId: newTicket._id } } }
       );
       res.status(200).send(updatedProject);
     } else {
       newTicket.save();
       const updatedProject = await Project.findOneAndUpdate(
         { title: project },
-        { $push: { tickets: {ticketId: newTicket._id} } }
+        { $push: { tickets: { ticketId: newTicket._id } } }
       );
       res.status(200).send(updatedProject);
     }
@@ -51,30 +57,31 @@ router.route("/ticket/list").get(async (req, res) => {
   res.send(tickets);
 });
 
-router.route("/update-ticket").patch(async (req,res) => {
-  const title = req.body.title
-  const dev = req.body.dev
+router.route("/update-ticket").patch(async (req, res) => {
+  const title = req.body.title;
+  const dev = req.body.dev;
 
-try{
-  await Ticket.findOneAndUpdate({"title": title}, {dev: dev})
-    .then(updated => res.status(200).send(updated))
-
-} catch {
-  res.status(404).send({"message": "error"})
-}
-  
-})
+  try {
+    await Ticket.findOneAndUpdate({ title: title }, { dev: dev }).then(
+      (updated) => res.status(200).send(updated)
+    );
+  } catch {
+    res.status(404).send({ message: "error" });
+  }
+});
 
 router.route("/ticket/resolve").patch(async (req, res) => {
   //todo resolve ticket and update project
-  const title = req.body.title
+  const title = req.body.title;
 
-  try { await Ticket.findOneAndUpdate({"title": title}, {status: "Resolved", dev: "none"}
-  ).then(updated => res.status(200).send(updated))
+  try {
+    await Ticket.findOneAndUpdate(
+      { title: title },
+      { status: "Resolved", dev: "none" }
+    ).then((updated) => res.status(200).send(updated));
   } catch {
-    res.status(404).send({"message": "error"})
+    res.status(404).send({ message: "error" });
   }
-
-})
+});
 
 module.exports = router;

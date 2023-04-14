@@ -60,11 +60,15 @@ export default function CreateItem(props:any) {
             }
           })
           .catch(function (error){
-            if (error.response){
-              notify('ticketError')
-              console.log(error.response.status)
+            if(error.response.status === 409){
+              notify('ticketExists')
               props.setFormData(blankData)
             }
+            if (error.response.status === 404){
+              notify('ticketError')
+              props.setFormData(blankData)
+            }
+
         })
       }
     }

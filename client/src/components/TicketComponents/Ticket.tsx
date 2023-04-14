@@ -1,23 +1,28 @@
 import { useState } from "react";
 import ProgressBar from "react-animated-progress-bar";
 import TicketItem from "./TicketItem";
-import { projectDashboardType } from "/Users/ayoomotosho/web_development/projects/bug-tracker/client/src/App";
+// import { projectDashboardType } from "/Users/ayoomotosho/web_development/projects/bug-tracker/client/src/App";
 
-interface Props {
-  projectDashboard: projectDashboardType;
-  setProjectDashboard: React.Dispatch<
-    React.SetStateAction<projectDashboardType>
-  >;
-}
+// interface Props {
+//   projectDashboard: projectDashboardType;
+//   setProjectDashboard: React.Dispatch<
+//     React.SetStateAction<projectDashboardType>
+//   >;
+// }
 
 export default function Ticket() {
   const [listLength, setListLength] = useState<number>(0);
+  const [percentages, setPercentages] = useState({
+    openPercentage: 0,
+    resolvedPercentage: 0,
+  })
   const [ticketStatus, setTicketStatus] = useState({
     total: 0,
     open: 0,
     resolved: 0,
   });
-  let percentage: string = "50";
+
+
   const ticketCategories: string[] = [
     "Title",
     "Submitted By",
@@ -25,6 +30,7 @@ export default function Ticket() {
     "Priority",
     "Last Updated",
   ];
+
 
   return (
     <>
@@ -47,7 +53,7 @@ export default function Ticket() {
                 height="10px"
                 fontColor="black"
                 trackWidth="18"
-                percentage={percentage}
+                percentage={percentages.openPercentage === 0 ? "0" : percentages.openPercentage.toString()}
                 trackPathColor="#F3F4F6"
                 trackBorderColor="white"
                 defColor={{
@@ -72,7 +78,7 @@ export default function Ticket() {
                 height="10px"
                 fontColor="black"
                 trackWidth="18"
-                percentage={percentage}
+                percentage={percentages.resolvedPercentage === 0? "0" : percentages.resolvedPercentage.toString()}
                 trackPathColor="#F3F4F6"
                 trackBorderColor="white"
                 defColor={{
@@ -99,6 +105,8 @@ export default function Ticket() {
             setTicketStatus={setTicketStatus}
             listLength={listLength}
             setListLength={setListLength}
+            percentages={percentages}
+            setPercentages={setPercentages}
           />
         </div>
         </div>
