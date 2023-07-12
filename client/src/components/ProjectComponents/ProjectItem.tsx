@@ -1,10 +1,10 @@
 import axios from "axios";
-import { useDashboard } from "/Users/ayoomotosho/web_development/projects/bug-tracker/client/src/DashboardProvider";
+import { useDashboard } from "../../DashboardProvider";
 import { useState, useEffect } from "react";
 
 export default function ProjectItem(props: any) {
   const [data, setData] = useState([{}]);
-  const dashStatus = useDashboard()
+  const dashStatus = useDashboard();
   let teamList = [{}];
 
   //the entry arg is the same arg in the map func when we render
@@ -21,11 +21,9 @@ export default function ProjectItem(props: any) {
       date: entry.date,
       id: entry._id,
       deadline: entry.deadline,
-      tickets: entry.tickets
+      tickets: entry.tickets,
     });
   };
-
-
 
   //fetches list of projects and saves it into data state
   const fetchData = async () => {
@@ -78,13 +76,8 @@ export default function ProjectItem(props: any) {
     );
   });
 
-
-
-
-
-
   return (
-    <div className="relative z-0  h-itemContainer max-h-itemContainer w-full md:min-w-full flex-none overflow-scroll">
+    <div className="relative z-0  h-itemContainer max-h-itemContainer w-full flex-none overflow-scroll md:min-w-full">
       <table className="w-full">
         <thead className="text-left text-[#707785]">
           <tr>

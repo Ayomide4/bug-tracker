@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import DropdownMenu from "../DropdownMenu";
-import { useLogin } from "/Users/ayoomotosho/web_development/projects/bug-tracker/client/src/LoginProvider";
+import { useLogin } from "../../LoginProvider";
 import ClipLoader from "react-spinners/ClipLoader";
 import SelectTeam from "./SelectTeam";
 import axios from "axios";
@@ -35,14 +35,13 @@ export default function Team(props: any) {
 
   //info for selected Item
 
-
   const login = useLogin();
   let manager = {};
   let id = "";
 
   const handleClick = () => {
     props.setTrigger((prev: boolean) => !prev);
-    console.log('click')
+    console.log("click");
   };
 
   const handleClickProjects = () => {
@@ -54,7 +53,7 @@ export default function Team(props: any) {
   };
 
   const setInfo = (e: any, entry: any) => {
-    if(entry !== undefined || entry !== null){
+    if (entry !== undefined || entry !== null) {
       props.setIsSelected((prev: boolean) => !prev);
       props.setSelectedInfo({
         ...props.selectedInfo,
@@ -66,7 +65,7 @@ export default function Team(props: any) {
         date: entry.projectId.date,
         id: entry.projectId._id,
         deadline: entry.projectId.deadline,
-        tickets: entry.projectId.tickets
+        tickets: entry.projectId.tickets,
       });
     }
   };
@@ -165,7 +164,7 @@ export default function Team(props: any) {
           <h1 className="ml-6 mt-6 mb-8 text-2xl font-semibold text-[#1D3557]">
             Teams
           </h1>
-          <div className="absolute top-4 right-24 md:right-8 flex">
+          <div className="absolute top-4 right-24 flex md:right-8">
             {!isAdmin && (
               <button
                 onClick={handleClick}
@@ -182,9 +181,9 @@ export default function Team(props: any) {
               setMembers={setMembers}
             />
           </div>
-          <div className="z-0 mb-8 flex flex-col w-screen md:w-full items-center md:flex-row md:items-start md:justify-evenly">
+          <div className="z-0 mb-8 flex w-screen flex-col items-center md:w-full md:flex-row md:items-start md:justify-evenly">
             {/* TEAM LIST */}
-            <div className="h-80 w-11/12 mb-4 md:w-5/12 rounded border border-[#1D3557] bg-white shadow-sm">
+            <div className="mb-4 h-80 w-11/12 rounded border border-[#1D3557] bg-white shadow-sm md:w-5/12">
               <div className="flex items-center justify-between py-2">
                 <h2 className=" ml-2 text-xl font-semibold text-[#1D3557]">
                   {props.myTeamName}
@@ -211,7 +210,7 @@ export default function Team(props: any) {
             </div>
 
             {/* PROJECT LIST */}
-            <div className="h-80 w-11/12 md:w-6/12 rounded border border-[#1D3557] bg-white shadow-sm">
+            <div className="h-80 w-11/12 rounded border border-[#1D3557] bg-white shadow-sm md:w-6/12">
               <div className="flex w-full items-center justify-between pt-2">
                 <h2 className="mb-2 px-2 text-xl font-semibold text-[#1D3557]">
                   Projects
@@ -241,7 +240,6 @@ export default function Team(props: any) {
               </div>
             </div>
           </div>
-
 
           <AddMember
             manager={(manager = {})}

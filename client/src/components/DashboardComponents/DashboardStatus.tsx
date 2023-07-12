@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useDashboard } from "/Users/ayoomotosho/web_development/projects/bug-tracker/client/src/DashboardProvider";
+import { useDashboard } from "../../DashboardProvider";
 import { useEffect } from "react";
 import { useLogin } from "../../LoginProvider";
 import { toToastItem } from "react-toastify/dist/utils";
@@ -28,7 +28,6 @@ export default function DashboardStatus({
   const loginStatus = useLogin();
 
   const dashStatus = useDashboard();
-  
 
   useEffect(() => {
     // fetchDashInfo();

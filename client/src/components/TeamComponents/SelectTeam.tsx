@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useLogin } from "/Users/ayoomotosho/web_development/projects/bug-tracker/client/src/LoginProvider";
+import { useLogin } from "../../LoginProvider";
 import React, { useState } from "react";
 import { AiOutlineRight, AiOutlineDown } from "react-icons/ai";
 
@@ -8,7 +8,7 @@ export default function SelectTeam(props: any) {
   const [btnTitle, setBtnTitle] = useState("Teams");
   const login = useLogin();
   //props needed list, list type = select team, title
-  
+
   const handleClick = (e: any) => {
     const value: any = e.target.getAttribute("value");
     props.setMyTeamName(value);

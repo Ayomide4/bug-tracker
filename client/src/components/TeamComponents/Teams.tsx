@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import CreateTeam from "./CreateTeam";
 import Team from "./Team";
-import { useLogin } from "/Users/ayoomotosho/web_development/projects/bug-tracker/client/src/LoginProvider";
+import { useLogin } from "../../LoginProvider";
 import SelectedProject from "../ProjectComponents/SelectedProject";
 
 type infoType = {
@@ -15,10 +15,10 @@ type infoType = {
   date: string;
   id: string;
   tickets: string[];
-  members: string[]
+  members: string[];
 };
 
-export default function Teams(props:any) {
+export default function Teams(props: any) {
   //get login info
   const login = useLogin();
 
@@ -45,7 +45,7 @@ export default function Teams(props:any) {
     id: "",
     deadline: "",
     tickets: [],
-    members: []
+    members: [],
   });
 
   useEffect(() => {
