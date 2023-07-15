@@ -1,6 +1,9 @@
 # bug-tracker
 
-## Manage projects and track/resolve issues
+## Full stack application that helps you manage projects and track/resolve issues
+
+Login: test@gmail.com
+Pass: 123
 
 ## Features
 
