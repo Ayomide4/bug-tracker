@@ -12,7 +12,6 @@
 
 ## Technologies Used
 
-| Technologies Used | Image |
 | --- | --- |
 | Typescript | ![Typescript](https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/Typescript.svg/128px-Typescript.svg.png) |
 | tailwind | ![tailwind](https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Tailwind_CSS_logo.svg/400px-Tailwind_CSS_logo.svg.png) |
