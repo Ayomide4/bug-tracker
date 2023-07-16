@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import DropdownMenu from "../DropdownMenu";
+import { useEffect, useState } from "react";
 import { useLogin } from "../../LoginProvider";
 import ClipLoader from "react-spinners/ClipLoader";
 import SelectTeam from "./SelectTeam";

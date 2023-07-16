@@ -1,5 +1,5 @@
 {
-  "homepage": "http://Ayomide4.github.io/bug-tracker",
+  "homepage": "https://Ayomide4.github.io/bug-tracker",
   "name": "bug-tracker",
   "private": true,
   "proxy": "http:localhost:3002",
