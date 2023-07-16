@@ -115,7 +115,6 @@ export const Dashboard = () => {
 
   const fetchUserTickets = (fullName: string) => {
     const ticketList = test;
-    console.log("fetching user tickets", fullName);
 
     //list of tickets assigned to current user
     const userTickets = ticketList.filter((entry: any, index: number) => {

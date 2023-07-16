@@ -41,7 +41,6 @@ export default function Team(props: any) {
 
   const handleClick = () => {
     props.setTrigger((prev: boolean) => !prev);
-    console.log("click");
   };
 
   const handleClickProjects = () => {

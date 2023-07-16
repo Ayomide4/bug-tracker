@@ -112,7 +112,6 @@ export default function SelectedProject({
           const updatedTickets = assignedTickets.filter((ticket: any) => {
             return selectedInfo.tickets.includes(ticket);
           });
-          console.log(updatedTickets);
           localStorage.setItem(
             "assignedTickets",
             JSON.stringify(updatedTickets)
@@ -189,7 +188,6 @@ export default function SelectedProject({
   useEffect(() => {
     //deletes project when confirm delete state changes
     setHidden(true);
-    console.log("inside selected ", hidden);
 
     axios
       .patch("http://localhost:3002/members", { teamName: selectedInfo.team })
