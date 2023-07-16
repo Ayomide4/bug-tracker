@@ -5,17 +5,13 @@ import "./index.css";
 import { AuthProvider } from "react-auth-kit";
 import { disableReactDevTools } from "@fvilers/disable-react-devtools";
 
-if (process.env.NODE_ENV === "production") {
-  disableReactDevTools();
-}
-
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
     <AuthProvider
       authType="cookie"
       authName="_auth"
       cookieDomain={window.location.hostname}
-      cookieSecure={false} //change when using https
+      cookieSecure={true} //change to true when using https
     >
       <App />
     </AuthProvider>
