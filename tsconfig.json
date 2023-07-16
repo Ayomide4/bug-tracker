@@ -15,12 +15,17 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
+    "noImplicitAny": false,
+    "typeRoots": ["./typings", "./node_modules/@types/"],
     "baseUrl": "./",
-        "paths": {
-            "*": [ "src/client/@custom_types/*"]
-        }
+    "paths": {
+      "*": ["src/client/@custom_types/*"]
+    }
   },
   "include": ["client/src", "client/tailwind.config.cjs"],
-  "exclude": ["node_modules", "client/src/components/TicketComponents/Ticket.tsx"],
+  "exclude": [
+    "node_modules",
+    "client/src/components/TicketComponents/Ticket.tsx"
+  ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
