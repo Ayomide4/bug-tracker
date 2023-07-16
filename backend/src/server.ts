@@ -7,10 +7,18 @@ config();
 const app = express();
 app.use(
   cors({
-    origin: ["http://localhost:3000", "https://bug-tracker-api.vercel.app/"],
+    origin: [
+      "http://localhost:3000",
+      "https://bug-tracker-api.vercel.app/",
+      "https://bug-tracker-rosy.vercel.app/",
+      "https://aomotosho.tech",
+    ],
   })
 );
 app.use(express.json());
+app.get("/", (req, res) => {
+  res.send("Welcome to Bug Tracker API");
+});
 mongoose.set("strictQuery", true);
 
 app.use("/", require("./routes/projectRoute"));
