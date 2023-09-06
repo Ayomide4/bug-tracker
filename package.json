@@ -1,0 +1,12 @@
+{
+  "name": "bug-tracker",
+  "version": "1.0.0",
+  "description": "## Full stack application that helps you manage projects and track/resolve issues",
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
