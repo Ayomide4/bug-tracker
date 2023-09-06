@@ -2,7 +2,7 @@
   "homepage": "https://Ayomide4.github.io/bug-tracker",
   "name": "bug-tracker",
   "private": true,
-  "proxy": "http:localhost:3002",
+  "proxy": "https://bug-tracker-f329.onrender.com",
   "version": "0.0.0",
   "type": "module",
   "scripts": {
