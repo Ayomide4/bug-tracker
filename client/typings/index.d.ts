@@ -1,2 +1,6 @@
 declare module "react-animated-progress-bar";
-declare module "react-spinners/ClipLoader";
+declare var reactSpinners: any;
+
+declare module "react-spinners/ClipLoader" {
+  export = reactSpinners;
+}
