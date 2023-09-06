@@ -41,12 +41,15 @@ function Edit(props: any) {
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     props.setSelectedInfo(newInfo);
-    axios.patch(`http://localhost:3002/project/${props.selectedInfo.id}`, {
-      title: newInfo.title,
-      deadline: newInfo.deadline,
-      desc: newInfo.desc,
-      status: newInfo.status,
-    });
+    axios.patch(
+      `https://bug-tracker-f329.onrender.com/project/${props.selectedInfo.id}`,
+      {
+        title: newInfo.title,
+        deadline: newInfo.deadline,
+        desc: newInfo.desc,
+        status: newInfo.status,
+      }
+    );
     // console.log("submitted info", props.selectedInfo);
     props.toggleEdit();
   };

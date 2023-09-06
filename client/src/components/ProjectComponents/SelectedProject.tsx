@@ -107,7 +107,9 @@ export default function SelectedProject({
     //if page is open delete project
     if (trigger) {
       axios
-        .delete(`http://localhost:3002/project/${selectedInfo.id}`)
+        .delete(
+          `https://bug-tracker-f329.onrender.com/project/${selectedInfo.id}`
+        )
         .then(() => {
           const updatedTickets = assignedTickets.filter((ticket: any) => {
             return selectedInfo.tickets.includes(ticket);
@@ -190,7 +192,9 @@ export default function SelectedProject({
     setHidden(true);
 
     axios
-      .patch("http://localhost:3002/members", { teamName: selectedInfo.team })
+      .patch("https://bug-tracker-f329.onrender.com/members", {
+        teamName: selectedInfo.team,
+      })
       .then((res) => {
         setMembers(res.data.members);
       });

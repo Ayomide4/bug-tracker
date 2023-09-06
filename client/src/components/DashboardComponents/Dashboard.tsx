@@ -41,9 +41,9 @@ export const Dashboard = () => {
     // console.log("fetching dash info", id)
     axios
       .all([
-        axios.get("http://localhost:3002/ticket/list"),
-        axios.get("http://localhost:3002/project/list"),
-        axios.get(`http://localhost:3002/user/teams/${id}`),
+        axios.get("https://bug-tracker-f329.onrender.com/ticket/list"),
+        axios.get("https://bug-tracker-f329.onrender.com/project/list"),
+        axios.get(`https://bug-tracker-f329.onrender.com/user/teams/${id}`),
       ])
       .then(
         axios.spread((data1, data2, data3) => {
@@ -157,11 +157,13 @@ export const Dashboard = () => {
 
     if (id) {
       //  saves login info to local storage
-      axios.get(`http://localhost:3002/user/${id}`).then((response) => {
-        localStorage.setItem("login state", JSON.stringify(response.data));
-        login?.setLoginInfo({ ...response.data });
-        fetchUserTickets(response.data.fullName);
-      });
+      axios
+        .get(`https://bug-tracker-f329.onrender.com/user/${id}`)
+        .then((response) => {
+          localStorage.setItem("login state", JSON.stringify(response.data));
+          login?.setLoginInfo({ ...response.data });
+          fetchUserTickets(response.data.fullName);
+        });
     }
 
     // axios

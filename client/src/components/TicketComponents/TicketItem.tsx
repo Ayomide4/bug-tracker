@@ -23,7 +23,7 @@ export default function TicketItem(props: any) {
   const fetchData = async () => {
     //FETCH DATA FROM TICKET DB
     axios
-      .get("http://localhost:3002/ticket/list")
+      .get("https://bug-tracker-f329.onrender.com/ticket/list")
       .then((res) => {
         const list: {}[] = res.data;
         setData(list.reverse());

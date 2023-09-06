@@ -28,7 +28,7 @@ export default function ProjectItem(props: any) {
   //fetches list of projects and saves it into data state
   const fetchData = async () => {
     axios
-      .get("http://localhost:3002/project/list")
+      .get("https://bug-tracker-f329.onrender.com/project/list")
       .then((res) => {
         const list = res.data;
         setData(list.reverse());

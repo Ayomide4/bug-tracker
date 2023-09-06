@@ -7,18 +7,20 @@ import axios from "axios";
 
 type Props = {
   btnTitle: string;
-  setBtnTitle:  React.Dispatch<React.SetStateAction<string>>;
+  setBtnTitle: React.Dispatch<React.SetStateAction<string>>;
   ticketData: {
     title: string;
     desc: string;
     dev: string;
     prio: string;
   };
-  members: [{
-    memberId: {
-      fullName: string;
+  members: [
+    {
+      memberId: {
+        fullName: string;
+      };
     }
-  }]
+  ];
   isModalOpen: boolean;
   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
@@ -35,23 +37,23 @@ export default function TicketInfoModal({
 }: Props) {
   let index: number = 0;
 
-  
   const [isClicked, setIsClicked] = useState<boolean>(false);
   const closeModal = () => {
     setIsModalOpen((prev: boolean) => !prev);
-    setIsClicked(prev => false)
+    setIsClicked((prev) => false);
   };
 
-
-  const handleClick = (e:any, item:any) => {
-    if(item.memberId.fullName !== btnTitle){
-      setIsClicked(prev => !prev)
-      setBtnTitle(item.memberId.fullName)
-      console.log(ticketData.title, item.memberId.fullName)
-      axios.patch("http://localhost:3002/update-ticket", {"title": ticketData.title, "dev": item.memberId.fullName})
+  const handleClick = (e: any, item: any) => {
+    if (item.memberId.fullName !== btnTitle) {
+      setIsClicked((prev) => !prev);
+      setBtnTitle(item.memberId.fullName);
+      console.log(ticketData.title, item.memberId.fullName);
+      axios.patch("https://bug-tracker-f329.onrender.com/update-ticket", {
+        title: ticketData.title,
+        dev: item.memberId.fullName,
+      });
     }
-  }  
-
+  };
 
   if (ticketData.prio == "Low") {
     index = 0;
@@ -61,13 +63,11 @@ export default function TicketInfoModal({
     index = 2;
   }
 
-
-
   return (
     <>
       {isModalOpen && (
         <div className=" fixed top-0 left-0 z-50 flex h-full w-full items-center justify-center bg-black bg-opacity-20">
-          <div className="relative h-3/5 w-4/5 md:w-2/5 bg-white">
+          <div className="relative h-3/5 w-4/5 bg-white md:w-2/5">
             <div className="h-full border border-black p-4">
               <div className="mb-2 flex items-center justify-between ">
                 <div
@@ -93,27 +93,37 @@ export default function TicketInfoModal({
                   {ticketData.desc}
                 </p>
                 <div className="flex">
-                  <label className="text-lg font-semibold text-[#1D3557]">Ticket Developer:</label>
-                  <div className="border border-gray-500 w-40 h-fit select-none ml-2 rounded-sm">
-                    <div className="flex justify-between items-center" onClick={() => setIsClicked(prev => !prev)}>
+                  <label className="text-lg font-semibold text-[#1D3557]">
+                    Ticket Developer:
+                  </label>
+                  <div className="ml-2 h-fit w-40 select-none rounded-sm border border-gray-500">
+                    <div
+                      className="flex items-center justify-between"
+                      onClick={() => setIsClicked((prev) => !prev)}
+                    >
                       <div className="ml-2">{btnTitle}</div>
                       <div className="mr-2">
-                        {!isClicked && <AiOutlineRight/>}
-                        {isClicked && <AiOutlineDown/>}
+                        {!isClicked && <AiOutlineRight />}
+                        {isClicked && <AiOutlineDown />}
                       </div>
                     </div>
                     <div>
-                      { isClicked &&
-                      <ul>
-                        <hr className="border-1 border-black"></hr>
-                        {members.map((item, index) => {
-                          return (
-                            <li key={index} onClick={(e) => handleClick(e, item)}  className="cursor-pointer hover:bg-gray-200 pl-2">
-                              {item.memberId.fullName}
-                            </li>
-                          )
-                        })}
-                      </ul>}
+                      {isClicked && (
+                        <ul>
+                          <hr className="border-1 border-black"></hr>
+                          {members.map((item, index) => {
+                            return (
+                              <li
+                                key={index}
+                                onClick={(e) => handleClick(e, item)}
+                                className="cursor-pointer pl-2 hover:bg-gray-200"
+                              >
+                                {item.memberId.fullName}
+                              </li>
+                            );
+                          })}
+                        </ul>
+                      )}
                     </div>
                   </div>
                 </div>

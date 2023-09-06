@@ -52,7 +52,7 @@ export default function ({ setTrigger, notify }: Props) {
       //   navigate('/dashboard')
     } else {
       axios
-        .post("http://localhost:3002/login", login?.loginInfo)
+        .post("https://bug-tracker-f329.onrender.com/login", login?.loginInfo)
         .then(async function (response) {
           responseToken = response.data.data;
           //console.log('response data handle submit login',response.data)
@@ -94,7 +94,7 @@ export default function ({ setTrigger, notify }: Props) {
     login?.setLoginInfo(newData);
 
     axios
-      .post("http://localhost:3002/login", newData)
+      .post("https://bug-tracker-f329.onrender.com/login", newData)
       .then(async function (response) {
         responseToken = response.data.data;
         //console.log('response data handle submit login',response.data)

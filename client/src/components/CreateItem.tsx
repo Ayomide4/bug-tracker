@@ -36,7 +36,10 @@ export default function CreateItem(props: any) {
         return false;
       } else {
         axios
-          .post("http://localhost:3002/project/create", formData)
+          .post(
+            "https://bug-tracker-f329.onrender.com/project/create",
+            formData
+          )
           .then(function (response) {
             props.setListLength((prev: number) => prev + 1); //
             notify(true);
@@ -61,7 +64,7 @@ export default function CreateItem(props: any) {
         return false;
       } else {
         axios
-          .post("http://localhost:3002/ticket/create", formData)
+          .post("https://bug-tracker-f329.onrender.com/ticket/create", formData)
           .then(function (response) {
             if (response.status === 200) {
               props.setListLength((prev: number) => prev + 1);

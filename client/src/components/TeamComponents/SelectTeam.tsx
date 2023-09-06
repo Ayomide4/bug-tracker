@@ -15,7 +15,7 @@ export default function SelectTeam(props: any) {
     setIsExpanded((prev) => !prev);
     // console.log('list', props.list)
     axios
-      .post("http://localhost:3002/dropdown", { value: value })
+      .post("https://bug-tracker-f329.onrender.com/dropdown", { value: value })
       .then((response) => {
         let tempData = [...response.data.members];
         props.setProjects(response.data.projects);

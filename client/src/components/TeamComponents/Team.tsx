@@ -104,7 +104,7 @@ export default function Team(props: any) {
   const fetchData = async (obj: any) => {
     //GET TEAM DATA
     await axios
-      .get(`http://localhost:3002/team/${obj._id}`)
+      .get(`https://bug-tracker-f329.onrender.com/team/${obj._id}`)
       .then((response) => {
         const test = JSON.stringify(response.data);
         localStorage.setItem("team state", test);
@@ -117,10 +117,12 @@ export default function Team(props: any) {
   };
 
   const fetchUser = async (obj: any) => {
-    axios.get(`http://localhost:3002/user/${obj._id}`).then((response) => {
-      localStorage.setItem("login state", JSON.stringify(response.data));
-      login?.setLoginInfo({ ...response.data });
-    });
+    axios
+      .get(`https://bug-tracker-f329.onrender.com/user/${obj._id}`)
+      .then((response) => {
+        localStorage.setItem("login state", JSON.stringify(response.data));
+        login?.setLoginInfo({ ...response.data });
+      });
   };
 
   useEffect(() => {

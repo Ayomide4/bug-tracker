@@ -26,7 +26,7 @@ export default function CreateTeamModal(props: any) {
 
       //gets user obj
       axios
-        .patch(`http://localhost:3002/user/teams/${obj._id}`, {
+        .patch(`https://bug-tracker-f329.onrender.com/user/teams/${obj._id}`, {
           title: team.title,
         })
         .then((response) => {
