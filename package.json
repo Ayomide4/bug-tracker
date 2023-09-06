@@ -150,7 +150,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start-client": "cd client && npm run dev",
-    "start-server": "nodemon backend/src/server.ts"
+    "start-server": "nodemon backend/src/server.ts",
+    "build": "cd client && npm run build"
   },
   "author": "",
   "license": "ISC"
